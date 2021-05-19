@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.unla.Grupo23OO22021.enums.TipoDocumento;
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -39,9 +41,8 @@ public class Usuario {
 	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "documento_idDocumento", nullable = false)
-	private Documento documento;
+	@Column(name = "tipodocumento")
+	private TipoDocumento tipoDocumento;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "perfil_idPerfil", nullable = false)
@@ -56,7 +57,7 @@ public class Usuario {
 	private LocalDateTime updateAt;
 
 	public Usuario(long idUsuario, int dni, String nombre, String apellido, String email, String username,
-			String password, Documento documento, Perfil perfil) {
+			String password, TipoDocumento tipoDocumento, Perfil perfil) {
 		super();
 		this.idUsuario = idUsuario;
 		this.dni = dni;
@@ -65,12 +66,12 @@ public class Usuario {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.documento = documento;
+		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
 
 	public Usuario(int dni, String nombre, String apellido, String email, String username, String password,
-			Documento documento, Perfil perfil) {
+			TipoDocumento tipoDocumento, Perfil perfil) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
@@ -78,7 +79,7 @@ public class Usuario {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.documento = documento;
+		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
 
@@ -138,12 +139,12 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Documento getDocumento() {
-		return documento;
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public void setDocumento(Documento documento) {
-		this.documento = documento;
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public Perfil getPerfil() {

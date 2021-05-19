@@ -1,7 +1,7 @@
 package com.unla.Grupo23OO22021.models;
 
-import com.unla.Grupo23OO22021.entities.Documento;
 import com.unla.Grupo23OO22021.entities.Perfil;
+import com.unla.Grupo23OO22021.enums.TipoDocumento;
 
 public class UsuarioModel {
 
@@ -14,10 +14,11 @@ public class UsuarioModel {
 	private String username;
 	private String password;
 	
-	private Documento documento;
+	private TipoDocumento tipoDocumento;
 	private Perfil perfil;
+	
 	public UsuarioModel(long idUsuario, int dni, String nombre, String apellido, String email, String username,
-			String password, Documento documento, Perfil perfil) {
+			String password, TipoDocumento tipoDocumento, Perfil perfil) {
 		super();
 		this.idUsuario = idUsuario;
 		this.dni = dni;
@@ -26,12 +27,12 @@ public class UsuarioModel {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.documento = documento;
+		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
 	
 	public UsuarioModel(int dni, String nombre, String apellido, String email, String username, String password,
-			Documento documento, Perfil perfil) {
+			TipoDocumento tipoDocumento, Perfil perfil) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
@@ -39,7 +40,7 @@ public class UsuarioModel {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.documento = documento;
+		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
 
@@ -99,12 +100,14 @@ public class UsuarioModel {
 		this.password = password;
 	}
 
-	public Documento getDocumento() {
-		return documento;
+	
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public void setDocumento(Documento documento) {
-		this.documento = documento;
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public Perfil getPerfil() {
