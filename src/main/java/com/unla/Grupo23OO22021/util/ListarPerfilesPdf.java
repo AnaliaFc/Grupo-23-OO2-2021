@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
-import com.lowagie.text.Document;
+import com.lowagie.text.Document; 
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
@@ -35,7 +35,7 @@ public class ListarPerfilesPdf extends AbstractPdfView{
 		
 		document.setPageSize(PageSize.A4.rotate());
 		document.open();
-		
+		//
 		
 		PdfPTable tablaPerfiles = new PdfPTable(2);
 		PdfPCell columnaId = new PdfPCell(new Phrase("ID", pdfMetodos.getFuenteDeLaPrimeraFila()));
