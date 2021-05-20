@@ -15,10 +15,10 @@ public class UsuarioModel {
 	private String password;
 	
 	private TipoDocumento tipoDocumento;
-	private Perfil perfil;
+	private PerfilModel perfil;
 	
 	public UsuarioModel(long idUsuario, int dni, String nombre, String apellido, String email, String username,
-			String password, TipoDocumento tipoDocumento, Perfil perfil) {
+			String password, TipoDocumento tipoDocumento, PerfilModel perfil) {
 		super();
 		this.idUsuario = idUsuario;
 		this.dni = dni;
@@ -32,7 +32,7 @@ public class UsuarioModel {
 	}
 	
 	public UsuarioModel(int dni, String nombre, String apellido, String email, String username, String password,
-			TipoDocumento tipoDocumento, Perfil perfil) {
+			TipoDocumento tipoDocumento, PerfilModel perfil) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
@@ -110,11 +110,11 @@ public class UsuarioModel {
 		this.tipoDocumento = tipoDocumento;
 	}
 
-	public Perfil getPerfil() {
+	public PerfilModel getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(Perfil perfil) {
+	public void setPerfil(PerfilModel perfil) {
 		this.perfil = perfil;
 	}
 	

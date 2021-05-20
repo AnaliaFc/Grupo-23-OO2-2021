@@ -18,7 +18,7 @@ public class PdfMetodos {
 	
 	public PdfPTable crearTablaTitulo(String titulo) {
 		PdfPTable tablaTitulo = new PdfPTable(1);
-		PdfPCell celda = new PdfPCell(new Phrase("LISTADO DE PERFILES",fuenteDelTitulo));
+		PdfPCell celda = new PdfPCell(new Phrase(titulo,fuenteDelTitulo));
 		celda.setBorder(0);
 		celda.setBackgroundColor(Color.LIGHT_GRAY);
 		celda.setHorizontalAlignment(Element.ALIGN_CENTER);

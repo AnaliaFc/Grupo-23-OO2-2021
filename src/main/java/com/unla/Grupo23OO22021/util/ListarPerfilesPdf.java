@@ -50,8 +50,17 @@ public class ListarPerfilesPdf extends AbstractPdfView{
 			tablaPerfiles.addCell(perfil.getTipo());
 		});
 		
-		document.add(pdfMetodos.crearTablaInfo());
-		document.add(pdfMetodos.crearTablaTitulo("LISTADO DE PERFILES"));
+		PdfPTable info = pdfMetodos.crearTablaInfo();
+		info.setWidthPercentage(90);
+		
+		PdfPTable titulo = pdfMetodos.crearTablaTitulo("LISTADO DE PERFILES");
+		titulo.setWidthPercentage(90);
+		titulo.setSpacingAfter(10);
+		
+		tablaPerfiles.setWidthPercentage(90);
+		
+		document.add(info);
+		document.add(titulo);
 		document.add(tablaPerfiles);
 	}
 
