@@ -1,0 +1,14 @@
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>TIPO</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="perfil : ${perfiles}">
+			<td th:text="${perfil.idPerfil}"></td>
+			<td th:text="${perfil.tipo}"></td>
+		</tr>
+	</tbody>
+</table>
