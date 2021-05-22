@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Listado de usuarios</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<main>
+                    <div class="container-fluid px-4">
+                         <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Listado
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+											<th>Nombre</th>
+											<th>Apellido</th>
+											<th>Email</th>
+										</tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr th:each="usuario : ${usuarios}">
+										<td> <span th:text="${usuario.nombre}"> </td>
+										<td> <span th:text="${usuario.apellido}"> </td>
+										<td> <span th:text="${usuario.email}"> </td>
+										</tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                     <div><a href="/usuario/new" class="btn btn-primary">Agregar nuevo usuario</a></div>
+                </main>
+	</body>
+</html>

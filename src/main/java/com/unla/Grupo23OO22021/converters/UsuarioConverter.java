@@ -1,8 +1,11 @@
 package com.unla.Grupo23OO22021.converters;
 
+import org.springframework.stereotype.Component;
+
 import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
 
+@Component("usuarioConverter")
 public class UsuarioConverter {
 	public Usuario modelToEntity(UsuarioModel usuarioModel) {
 		return new Usuario(usuarioModel.getIdUsuario(), usuarioModel.getDni(), usuarioModel.getNombre(),

@@ -1,0 +1,19 @@
+<form action="#" th:action="@{/usuario/crear}" th:object="${usuario}" method="post">
+	<p>Name: <input type="text" th:field="*{nombre}" />
+	Apellido: <input type="text" th:field="*{apellido}" /></p>
+	
+	<p><select th:field="*{tipoDocumento}">
+    <option value="default">Tipo de DNI</option>
+    <option value="DNI" th:selected="DNI">DNI</option>
+    <option value="DocumentoUnico" th:selected="DocumentoUnico">Documento Unico</option>
+    <option value="LibretaCivica" th:selected="LibretaCivica">Libreta Cívica</option>
+    <option value="LibreDeEnrolamiento" th:selected="LibreDeEnrolamiento">Libreta de Enrolamiento</option>
+    <option value="CedulaDeIdentidad" th:selected="CedulaDeIdentidad">C.I</option>
+	</select>
+	 N° Documento: <input type="text" th:field="*{dni}" /></p>
+	<p>Email: <input type="text" th:field="*{email}" /></p>
+	<p>Nombre de usuario: <input type="text" th:field="*{username}" /></p>
+	<p>Contraseña: <input type="password" pattern=".{6,}" th:field="*{password}"/></p>
+	<input type="submit" value="crear"/>
+</form>
+

@@ -44,6 +44,8 @@ public class UsuarioModel {
 		this.perfil = perfil;
 	}
 
+	public UsuarioModel() {}
+
 	public long getIdUsuario() {
 		return idUsuario;
 	}
