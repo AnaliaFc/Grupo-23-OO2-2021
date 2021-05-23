@@ -1,8 +1,11 @@
 package com.unla.Grupo23OO22021.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +42,17 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/crear")
-	public RedirectView crear(@ModelAttribute("usuario") UsuarioModel UsuarioModel) {
-		usuarioService.insertOrUpdate(UsuarioModel);
-		return new RedirectView(ViewRouteHelper.USUARIO_ROOT);
+	public RedirectView crear(@Valid @ModelAttribute("usuario") UsuarioModel UsuarioModel, BindingResult result) {
+		
+		RedirectView redirect= new RedirectView(ViewRouteHelper.USUARIO_ROOT);
+		
+		 if (result.hasErrors()) {			
+			 redirect= new RedirectView("new");
+		    }else {
+		    	
+		    	usuarioService.insertOrUpdate(UsuarioModel);
+		    }
+		return redirect;
 	}
 	
 	@GetMapping("/{idUsuario}")

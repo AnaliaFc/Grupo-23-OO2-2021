@@ -3,7 +3,10 @@
 	<input type="hidden" th:field="*{idUsuario}" />
 	</p>
 	<p>
-		Nombre: <input type="text" th:field="*{nombre}" />
+		Nombre Usuario: <input type="text" th:field="*{username}" />
+	</p>
+	<p>
+		Contraseña nueva: <input type="password" class="form-control" pattern=".{6,}" th:field="*{password}"/>
 	</p>
 	<input type="submit" value="Edit" />
 </form>

@@ -7,10 +7,12 @@
 	<p>
     <label class="form-label">Nombre</label>
     <input type="text" class="form-control" th:field="*{nombre}"/>
+    <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Longitud de Nombre incorrecta </p>
     </div>
     <div class="col-md-4">
   	<label class="form-label">Apellido</label>
     <input type="text" class="form-control" th:field="*{apellido}"/>
+  	<p th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Longitud de Apellido incorrecta </p>
   	</p>
   	</div>
 	
@@ -18,33 +20,35 @@
 	<p>
 	<div class="col-md-4">
 	<label class="form-label">Tipo de Documento</label>
-	<select th:field="*{tipoDocumento}" style= "width:200px">
-    <option value="default" th:selected="DNI">DNI</option>
-    <option value="DocumentoUnico" th:selected="DocumentoUnico">Documento Unico</option>
-    <option value="LibretaCivica" th:selected="LibretaCivica">Libreta Cívica</option>
-    <option value="LibreDeEnrolamiento" th:selected="LibreDeEnrolamiento">Libreta de Enrolamiento</option>
-    <option value="CedulaDeIdentidad" th:selected="CedulaDeIdentidad">C.I</option>
-	</select>
-	</div>
-	<div class="col-md-4">
+		<div class="form-group">
+		<select th:field="*{tipoDocumento}">
+        <option th:each="tipoDocumento : ${T(com.unla.Grupo23OO22021.enums.TipoDocumento).values()}" th:value="${tipoDocumento}" th:text="${tipoDocumento}"></option>
+      	</select>
+     	</div> 
+     </div>
+    
+    <div class="col-md-4">
 	<label class="form-label"> N° Documento </label>
 	<input type="text" class="form-control" th:field="*{dni}" />
+	<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Longitud incorrecta </p>
 	</div></p>
 	<div class="col-md-4">
 	<label class="form-label"> Email </label>
 	<input type="text" class="form-control" th:field="*{email}" /></p>
 	</div>
 	<div class="col-md-4">
-    <label class="form-label">Nombre de Usuario</label>
+	<label class="form-label">Nombre de Usuario</label>
 	<input type="text" class="form-control" th:field="*{username}"/>
+	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Longitud usuario incorrecta </p>
 	</div>
-	<div class="col-md-4">
+	
 	<label class="form-label">Contraseña</label>
-	<p><input type="password" class="form-control" pattern=".{6,}" th:field="*{password}"/></p>
-	</div>
+	<input type="password" class="form-control" pattern=".{6,}" th:field="*{password}" style= "width:500px"/>
 	<div class="col-md-4">
 	<input type="submit" class="btn btn-primary" value="Crear"/>
 	</div>
+	
+	
 </form>
 
 

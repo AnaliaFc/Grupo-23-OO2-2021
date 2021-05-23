@@ -1,16 +1,26 @@
 package com.unla.Grupo23OO22021.models;
 
-import com.unla.Grupo23OO22021.entities.Perfil;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 import com.unla.Grupo23OO22021.enums.TipoDocumento;
 
 public class UsuarioModel {
 
 	private long idUsuario;
 	
+	@Min(6)
 	private int dni;
+	
+	@Size(min=3,max=20)
 	private String nombre;
+	
+	@Size(min=3,max=20)
 	private String apellido;
+	
 	private String email;
+	
+	@Size(min=3,max=20)
 	private String username;
 	private String password;
 	
