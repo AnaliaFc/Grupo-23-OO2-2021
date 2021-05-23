@@ -7,9 +7,10 @@
             <title>Listado de usuarios</title>
      </head>
 	<body>
-		<table class="table table-dark table-striped table-sm">
+	 	<table class="table table-bordered table-dark table-striped table-sm" style="width: 800px; margin: 0 auto;">
         		<thead>
                      <tr>
+                        <th>Usuario</th>
 						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>Email</th>
@@ -18,14 +19,16 @@
                                     
                  <tbody>
                     <tr th:each="usuario : ${usuarios}">
+                    <td> <span th:text="${usuario.username}"> </td>
 					<td> <span th:text="${usuario.nombre}"> </td>
 					<td> <span th:text="${usuario.apellido}"> </td>
 					<td> <span th:text="${usuario.email}"> </td>
 					</tr>
                   </tbody>
-                  </table>
-                            
-                 <div><a href="/usuario/new" class="btn btn-primary">Agregar nuevo usuario</a></div>
+          </table>
+          <div class="col-md-12 text-center">
+           <a href="/usuario/new" class="btn btn-primary" style="text-align: center;">Agregar nuevo usuario</a>
+          </div>
                 
     </body>
 </html>
