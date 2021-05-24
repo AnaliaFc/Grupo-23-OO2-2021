@@ -35,8 +35,16 @@
 					</li>
 				</ul>
 				<div class="d-flex">
-					<a class="nav-link" style="color: white;" th:href="@{/login}">Login</a>
+					<div sec:authorize="isAuthenticated()">
+						<form th:action="@{/logout}" method="post" id="form-logout">
+						</form>
+						<input class="btn btn-dark" style="cursor: pointer" type="submit" value="Logout" form="form-logout"/>
+					</div>
+					<div sec:authorize="!isAuthenticated()">
+						<a class="btn btn-dark" th:href="@{/login}">Login</a>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</nav>
