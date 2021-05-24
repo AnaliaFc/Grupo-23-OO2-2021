@@ -30,7 +30,7 @@ public class Perfil {
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
 	
-	
+	public Perfil() {}
 	
 	public Perfil(long idPerfil, String tipo) {
 		super();

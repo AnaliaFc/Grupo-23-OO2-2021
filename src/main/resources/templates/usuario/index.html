@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+    <meta charset="utf-8">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+            <title>Listado de usuarios</title>
+     </head>
+	<body>
+	 	<table class="table table-bordered table-dark table-striped table-sm" style="width: 800px; margin: 0 auto;">
+        		<thead>
+                     <tr>
+                        <th>Usuario</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Email</th>
+					 </tr>
+                 </thead>
+                                    
+                 <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                    <td> <span th:text="${usuario.username}"> </td>
+					<td> <span th:text="${usuario.nombre}"> </td>
+					<td> <span th:text="${usuario.apellido}"> </td>
+					<td> <span th:text="${usuario.email}"> </td>
+					</tr>
+                  </tbody>
+          </table>
+          <div class="col-md-12 text-center">
+           <a href="/usuario/new" class="btn btn-primary" style="text-align: center;">Agregar nuevo usuario</a>
+          </div>
+                
+    </body>
+</html>

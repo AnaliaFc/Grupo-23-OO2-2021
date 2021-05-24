@@ -69,6 +69,8 @@ public class Usuario {
 		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
+	
+	public Usuario() {}
 
 	public Usuario(int dni, String nombre, String apellido, String email, String username, String password,
 			TipoDocumento tipoDocumento, Perfil perfil) {

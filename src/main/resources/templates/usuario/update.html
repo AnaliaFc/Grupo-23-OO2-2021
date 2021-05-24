@@ -1,0 +1,15 @@
+<form action="#" th:action="@{/usuario/update}" th:object="${usuario}"
+	method="post">
+	<input type="hidden" th:field="*{idUsuario}" />
+	</p>
+	<p>
+		Nombre Usuario: <input type="text" th:field="*{username}" />
+	</p>
+	<p>
+		Contraseña nueva: <input type="password" class="form-control" pattern=".{6,}" th:field="*{password}"/>
+	</p>
+	<input type="submit" value="Edit" />
+</form>
+<form action="#" th:action="@{/usuario/delete/{id}(id=${usuario.idUsuario})}" method="post">
+	<input type="submit" value="delete usuario" />
+</form>
