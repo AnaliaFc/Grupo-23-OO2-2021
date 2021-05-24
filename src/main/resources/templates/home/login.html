@@ -11,32 +11,31 @@
 </head>
 
 <body>
+	<!-- MENU -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" th:href="@{/}">Home</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+						<a class="nav-link" th:href="@{/usuario}">Usuario</a>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false">
-							Dropdown
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">Something else here</a></li>
-						</ul>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+						<a class="nav-link" th:href="@{/perfil}">Perfil</a>
 					</li>
 				</ul>
 				<div class="d-flex">
-					<a class="nav-link" style="color: white;" th:href="@{/login}">Login</a>
+					<div sec:authorize="isAuthenticated()">
+						<form th:action="@{/logout}" method="post" id="form-logout">
+						</form>
+						<input class="btn btn-dark" style="cursor: pointer" type="submit" value="Logout"
+							form="form-logout" />
+					</div>
+					<div sec:authorize="!isAuthenticated()">
+						<a class="btn btn-dark" th:href="@{/login}">Login</a>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</nav>
