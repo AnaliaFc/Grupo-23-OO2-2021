@@ -10,6 +10,9 @@ public class PerfilModel {
 		this.idPerfil = idPerfil;
 		this.tipo = tipo;
 	}
+	
+	public PerfilModel() {}
+	
 	public PerfilModel(String tipo) {
 		super();
 		this.tipo = tipo;
