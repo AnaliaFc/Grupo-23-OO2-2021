@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.services.IUsuarioService;
+import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 
 
@@ -25,7 +26,7 @@ public class UsuarioController {
 	
 	@Autowired
 	@Qualifier("usuarioService")
-	private IUsuarioService usuarioService;
+	private UsuarioService usuarioService;
 	
 	@GetMapping("")
 	public ModelAndView index() {

@@ -14,8 +14,9 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	@Query("SELECT u FROM Usuario u WHERE dni = (:dni)")
 	public abstract Usuario findByDocumento(int dni);
-
-	public abstract Usuario findByUsernameAndFetchPerfilEagerly(String username);
+	
+	@Query("SELECT u FROM Usuario u where username = (:username)")
+	public abstract Usuario findByUsernameWithPerfil(String username);
 
 		
 }

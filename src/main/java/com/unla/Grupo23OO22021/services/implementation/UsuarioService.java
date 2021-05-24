@@ -71,7 +71,7 @@ public class UsuarioService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepository.findByUsernameAndFetchPerfilEagerly(username);
+		Usuario usuario = usuarioRepository.findByUsernameWithPerfil(username);
 		return builUser(usuario, buildGrantedAuthorities(usuario.getPerfil()));
 	}
 	
