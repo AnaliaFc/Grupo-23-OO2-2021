@@ -17,7 +17,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
 
-@Component("prueba/imprimir-usuario")
+@Component("usuario")
 public class ListarUsuariosPdf extends AbstractPdfView {
 
 	@SuppressWarnings("unchecked")
