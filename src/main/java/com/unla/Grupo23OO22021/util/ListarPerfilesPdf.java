@@ -1,4 +1,5 @@
 package com.unla.Grupo23OO22021.util;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +29,15 @@ public class ListarPerfilesPdf extends AbstractPdfView{
 		
 		document.setPageSize(PageSize.A4.rotate());
 		document.open();
+		document.addTitle("lista-de-perfiles-"+LocalDate.now());
 		//
 		
-		PdfPTable tablaPerfiles = new PdfPTable(2);
-		PdfPCell columnaId = new PdfPCell(new Phrase("ID", pdfMetodos.getFuenteDeLaPrimeraFila()));
+		PdfPTable tablaPerfiles = new PdfPTable(1);
 		PdfPCell columnaTipo = new PdfPCell(new Phrase("TIPO", pdfMetodos.getFuenteDeLaPrimeraFila()));
-		
-		tablaPerfiles.addCell(columnaId);
 		tablaPerfiles.addCell(columnaTipo);
 		
 		
 		perfils.forEach(perfil ->{
-			tablaPerfiles.addCell(String.valueOf(perfil.getIdPerfil()));
 			tablaPerfiles.addCell(perfil.getTipo());
 		});
 		
