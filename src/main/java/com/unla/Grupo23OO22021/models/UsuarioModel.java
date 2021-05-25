@@ -3,6 +3,8 @@ package com.unla.Grupo23OO22021.models;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.unla.Grupo23OO22021.enums.TipoDocumento;
 
 public class UsuarioModel {
@@ -55,6 +57,13 @@ public class UsuarioModel {
 	}
 
 	public UsuarioModel() {}
+	
+	 public String encriptarPassword(String pass)
+	 {
+	  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+      String encodedPassword = passwordEncoder.encode(pass);
+      return encodedPassword;
+	 }
 
 	public long getIdUsuario() {
 		return idUsuario;
@@ -129,6 +138,5 @@ public class UsuarioModel {
 	public void setPerfil(PerfilModel perfil) {
 		this.perfil = perfil;
 	}
-	
 	
 }
