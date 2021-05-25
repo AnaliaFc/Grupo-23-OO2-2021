@@ -47,6 +47,7 @@
 				<th>Nombre</th>
 				<th>Apellido</th>
 				<th>Email</th>
+				<th>Perfil</th>
 				<th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
 			</tr>
 		</thead>
@@ -57,6 +58,7 @@
 				<td> <span th:text="${usuario.nombre}"> </td>
 				<td> <span th:text="${usuario.apellido}"> </td>
 				<td> <span th:text="${usuario.email}"> </td>
+				<td> <span th:text="${usuario.perfil.tipo}"> </td>
 				<td sec:authorize="hasRole('ROLE_ADMIN')">
 						<a th:href="@{usuario/}+${usuario.idUsuario}" class="btn btn-danger">Editar</a>
 					</td>
