@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.services.IUsuarioService;
+import com.unla.Grupo23OO22021.services.IPerfilService;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 
@@ -28,6 +29,10 @@ public class UsuarioController {
 	@Qualifier("usuarioService")
 	private UsuarioService usuarioService;
 	
+	@Autowired
+	@Qualifier("perfilService")
+	private IPerfilService perfilService;
+	
 	@GetMapping("")
 	public ModelAndView index() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_INDEX);
@@ -38,6 +43,7 @@ public class UsuarioController {
 	@GetMapping("/new")
 	public ModelAndView crear() {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_NEW);
+		mAV.addObject("perfiles", perfilService.traerPerfiles());
 		mAV.addObject("usuario", new UsuarioModel());
 		return mAV;
 	}
