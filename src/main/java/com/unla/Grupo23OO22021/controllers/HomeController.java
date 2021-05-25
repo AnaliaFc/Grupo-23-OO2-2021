@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 
@@ -23,7 +24,7 @@ public class HomeController {
 	
 	@GetMapping("")
 	public ModelAndView index() {
-		ModelAndView modelAndView = new ModelAndView("home/index");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.HOME_INDEX);
 		return modelAndView;
 	}
 
@@ -32,16 +33,16 @@ public class HomeController {
 			@RequestParam(name = "logout", required = false) String logout) {
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
-		return "home/login";
+		return ViewRouteHelper.HOME_LOGIN;
 	}
 
 	@GetMapping("/logout")
 	public String logout(Model model) {
-		return "home/logout";
+		return ViewRouteHelper.HOME_LOGOUT;
 	}
 
 	@GetMapping("/loginsuccess")
 	public String loginCheck() {
-		return "redirect:/";
+		return ViewRouteHelper.HOME_ROUTE;
 	}
 }
