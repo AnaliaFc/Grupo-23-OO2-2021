@@ -38,22 +38,22 @@
 		</div>
 	</nav>
 	<div class="container mt-4">
-		<a th:href="@{/perfil/new}" class="btn btn-primary">Nuevo</a>
-		<a href="/perfil/listar?format=pdf" class="btn btn-secondary" target="_BLANK">Generar PDF</a>
+		<a th:href="@{/perfil/new}" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">Nuevo</a>
+		<a href="/perfil/listar?format=pdf" class="btn btn-secondary" target="_BLANK" sec:authorize="hasRole('ROLE_AUDITOR')">Generar PDF</a>
 		<br> </br>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>TIPO</th>
-					<th>ACCIONES</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">ACCIONES</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="perfil:${perfiles}">
 					<td th:text="${perfil.idPerfil}"></td>
 					<td th:text="${perfil.tipo}"></td>
-					<td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')">
 						<a th:href="@{editar/}+${perfil.idPerfil}" class="btn btn-warning">Editar</a>
 						<a th:href="@{eliminar/}+${perfil.idPerfil}" class="btn btn-danger">Eliminar</a>
 					</td>
