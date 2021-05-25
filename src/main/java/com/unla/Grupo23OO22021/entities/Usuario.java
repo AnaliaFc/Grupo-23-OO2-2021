@@ -44,7 +44,7 @@ public class Usuario {
 	@Column(name = "tipodocumento")
 	private TipoDocumento tipoDocumento;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "perfil_idPerfil", nullable = false)
 	private Perfil perfil;
 	
