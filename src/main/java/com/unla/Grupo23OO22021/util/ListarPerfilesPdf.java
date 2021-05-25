@@ -1,9 +1,4 @@
 package com.unla.Grupo23OO22021.util;
-
-import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -19,19 +14,17 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.unla.Grupo23OO22021.entities.Perfil;
+import com.unla.Grupo23OO22021.models.PerfilModel;
 
-@Component("prueba/imprimir-perfil")
+@Component("viewsPerfil/listaPerfiles")
 public class ListarPerfilesPdf extends AbstractPdfView{
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
 		PdfMetodos pdfMetodos = new PdfMetodos();
-		
-		List<Perfil> perfils = (List<Perfil>) model.get("perfiles");
+		List<PerfilModel> perfils = (List<PerfilModel>) model.get("perfiles");
 		
 		document.setPageSize(PageSize.A4.rotate());
 		document.open();
