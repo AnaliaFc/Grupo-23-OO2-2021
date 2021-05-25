@@ -1,5 +1,6 @@
 package com.unla.Grupo23OO22021.util;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -31,23 +32,24 @@ public class ListarUsuariosPdf extends AbstractPdfView {
 		document.setPageSize(PageSize.A4.rotate());
 		document.open();
 		
-		PdfPTable tablaPerfiles = new PdfPTable(8);
+		document.addTitle("lista-de-usuarios-"+LocalDate.now());
+		
+		PdfPTable tablaPerfiles = new PdfPTable(7);
 		tablaPerfiles.setWidthPercentage(90);
 		
-		String encabezados[]= {"ID", "TIPO DE DOCUMENTO","DOCUMENTO", "NOMBRE", "APELLIDO", "EMAIL", "USERNAME", "PERFIL"};
+		String encabezados[]= {"TIPO DE DOCUMENTO","DOCUMENTO", "NOMBRE", "APELLIDO", "EMAIL", "USERNAME", "PERFIL"};
 		for (String encabezado : encabezados) {
 			tablaPerfiles.addCell(new PdfPCell(new Phrase(encabezado, pdfMetodos.getFuenteDeLaPrimeraFila())));				
 		}
 		
 		for (UsuarioModel usuarioModel : usuarios) {
-			tablaPerfiles.addCell(String.valueOf(usuarioModel.getIdUsuario()));
 			tablaPerfiles.addCell(usuarioModel.getTipoDocumento().name());
 			tablaPerfiles.addCell(String.valueOf(usuarioModel.getDni()));
 			tablaPerfiles.addCell(usuarioModel.getNombre());
 			tablaPerfiles.addCell(usuarioModel.getApellido());
 			tablaPerfiles.addCell(usuarioModel.getEmail());
 			tablaPerfiles.addCell(usuarioModel.getUsername());
-			tablaPerfiles.addCell(usuarioModel.getPerfil().getTipo());
+			tablaPerfiles.addCell(usuarioModel.getPerfil().getTipo().replace("ROLE_", ""));
 		}
 		PdfPTable info = pdfMetodos.crearTablaInfo();
 		info.setWidthPercentage(90);
