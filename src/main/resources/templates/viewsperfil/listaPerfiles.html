@@ -9,31 +9,60 @@
 </head>
 
 <body>
+	<!-- MENU -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">Home</a>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+						<a class="nav-link" th:href="@{/usuario}">Usuario</a>
+					</li>
+					<li class="nav-item" sec:authorize="isAuthenticated()">
+						<a class="nav-link" th:href="@{/perfil/}">Perfil</a>
+					</li>
+				</ul>
+				<div class="d-flex">
+					<div sec:authorize="isAuthenticated()">
+						<form th:action="@{/logout}" method="post" id="form-logout">
+						</form>
+						<input class="btn btn-dark" style="cursor: pointer" type="submit" value="Logout"
+							form="form-logout" />
+					</div>
+					<div sec:authorize="!isAuthenticated()">
+						<a class="btn btn-dark" th:href="@{/login}">Login</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</nav>
 	<div class="container mt-4">
 		<a th:href="@{/perfil/new}" class="btn btn-primary">Nuevo</a>
-			<br> </br>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>TIPO</th>
-						<th>ACCIONES</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="perfil:${perfiles}">
-						<td th:text="${perfil.idPerfil}"></td>
-						<td th:text="${perfil.tipo}"></td>
-						<td>
-							<a th:href="@{editar/}+${perfil.idPerfil}" class="btn btn-warning">Editar</a>
-							<a th:href="@{eliminar/}+${perfil.idPerfil}" class="btn btn-danger">Eliminar</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<br> </br>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>TIPO</th>
+					<th>ACCIONES</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="perfil:${perfiles}">
+					<td th:text="${perfil.idPerfil}"></td>
+					<td th:text="${perfil.tipo}"></td>
+					<td>
+						<a th:href="@{editar/}+${perfil.idPerfil}" class="btn btn-warning">Editar</a>
+						<a th:href="@{eliminar/}+${perfil.idPerfil}" class="btn btn-danger">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.js"
 		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
+
 </html>
