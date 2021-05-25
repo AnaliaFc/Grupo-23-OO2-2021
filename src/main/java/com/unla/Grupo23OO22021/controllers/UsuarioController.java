@@ -49,15 +49,18 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/crear")
-	public RedirectView crear(@Valid @ModelAttribute("usuario") UsuarioModel UsuarioModel, BindingResult result) {
+	public RedirectView crear(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result) {
 		
 		RedirectView redirect= new RedirectView(ViewRouteHelper.USUARIO_ROOT);
+		
+		String passEncriptado = usuarioModel.encriptarPassword(usuarioModel.getPassword());
+		usuarioModel.setPassword(passEncriptado);
 		
 		 if (result.hasErrors()) {			
 			 redirect= new RedirectView("new");
 		    }else {
 		    	
-		    	usuarioService.insertOrUpdate(UsuarioModel);
+		    	usuarioService.insertOrUpdate(usuarioModel);
 		    }
 		return redirect;
 	}

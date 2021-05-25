@@ -41,7 +41,7 @@
 		<a th:href="@{/perfil/new}" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">Nuevo</a>
 		<a href="/perfil/listar?format=pdf" class="btn btn-secondary" target="_BLANK" sec:authorize="hasRole('ROLE_AUDITOR')">Generar PDF</a>
 		<br> </br>
-		<table class="table">
+		<table class="table table-bordered table-dark table-striped table-sm" style="width: 800px; margin: 0 auto;">
 			<thead>
 				<tr>
 					<th>ID</th>
