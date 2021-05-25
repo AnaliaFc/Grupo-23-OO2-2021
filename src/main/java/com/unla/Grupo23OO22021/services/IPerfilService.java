@@ -1,7 +1,16 @@
 package com.unla.Grupo23OO22021.services;
 
-public interface IPerfilService {
+import java.util.List;
 
-	Object traerPerfiles();
+import com.unla.Grupo23OO22021.models.PerfilModel;
+
+public interface IPerfilService {
+	public List<PerfilModel> traerPerfiles();
+
+	public PerfilModel traerId(long id);
+
+	public PerfilModel insertOrUpdate(PerfilModel userModel);
+		
+	public boolean remove(long id);
 
 }
