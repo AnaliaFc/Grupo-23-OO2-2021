@@ -22,6 +22,7 @@
 						<div class="form-group">
 							<label>TIPO</label>
 							<input th:field="*{tipo}" type="text" class="form-control" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" >EL TIPO NO PUEDE SER NULL</small>
 						</div>
 					</div>
 					<div class="card-footer">

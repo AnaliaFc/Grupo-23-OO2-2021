@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,9 +51,13 @@ public class PerfilController {
 	}
 	
 	@PostMapping("/save")
-	public String save(@Valid PerfilModel p, Model model) {
-		service.insertOrUpdate(p);
-		return ViewRouteHelper.ROUTE_PERFILES;
+	public String save(@Valid PerfilModel perfil, Model model, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return ViewRouteHelper.FORM;
+		}
+			service.insertOrUpdate(perfil);
+			return ViewRouteHelper.ROUTE_PERFILES;
 	}
 	
 	@GetMapping("/eliminar/{idPerfil}")
