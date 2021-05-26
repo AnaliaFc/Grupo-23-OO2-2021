@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,7 +19,6 @@ public class Perfil {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idPerfil;
 	
-	@NotEmpty
 	@Column(name = "tipo")
 	private String tipo;
 	
