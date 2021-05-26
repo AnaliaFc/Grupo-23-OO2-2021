@@ -42,13 +42,19 @@
 
 	<form action="#" th:action="@{/usuario/update}" th:object="${usuario}" method="post">
 		<input type="hidden" th:field="*{idUsuario}" />
+		<input type="hidden" th:field="*{perfil.idPerfil}" />
+		<input type="hidden" th:field="*{password}" />
+		<p>
+			Nombre <input type="text" th:field="*{nombre}" />
+		</p>
+		<p>
+			Apellido: <input type="text" th:field="*{apellido}" />
 		</p>
 		<p>
 			Nombre Usuario: <input type="text" th:field="*{username}" />
 		</p>
 		<p>
-			Contraseña nueva: <input type="password" class="form-control" pattern=".{6,}" th:field="*{password}"
-				style="width:500px" />
+			Email: <input type="text" th:field="*{email}" />
 		</p>
 		<input type="submit" class="btn btn-primary" value="Editar" />
 	</form>

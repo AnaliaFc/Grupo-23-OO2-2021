@@ -13,7 +13,7 @@ import com.unla.Grupo23OO22021.models.PerfilModel;
 import com.unla.Grupo23OO22021.repositories.IPerfilRepository;
 import com.unla.Grupo23OO22021.services.IPerfilService;
 
-@Service
+@Service("perfilService")
 public class PerfilService implements IPerfilService{
 	
 	@Autowired

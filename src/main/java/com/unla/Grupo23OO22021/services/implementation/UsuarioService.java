@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +34,6 @@ public class UsuarioService implements UserDetailsService {
 	@Autowired
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
-
 	
 	public List<UsuarioModel> traerUsuarios() {
 		List<UsuarioModel> models = new ArrayList<UsuarioModel>();
@@ -48,10 +48,19 @@ public class UsuarioService implements UserDetailsService {
 		return usuarioConverter.entityToModel(usuarioRepository.findById(id));
 	}
 
-	
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
-		Usuario user = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));
-		return usuarioConverter.entityToModel(user);
+	
+		Usuario existente = usuarioRepository.findById(userModel.getIdUsuario());
+		if(existente!=null)
+		{
+			existente.setApellido(userModel.getApellido());
+			existente.setNombre(userModel.getNombre());
+			existente.setUsername(userModel.getUsername());
+			existente.setEmail(userModel.getEmail());
+			usuarioRepository.save(existente);
+		}else {
+		     existente = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));}
+		return usuarioConverter.entityToModel(existente);
 	}
 
 	

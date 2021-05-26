@@ -14,10 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.unla.Grupo23OO22021.enums.TipoDocumento;
 @Entity
+@DynamicInsert(true)
+@DynamicUpdate(true)
 @Table(name = "usuario")
 public class Usuario {
 	@Id
