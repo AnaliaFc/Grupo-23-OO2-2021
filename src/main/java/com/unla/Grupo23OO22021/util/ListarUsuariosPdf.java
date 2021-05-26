@@ -1,5 +1,6 @@
 package com.unla.Grupo23OO22021.util;
 
+import java.awt.Color;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -29,6 +34,14 @@ public class ListarUsuariosPdf extends AbstractPdfView {
 		
 		List<UsuarioModel> usuarios = (List<UsuarioModel>) model.get("usuarios");
 		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+			if(!grantedAuthority.getAuthority().contains("AUDITOR")) {
+				response.sendRedirect("error/403");
+			}
+		}
+		
 		document.setPageSize(PageSize.A4.rotate());
 		document.open();
 		
@@ -39,7 +52,9 @@ public class ListarUsuariosPdf extends AbstractPdfView {
 		
 		String encabezados[]= {"TIPO DE DOCUMENTO","DOCUMENTO", "NOMBRE", "APELLIDO", "EMAIL", "USERNAME", "PERFIL"};
 		for (String encabezado : encabezados) {
-			tablaPerfiles.addCell(new PdfPCell(new Phrase(encabezado, pdfMetodos.getFuenteDeLaPrimeraFila())));				
+			PdfPCell cell = new PdfPCell(new Phrase(encabezado, pdfMetodos.getFuenteDeLaPrimeraFila()));
+			cell.setBackgroundColor(Color.LIGHT_GRAY);
+			tablaPerfiles.addCell(cell);				
 		}
 		
 		for (UsuarioModel usuarioModel : usuarios) {
