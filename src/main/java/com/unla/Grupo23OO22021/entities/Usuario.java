@@ -2,6 +2,7 @@ package com.unla.Grupo23OO22021.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +45,7 @@ public class Usuario {
 	@Column(name = "tipodocumento")
 	private TipoDocumento tipoDocumento;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
 	@JoinColumn(name = "perfil_idPerfil", nullable = false)
 	private Perfil perfil;
 	
@@ -69,6 +70,8 @@ public class Usuario {
 		this.tipoDocumento = tipoDocumento;
 		this.perfil = perfil;
 	}
+	
+	public Usuario() {}
 
 	public Usuario(int dni, String nombre, String apellido, String email, String username, String password,
 			TipoDocumento tipoDocumento, Perfil perfil) {

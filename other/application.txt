@@ -1,4 +1,9 @@
 spring:
+  mvc:
+    contentnegotiation:
+      favor-parameter: true
+      media-types:
+        pdf: application/pdf
   datasource:
     url: jdbc:mysql://localhost:3306/grupo-23-bdd-oo2-2021
     username: 

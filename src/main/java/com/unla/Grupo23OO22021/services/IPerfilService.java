@@ -5,7 +5,6 @@ import java.util.List;
 import com.unla.Grupo23OO22021.models.PerfilModel;
 
 public interface IPerfilService {
-
 	public List<PerfilModel> traerPerfiles();
 
 	public PerfilModel traerId(long id);
