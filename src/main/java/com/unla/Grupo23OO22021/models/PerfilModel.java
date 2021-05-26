@@ -1,9 +1,12 @@
 package com.unla.Grupo23OO22021.models;
 
+import javax.validation.constraints.NotEmpty;
+
 public class PerfilModel {
 	
 	private long idPerfil;
 	
+	@NotEmpty
 	private String tipo;
 	
 	public PerfilModel(long idPerfil, String tipo) {

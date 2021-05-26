@@ -27,12 +27,12 @@ public class PerfilService implements IPerfilService{
 		@Override
 		public List<PerfilModel> traerPerfiles() {
 			List<PerfilModel> models = new ArrayList<PerfilModel>();
-			for (Perfil user : perfilRepository.findAll()) {
-				models.add(perfilConverter.entityToModel(user));
+			for (Perfil perfil : perfilRepository.findAll()) {
+				models.add(perfilConverter.entityToModel(perfil));
 			}
 			return models;
 		}
-
+		
 		@Override
 		public PerfilModel traerId(long id) {
 			return perfilConverter.entityToModel(perfilRepository.findById(id));
@@ -40,8 +40,8 @@ public class PerfilService implements IPerfilService{
 
 		@Override
 		public PerfilModel insertOrUpdate(PerfilModel perfilModel) {
-			Perfil user = perfilRepository.save(perfilConverter.modelToEntity(perfilModel));
-			return perfilConverter.entityToModel(user);
+			Perfil perfil = perfilRepository.save(perfilConverter.modelToEntity(perfilModel));
+			return perfilConverter.entityToModel(perfil);
 		}
 
 		@Override

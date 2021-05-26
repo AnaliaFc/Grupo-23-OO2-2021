@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.PerfilModel;
@@ -51,13 +53,16 @@ public class PerfilController {
 	}
 	
 	@PostMapping("/save")
-	public String save(@Valid PerfilModel perfil, Model model, BindingResult result) {
-		
-		if(result.hasErrors()) {
-			return ViewRouteHelper.FORM;
+	public RedirectView save(@Valid @ModelAttribute("perfil") PerfilModel perfilModel, Model model, BindingResult result) {
+
+		RedirectView redirect = new RedirectView("/perfil/listar");
+
+		if (result.hasErrors()) {
+			redirect = new RedirectView(ViewRouteHelper.FORM);
+		} else {
+			service.insertOrUpdate(perfilModel);
 		}
-			service.insertOrUpdate(perfil);
-			return ViewRouteHelper.ROUTE_PERFILES;
+		return redirect;
 	}
 	
 	@GetMapping("/eliminar/{idPerfil}")

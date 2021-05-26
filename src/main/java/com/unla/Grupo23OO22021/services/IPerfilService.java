@@ -10,7 +10,7 @@ public interface IPerfilService {
 
 	public PerfilModel traerId(long id);
 
-	public PerfilModel insertOrUpdate(PerfilModel userModel);
+	public PerfilModel insertOrUpdate(PerfilModel perfilModel);
 		
 	public boolean remove(long id);
 
