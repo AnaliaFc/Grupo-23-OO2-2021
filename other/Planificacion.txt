@@ -1,0 +1,14 @@
+Clases:
+Eze -> Persona
+Dani -> Familia de Permisos
+Ana -> Rodado y Lugar
+
+CU:
+Alta de Personas -> Dani
+Alta de Permisos -> Eze
+Alta de Rodados -> Ana
+
+Traer Permiso por Persona -> Dani
+Traer Permiso por Rodado -> Ana
+Traer Permisos Activos entre fecha y fecha -> Eze 
+Traer Permisos Activos entre fecha y fecha,salgan / lleguen de un -> Eze
