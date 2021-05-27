@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,25 +20,15 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.unla.Grupo23OO22021.enums.TipoDocumento;
+
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @Table(name = "usuario")
-public class Usuario {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idUsuario;
+@PrimaryKeyJoinColumn(name = "idPersona")
+public class Usuario extends Persona{
 	
-	@Column(name = "dni", unique = true)
-	private int dni;
-	
-	@Column(name = "nombre")
-	private String nombre;
-	
-	@Column(name = "apellido")
-	private String apellido;
-	
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
 	@Column(name = "username", unique = true, nullable = false, length = 45)
@@ -53,36 +44,11 @@ public class Usuario {
 	@JoinColumn(name = "perfil_idPerfil", nullable = false)
 	private Perfil perfil;
 	
-	@Column(name = "createat")
-	@CreationTimestamp
-	private LocalDateTime createAt;
-	
-	@Column(name = "updateat") 
-	@UpdateTimestamp
-	private LocalDateTime updateAt;
-
-	public Usuario(long idUsuario, int dni, String nombre, String apellido, String email, String username,
-			String password, TipoDocumento tipoDocumento, Perfil perfil) {
-		super();
-		this.idUsuario = idUsuario;
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.tipoDocumento = tipoDocumento;
-		this.perfil = perfil;
-	}
-	
 	public Usuario() {}
-
-	public Usuario(int dni, String nombre, String apellido, String email, String username, String password,
+	
+	public Usuario(long idPersona,String nombre, String apellido, int dni, String email, String username, String password,
 			TipoDocumento tipoDocumento, Perfil perfil) {
-		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
+		super(idPersona,nombre, apellido, dni);
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -90,36 +56,14 @@ public class Usuario {
 		this.perfil = perfil;
 	}
 
-	public long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public int getDni() {
-		return dni;
-	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public Usuario(String nombre, String apellido, int dni, String email, String username, String password,
+			TipoDocumento tipoDocumento, Perfil perfil) {
+		super(nombre, apellido, dni);
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.tipoDocumento = tipoDocumento;
+		this.perfil = perfil;
 	}
 
 	public String getEmail() {
@@ -161,23 +105,6 @@ public class Usuario {
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
-
-	public LocalDateTime getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(LocalDateTime createAt) {
-		this.createAt = createAt;
-	}
-
-	public LocalDateTime getUpdateAt() {
-		return updateAt;
-	}
-
-	public void setUpdateAt(LocalDateTime updateAt) {
-		this.updateAt = updateAt;
-	}
-	
 	
 	
 	
