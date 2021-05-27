@@ -13,11 +13,11 @@
 
 <body class="masthead">
 	<!-- MENU -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top nav-menu">
 		<div class="container-fluid">
 			<a class="navbar-brand" th:href="@{/}">Home</a>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item" sec:authorize="isAuthenticated()">
 						<a class="nav-link" th:href="@{/usuario}">Usuario</a>
 					</li>
@@ -40,9 +40,15 @@
 			</div>
 		</div>
 	</nav>
+
+	<div class="title-container mt-5">
+		<h1 class="display-2">Sistema integrador</h1>
+		<h2 class="display-5 text-muted">(versión web con bases de datos)</h2>
+		<h5>Grupo 23 del año 2021</h5>
+	</div>
 	
-	<div class="container"></div>
 	
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
