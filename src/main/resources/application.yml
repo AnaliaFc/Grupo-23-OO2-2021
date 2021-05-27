@@ -1,17 +1,0 @@
-spring:
-  mvc:    contentnegotiation:
-      favor-parameter: true      media-types:        pdf: application/pdf
-  datasource:
-    url: jdbc:mysql://localhost:3306/grupo-23-bdd-oo2-2021
-    username: root
-    password: newVegas2202#
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        strategy: org.hibernate.cfg.ImprovedNaming.Strategy
-    properties:
-      dialect: org.hibernate.dialect.MySQL5Dialect
-  thymeleaf:
-    cache: false
