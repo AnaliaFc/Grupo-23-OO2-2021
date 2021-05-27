@@ -18,6 +18,7 @@ import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.services.IUsuarioService;
 import com.unla.Grupo23OO22021.services.IPerfilService;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
+import com.unla.Grupo23OO22021.util.Encriptar;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 
 
@@ -32,6 +33,9 @@ public class UsuarioController {
 	@Autowired
 	@Qualifier("perfilService")
 	private IPerfilService perfilService;
+	
+	@Autowired
+	private Encriptar encriptar;
 	
 	@GetMapping("")
 	public ModelAndView index() {
@@ -52,14 +56,13 @@ public class UsuarioController {
 	public RedirectView crear(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result) {
 		
 		RedirectView redirect= new RedirectView(ViewRouteHelper.USUARIO_ROOT);
-		
-		String passEncriptado = usuarioModel.encriptarPassword(usuarioModel.getPassword());
-		usuarioModel.setPassword(passEncriptado);
+		//TODO: Cambie esto
+		// String passEncriptado = usuarioModel.encriptarPassword(usuarioModel.getPassword());
+		usuarioModel.setPassword(encriptar.encode(usuarioModel.getPassword()));
 		
 		 if (result.hasErrors()) {			
 			 redirect= new RedirectView("new");
 		    }else {
-		    	
 		    	usuarioService.insertOrUpdate(usuarioModel);
 		    }
 		return redirect;

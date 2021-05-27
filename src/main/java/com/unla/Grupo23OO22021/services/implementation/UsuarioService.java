@@ -50,7 +50,7 @@ public class UsuarioService implements UserDetailsService {
 
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
 	
-		Usuario existente = usuarioRepository.findById(userModel.getIdUsuario());
+		Usuario existente = usuarioRepository.findById(userModel.getIdPersona());
 		if(existente!=null)
 		{
 			existente.setApellido(userModel.getApellido());

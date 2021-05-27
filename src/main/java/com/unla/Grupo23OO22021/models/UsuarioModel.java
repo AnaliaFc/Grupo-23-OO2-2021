@@ -7,48 +7,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.unla.Grupo23OO22021.enums.TipoDocumento;
 
-public class UsuarioModel {
+public class UsuarioModel extends PersonaModel {
 
-	private long idUsuario;
-	
-	@Min(6)
-	private int dni;
-	
-	@Size(min=3,max=20)
-	private String nombre;
-	
-	@Size(min=3,max=20)
-	private String apellido;
-	
 	private String email;
-	
-	@Size(min=3,max=20)
+
+	@Size(min = 3, max = 20)
 	private String username;
 	private String password;
-	
+
 	private TipoDocumento tipoDocumento;
 	private PerfilModel perfil;
-	
-	public UsuarioModel(long idUsuario, int dni, String nombre, String apellido, String email, String username,
-			String password, TipoDocumento tipoDocumento, PerfilModel perfil) {
-		super();
-		this.idUsuario = idUsuario;
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.tipoDocumento = tipoDocumento;
-		this.perfil = perfil;
+
+	public UsuarioModel() {
 	}
-	
-	public UsuarioModel(int dni, String nombre, String apellido, String email, String username, String password,
-			TipoDocumento tipoDocumento, PerfilModel perfil) {
-		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
+
+	public UsuarioModel(long idPersona, @Min(6) int dni, @Size(min = 3, max = 20) String nombre,
+			@Size(min = 3, max = 20) String apellido, long idUsuario, String email,
+			@Size(min = 3, max = 20) String username, String password, TipoDocumento tipoDocumento,
+			PerfilModel perfil) {
+		super(idPersona, dni, nombre, apellido);
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -56,45 +33,16 @@ public class UsuarioModel {
 		this.perfil = perfil;
 	}
 
-	public UsuarioModel() {}
-	
-	 public String encriptarPassword(String pass)
-	 {
-	  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-      String encodedPassword = passwordEncoder.encode(pass);
-      return encodedPassword;
-	 }
-
-	public long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public int getDni() {
-		return dni;
-	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public UsuarioModel(@Min(6) int dni, @Size(min = 3, max = 20) String nombre,
+			@Size(min = 3, max = 20) String apellido, long idUsuario, String email,
+			@Size(min = 3, max = 20) String username, String password, TipoDocumento tipoDocumento,
+			PerfilModel perfil) {
+		super(dni, nombre, apellido);
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.tipoDocumento = tipoDocumento;
+		this.perfil = perfil;
 	}
 
 	public String getEmail() {
@@ -121,8 +69,6 @@ public class UsuarioModel {
 		this.password = password;
 	}
 
-	
-
 	public TipoDocumento getTipoDocumento() {
 		return tipoDocumento;
 	}
@@ -138,5 +84,6 @@ public class UsuarioModel {
 	public void setPerfil(PerfilModel perfil) {
 		this.perfil = perfil;
 	}
+
 	
 }
