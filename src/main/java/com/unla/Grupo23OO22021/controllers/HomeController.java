@@ -27,6 +27,11 @@ public class HomeController {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.HOME_INDEX);
 		return modelAndView;
 	}
+	
+	@GetMapping("/about-us")
+	public String aboutUs() {
+		return "home/about-us";
+	}
 
 	@GetMapping("/login")
 	public String login(Model model, @RequestParam(name = "error", required = false) String error,
