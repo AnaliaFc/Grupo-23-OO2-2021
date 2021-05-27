@@ -60,7 +60,7 @@
 				<td> <span th:text="${usuario.email}"> </td>
 				<td> <span th:text="${usuario.perfil.tipo}"> </td>
 				<td sec:authorize="hasRole('ROLE_ADMIN')">
-						<a th:href="@{usuario/}+${usuario.idUsuario}" class="btn btn-danger">Editar</a>
+						<a th:href="@{usuario/}+${usuario.idPersona}" class="btn btn-danger">Editar</a>
 					</td>
 			</tr>
 		</tbody>

@@ -42,7 +42,7 @@
 	</nav>
 
 	<form action="#" th:action="@{/usuario/update}" th:object="${usuario}" method="post">
-		<input type="hidden" th:field="*{idUsuario}" />
+		<input type="hidden" th:field="*{idPersona}" />
 		<input type="hidden" th:field="*{perfil.idPerfil}" />
 		<input type="hidden" th:field="*{password}" />
 		<p>
@@ -59,7 +59,7 @@
 		</p>
 		<input type="submit" class="btn btn-primary" value="Editar" />
 	</form>
-	<form action="#" th:action="@{/usuario/delete/{id}(id=${usuario.idUsuario})}" method="post">
+	<form action="#" th:action="@{/usuario/delete/{id}(id=${usuario.idPersona})}" method="post">
 		<input type="submit" class="btn btn-primary" value="Borrar Usuario" />
 	</form>
 
