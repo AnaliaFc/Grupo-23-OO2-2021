@@ -22,7 +22,7 @@ public class UsuarioModel extends PersonaModel {
 	}
 
 	public UsuarioModel(long idPersona, @Min(6) int dni, @Size(min = 3, max = 20) String nombre,
-			@Size(min = 3, max = 20) String apellido, long idUsuario, String email,
+			@Size(min = 3, max = 20) String apellido, String email,
 			@Size(min = 3, max = 20) String username, String password, TipoDocumento tipoDocumento,
 			PerfilModel perfil) {
 		super(idPersona, dni, nombre, apellido);
@@ -34,7 +34,7 @@ public class UsuarioModel extends PersonaModel {
 	}
 
 	public UsuarioModel(@Min(6) int dni, @Size(min = 3, max = 20) String nombre,
-			@Size(min = 3, max = 20) String apellido, long idUsuario, String email,
+			@Size(min = 3, max = 20) String apellido, String email,
 			@Size(min = 3, max = 20) String username, String password, TipoDocumento tipoDocumento,
 			PerfilModel perfil) {
 		super(dni, nombre, apellido);

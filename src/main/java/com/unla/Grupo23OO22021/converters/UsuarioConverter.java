@@ -8,17 +8,15 @@ import com.unla.Grupo23OO22021.models.UsuarioModel;
 @Component("usuarioConverter")
 public class UsuarioConverter {
 	public Usuario modelToEntity(UsuarioModel usuarioModel) {
-		return new Usuario(usuarioModel.getIdUsuario(), usuarioModel.getApellido(), usuarioModel.getNombre(),
+		return new Usuario(usuarioModel.getIdPersona(), usuarioModel.getApellido(), usuarioModel.getNombre(),
 				usuarioModel.getDni(), usuarioModel.getEmail(), usuarioModel.getUsername(),
 				usuarioModel.getPassword(), usuarioModel.getTipoDocumento(),
 				new PerfilConverter().modelToEntity(usuarioModel.getPerfil()));
 	}
 
 	public UsuarioModel entityToModel(Usuario usuario) {
-		//TODO: Arreglar esto
-		return null;
-//		return new UsuarioModel(usuario.getIdUsuario(), usuario.getDni(), usuario.getNombre(), usuario.getApellido(),
-//				usuario.getEmail(), usuario.getUsername(), usuario.getPassword(), usuario.getTipoDocumento(),
-//				new PerfilConverter().entityToModel(usuario.getPerfil()));
+		return new UsuarioModel(usuario.getIdPersona(), usuario.getDni(), usuario.getNombre(), usuario.getApellido(),
+				usuario.getEmail(), usuario.getUsername(), usuario.getPassword(), usuario.getTipoDocumento(),
+				new PerfilConverter().entityToModel(usuario.getPerfil()));
 	}
 }
