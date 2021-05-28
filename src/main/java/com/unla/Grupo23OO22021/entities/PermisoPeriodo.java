@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -21,6 +22,7 @@ public class PermisoPeriodo extends Permiso {
 	private boolean vacaciones;
 	
 	@Column(name = "rodado")
+	@ManyToOne
 	private Rodado rodado;
 	
 	public PermisoPeriodo(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, int cantDias,
