@@ -3,8 +3,6 @@ package com.unla.Grupo23OO22021.models;
 import java.time.LocalDate;
 import java.util.Set;
 
-import javax.persistence.Column;
-
 import com.unla.Grupo23OO22021.entities.Persona;
 import com.unla.Grupo23OO22021.entities.Lugar;
 import com.unla.Grupo23OO22021.entities.Rodado;
@@ -46,6 +44,11 @@ public class PermisoPeriodoModel extends PermisoModel{
 
 	public void setRodado(Rodado rodado) {
 		this.rodado = rodado;
+	}
+
+	@Override
+	public String toString() {
+		return "PermisoPeriodoModel [cantDias=" + cantDias + ", vacaciones=" + vacaciones + ", rodado=" + rodado + "]";
 	}
 
 }

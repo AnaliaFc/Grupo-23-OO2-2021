@@ -65,7 +65,12 @@ public class PersonaModel {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "PersonaModel [idPersona=" + idPersona + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido
+				+ "]";
+	}
 	
 	
 }
