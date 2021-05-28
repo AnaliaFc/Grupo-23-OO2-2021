@@ -6,7 +6,7 @@ public class PerfilModel {
 	
 	private long idPerfil;
 	
-	@NotEmpty
+	@NotEmpty(message="El tipo no puede estar vacio")
 	private String tipo;
 	
 	public PerfilModel(long idPerfil, String tipo) {

@@ -6,35 +6,33 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@DynamicInsert(true)
-@DynamicUpdate(true)
+@Inheritance(strategy= InheritanceType.JOINED)
 public class Permiso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int idPermiso;
 	
-	@Column(name = "persona")
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	protected Persona persona;
 	
 	@Column(name = "fecha")
 	protected LocalDate fecha;
 	
-	@Column(name = "desdeHasta")
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	protected Set<Lugar> desdeHasta;
 	
 	@Column(name = "createat")

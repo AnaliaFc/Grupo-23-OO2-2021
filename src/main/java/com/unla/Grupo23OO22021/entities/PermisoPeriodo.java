@@ -5,14 +5,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@DynamicInsert(true)
-@DynamicUpdate(true)
+@PrimaryKeyJoinColumn(name="idPermiso")
 public class PermisoPeriodo extends Permiso {
 	
 	@Column(name = "cantDias")
@@ -21,8 +20,7 @@ public class PermisoPeriodo extends Permiso {
 	@Column(name = "vacaciones")
 	private boolean vacaciones;
 	
-	@Column(name = "rodado")
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Rodado rodado;
 	
 	public PermisoPeriodo(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, int cantDias,
