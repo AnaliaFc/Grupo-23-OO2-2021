@@ -1,13 +1,14 @@
 package com.unla.Grupo23OO22021.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,14 +18,20 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
-@Table(name = "perfil")
-public class Perfil {
+public class Permiso {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idPerfil;
+	protected int idPermiso;
 	
-	@Column(name = "tipo")
-	private String tipo;
+	@Column(name = "persona")
+	protected Persona persona;
+	
+	@Column(name = "fecha")
+	protected LocalDate fecha;
+	
+	@Column(name = "desdeHasta")
+	protected Set<Lugar> desdeHasta;
 	
 	@Column(name = "createat")
 	@CreationTimestamp
@@ -34,31 +41,44 @@ public class Perfil {
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
 	
-	public Perfil(long idPerfil, String tipo) {
+	public Permiso(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta) {
 		super();
-		this.idPerfil = idPerfil;
-		this.tipo = tipo;
+		this.idPermiso = idPermiso;
+		this.persona = persona;
+		this.fecha = fecha;
+		this.desdeHasta = desdeHasta;
 	}
 
-	public Perfil(String tipo) {
-		super();
-		this.tipo = tipo;
+	public int getIdPermiso() {
+		return idPermiso;
 	}
 
-	public long getIdPerfil() {
-		return idPerfil;
+	public void setIdPermiso(int idPermiso) {
+		this.idPermiso = idPermiso;
 	}
 
-	public void setIdPerfil(long idPerfil) {
-		this.idPerfil = idPerfil;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public Set<Lugar> getDesdeHasta() {
+		return desdeHasta;
+	}
+
+	public void setDesdeHasta(Set<Lugar> desdeHasta) {
+		this.desdeHasta = desdeHasta;
 	}
 
 	public LocalDateTime getCreateAt() {
@@ -76,6 +96,5 @@ public class Perfil {
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
-	
-	
+
 }
