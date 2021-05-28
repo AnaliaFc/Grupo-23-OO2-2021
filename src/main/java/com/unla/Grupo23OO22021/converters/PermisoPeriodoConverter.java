@@ -1,8 +1,11 @@
 package com.unla.Grupo23OO22021.converters;
 
+import org.springframework.stereotype.Component;
+
 import com.unla.Grupo23OO22021.entities.PermisoPeriodo;
 import com.unla.Grupo23OO22021.models.PermisoPeriodoModel;
 
+@Component("permisoPeriodoConverter")
 public class PermisoPeriodoConverter {
 	
 	public PermisoPeriodo modelToEntity(PermisoPeriodoModel permisoModel) {

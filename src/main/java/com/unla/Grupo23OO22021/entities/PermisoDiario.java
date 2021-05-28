@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -13,6 +15,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
+@Table(name = "permisodiario")
+@PrimaryKeyJoinColumn(name = "idPermiso")
 public class PermisoDiario extends Permiso{
 	
 	@Column(name = "motivo")

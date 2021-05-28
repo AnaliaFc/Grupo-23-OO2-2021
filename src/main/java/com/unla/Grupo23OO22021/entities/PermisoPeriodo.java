@@ -3,8 +3,14 @@ package com.unla.Grupo23OO22021.entities;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -12,6 +18,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
+@Table(name = "permisoperiodo")
+@PrimaryKeyJoinColumn(name = "idPermiso")
 public class PermisoPeriodo extends Permiso {
 	
 	@Column(name = "cantDias")
@@ -20,7 +28,8 @@ public class PermisoPeriodo extends Permiso {
 	@Column(name = "vacaciones")
 	private boolean vacaciones;
 	
-	@Column(name = "rodado")
+	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idRodado", nullable = false)
 	private Rodado rodado;
 	
 	public PermisoPeriodo(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, int cantDias,
