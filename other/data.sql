@@ -22,4 +22,4 @@ values("eze@pepe.com","$2a$10$KbD5zlop6D/W06fvqtHzLejYw3evJ3U3fWP/ffDpiiaWVQmFVh
 -- usuario=user password=auditor
 
 insert into usuario(email, password, tipodocumento, username, id_persona, perfil_id_perfil)
-values("eze@pepe.com.ar","$2a$10$ePhKPkFp.Uti3gy3HI5PcupVWrckG3cEhKgbma62mjulO/K.GoalS", 2, "user", 3, 2 );
+values("eze@pepe.com.ar","$2a$10$ePhKPkFp.Uti3gy3HI5PcupVWrckG3cEhKgbma62mjulO/K.GoalS", 2, "user", 2, 2 );

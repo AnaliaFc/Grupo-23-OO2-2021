@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,27 +13,41 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Inheritance(strategy= InheritanceType.JOINED)
+@DynamicInsert(true)
+@DynamicUpdate(true)
+@Table(name = "permiso")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Permiso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int idPermiso;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idPersona", nullable = false)
 	protected Persona persona;
 	
 	@Column(name = "fecha")
 	protected LocalDate fecha;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name = "permisoxlugar",
+			joinColumns = @JoinColumn(name="FK_permiso", nullable = false),
+			inverseJoinColumns = @JoinColumn(name="FK_lugar", nullable = false)
+	)
+	@ManyToMany(cascade = CascadeType.ALL)
 	protected Set<Lugar> desdeHasta;
 	
 	@Column(name = "createat")
