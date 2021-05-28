@@ -6,7 +6,7 @@ import com.unla.Grupo23OO22021.models.PermisoModel;
 import com.unla.Grupo23OO22021.models.PersonaModel;
 
 public interface IPermisoService {
-	public List<PersonaModel> findAll();
+	public List<PermisoModel> findAll();
 	public PermisoModel findById(int id);
 	public PermisoModel insertOrUpdate(PermisoModel permisoModel);
 	public boolean remove(int id);

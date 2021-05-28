@@ -1,5 +1,6 @@
 package com.unla.Grupo23OO22021.services.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.unla.Grupo23OO22021.converters.PermisoConverter;
 import com.unla.Grupo23OO22021.converters.PermisoDiarioConverter;
 import com.unla.Grupo23OO22021.converters.PermisoPeriodoConverter;
+import com.unla.Grupo23OO22021.entities.Permiso;
 import com.unla.Grupo23OO22021.models.PermisoModel;
 import com.unla.Grupo23OO22021.models.PersonaModel;
 import com.unla.Grupo23OO22021.repositories.IPermisoRepository;
@@ -35,27 +37,33 @@ public class PermisoService implements IPermisoService{
 	private IPermisoRepository permisoRepository;
 
 	@Override
-	public List<PersonaModel> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PermisoModel> findAll() {
+		List<PermisoModel> permisos = new ArrayList<PermisoModel>();
+		for(Permiso permiso : permisoRepository.findAll())
+			permisos.add(permisoConverter.entityToModel(permiso));
+		return permisos;
 	}
 
 	@Override
 	public PermisoModel findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return permisoConverter.entityToModel(permisoRepository.findById(id));
 	}
 
 	@Override
 	public PermisoModel insertOrUpdate(PermisoModel permisoModel) {
 		// TODO Auto-generated method stub
-		return null;
+		return permisoConverter.entityToModel(permisoRepository.save(permisoConverter.modelToEntity(permisoModel)));
 	}
 
 	@Override
 	public boolean remove(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			permisoRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 }
