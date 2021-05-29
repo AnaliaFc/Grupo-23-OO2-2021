@@ -30,7 +30,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicUpdate(true)
 @Table(name = "permiso")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Permiso {
+public abstract class Permiso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,14 +43,13 @@ public class Permiso {
 	@Column(name = "fecha")
 	protected LocalDate fecha;
 	
-	//TODO: CAMBIAR A SET
 	@JoinTable(
 			name = "permisoxlugar",
 			joinColumns = @JoinColumn(name="FK_permiso", nullable = false),
 			inverseJoinColumns = @JoinColumn(name="FK_lugar", nullable = false)
 	)
 	@ManyToMany(cascade = CascadeType.ALL)
-	protected List<Lugar> desdeHasta;
+	protected Set<Lugar> desdeHasta;
 	
 	@Column(name = "createat")
 	@CreationTimestamp
@@ -60,7 +59,7 @@ public class Permiso {
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
 	
-	public Permiso(int idPermiso, Persona persona, LocalDate fecha, List<Lugar> desdeHasta) {
+	public Permiso(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta) {
 		super();
 		this.idPermiso = idPermiso;
 		this.persona = persona;
@@ -92,11 +91,11 @@ public class Permiso {
 		this.fecha = fecha;
 	}
 
-	public List<Lugar> getDesdeHasta() {
+	public Set<Lugar> getDesdeHasta() {
 		return desdeHasta;
 	}
 
-	public void setDesdeHasta(List<Lugar> desdeHasta) {
+	public void setDesdeHasta(Set<Lugar> desdeHasta) {
 		this.desdeHasta = desdeHasta;
 	}
 
@@ -115,5 +114,5 @@ public class Permiso {
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
-
+	
 }

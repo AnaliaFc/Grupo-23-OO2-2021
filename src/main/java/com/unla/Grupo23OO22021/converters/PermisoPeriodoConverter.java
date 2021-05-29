@@ -2,7 +2,9 @@ package com.unla.Grupo23OO22021.converters;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,7 @@ public class PermisoPeriodoConverter {
 	private RodadoConverter rodadoConverter;
 	
 	public PermisoPeriodo modelToEntity(PermisoPeriodoModel permisoModel) {
-		List<Lugar> lugares=new ArrayList<Lugar>();
+		Set<Lugar> lugares=new HashSet<Lugar>();
 		for(LugarModel lugarModel : permisoModel.getDesdeHasta()) {
 			lugares.add(lugarConverter.modelToEntity(lugarModel));
 		}
