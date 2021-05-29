@@ -77,7 +77,6 @@ public class LugarModel {
 
 	
 	public boolean equals(LugarModel lugar) {
-		// TODO Auto-generated method stub
 		return codigoPostal.equalsIgnoreCase(lugar.codigoPostal) && this.lugar.equalsIgnoreCase(lugar.lugar);
 	}
 

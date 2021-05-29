@@ -27,6 +27,7 @@ import com.unla.Grupo23OO22021.models.PersonaModel;
 import com.unla.Grupo23OO22021.models.RodadoModel;
 import com.unla.Grupo23OO22021.services.implementation.LugarService;
 import com.unla.Grupo23OO22021.services.implementation.PermisoService;
+import com.unla.Grupo23OO22021.services.implementation.RodadoService;
 
 @Controller
 @RequestMapping("/permiso")
@@ -37,21 +38,23 @@ public class PermisoController {
 	private PermisoService permisoService;
 	
 	@Autowired
+	private RodadoService rodadoService;
+	
+	@Autowired
 	private LugarService lugarService;
 
 	@GetMapping("/periodo/new")
 	public ModelAndView formPeriodo() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
+		
 		//TODO: Cambiar esto por los servicios
 		List<PersonaModel> personas = new ArrayList<PersonaModel>();
 		personas.add(new PersonaModel(1, 3, "Pepe", "Jose"));
 		personas.add(new PersonaModel(2, 4, "Roberto", "Jose"));
 		modelAndView.addObject("personas", personas);
 
-		List<RodadoModel> rodados = new ArrayList<RodadoModel>();
-		rodados.add(new RodadoModel(1, "AAA222", "Car-1"));
-		rodados.add(new RodadoModel(2, "AAA333", "Car-2"));
+		List<RodadoModel> rodados = rodadoService.traerRodados();
 		modelAndView.addObject("rodados", rodados);
 
 		return modelAndView;
@@ -65,7 +68,7 @@ public class PermisoController {
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 
 		// TODO: Traer a la persona correspondiente
-		// TODO: Traer al rodado correspondiente
+		permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
 		
 		revisarLugares(permisoModel);
 
