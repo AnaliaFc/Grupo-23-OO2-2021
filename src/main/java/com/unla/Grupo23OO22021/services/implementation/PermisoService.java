@@ -8,11 +8,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import com.unla.Grupo23OO22021.converters.LugarConverter;
 import com.unla.Grupo23OO22021.converters.PermisoDiarioConverter;
 import com.unla.Grupo23OO22021.converters.PermisoPeriodoConverter;
+import com.unla.Grupo23OO22021.entities.Lugar;
 import com.unla.Grupo23OO22021.entities.Permiso;
 import com.unla.Grupo23OO22021.entities.PermisoDiario;
 import com.unla.Grupo23OO22021.entities.PermisoPeriodo;
+import com.unla.Grupo23OO22021.models.LugarModel;
 import com.unla.Grupo23OO22021.models.PermisoDiarioModel;
 import com.unla.Grupo23OO22021.models.PermisoModel;
 import com.unla.Grupo23OO22021.models.PermisoPeriodoModel;
@@ -31,6 +35,8 @@ public class PermisoService implements IPermisoService{
 	@Qualifier("permisoPeriodoConverter")
 	private PermisoPeriodoConverter permisoPeriodoConverter;
 	
+	@Autowired
+	private LugarConverter lugarConverter;
 	
 	@Autowired
 	@Qualifier("permisoRepository")
@@ -103,4 +109,28 @@ public class PermisoService implements IPermisoService{
 		return permisos;
 	}
 	
+	
+	public List<PermisoPeriodoModel> findByFechaAndLugar(LocalDate inicio, LocalDate fin, LugarModel desde, LugarModel hasta){
+		List<PermisoPeriodoModel> permisoPeriodoModels = findByFecha(inicio, fin);
+		List<PermisoPeriodoModel> list = new ArrayList<PermisoPeriodoModel>();
+		
+		for(PermisoPeriodoModel periodoModel : permisoPeriodoModels) {
+			if(periodoModel.getDesdeHasta().get(0).equals(desde) && periodoModel.getDesdeHasta().get(1).equals(hasta))
+				list.add(periodoModel);
+		}
+		
+		return list;
+	}
+	
+	public List<PermisoDiarioModel> findByFechaBetweenAndLugar(LocalDate inicio, LocalDate fin, LugarModel desde, LugarModel hasta){
+		List<PermisoDiarioModel> permisoDiarioModels = findByFechaBetween(inicio, fin);
+		List<PermisoDiarioModel> list = new ArrayList<PermisoDiarioModel>();
+		
+		for(PermisoDiarioModel permisoDiarioModel : permisoDiarioModels) {
+			if(permisoDiarioModel.getDesdeHasta().get(0).equals(desde) && permisoDiarioModel.getDesdeHasta().get(1).equals(hasta))
+				list.add(permisoDiarioModel);
+		}
+		
+		return list;
+	}
 }

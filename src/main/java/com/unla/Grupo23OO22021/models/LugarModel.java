@@ -2,6 +2,8 @@ package com.unla.Grupo23OO22021.models;
 
 import javax.validation.constraints.Size;
 
+import com.unla.Grupo23OO22021.entities.Lugar;
+
 public class LugarModel {
 
 	private long idLugar;
@@ -73,19 +75,10 @@ public class LugarModel {
 		return result;
 	}
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LugarModel other = (LugarModel) obj;
-		if (idLugar != other.idLugar)
-			return false;
-		return true;
+	
+	public boolean equals(LugarModel lugar) {
+		// TODO Auto-generated method stub
+		return codigoPostal.equalsIgnoreCase(lugar.codigoPostal) && this.lugar.equalsIgnoreCase(lugar.lugar);
 	}
 
 
