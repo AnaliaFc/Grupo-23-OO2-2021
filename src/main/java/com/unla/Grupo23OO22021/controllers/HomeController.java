@@ -50,4 +50,10 @@ public class HomeController {
 	public String loginCheck() {
 		return ViewRouteHelper.HOME_ROUTE;
 	}
+	
+	@GetMapping("/user")
+	public ModelAndView user() {
+		ModelAndView modelAndView = new ModelAndView("home/user");
+		return modelAndView;
+	}
 }
