@@ -39,6 +39,7 @@ public class Rodado {
 	
 	public Rodado(String dominio, String vehiculo)
 	{
+		super();
 		this.dominio=dominio;
 		this.vehiculo=vehiculo;
 	}
@@ -54,7 +55,7 @@ public class Rodado {
 		return idRodado;
 	}
 
-	protected void setIdRodado(long idRodado) {
+	public void setIdRodado(long idRodado) {
 		this.idRodado = idRodado;
 	}
 
@@ -89,6 +90,33 @@ public class Rodado {
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dominio == null) ? 0 : dominio.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rodado other = (Rodado) obj;
+		if (dominio == null) {
+			if (other.dominio != null)
+				return false;
+		} else if (!dominio.equals(other.dominio))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }

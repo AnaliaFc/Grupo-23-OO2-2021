@@ -14,19 +14,17 @@ public class RodadoModel {
 	
 	public RodadoModel() {}
 	
-	
-	
 	public RodadoModel(long idRodado, @Size(min = 6, max = 10) String dominio,
 			@Size(min = 5, max = 50) String vehiculo) {
+		super();
 		this.idRodado = idRodado;
 		this.dominio = dominio;
 		this.vehiculo = vehiculo;
 	}
 
-
-
 	public RodadoModel(String dominio, String vehiculo)
 	{
+		super();
 		this.dominio=dominio;
 		this.vehiculo=vehiculo;
 	}
@@ -35,7 +33,7 @@ public class RodadoModel {
 		return idRodado;
 	}
 
-	protected void setIdRodado(long idRodado) {
+	public void setIdRodado(long idRodado) {
 		this.idRodado = idRodado;
 	}
 
@@ -55,12 +53,12 @@ public class RodadoModel {
 		this.vehiculo = vehiculo;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dominio == null) ? 0 : dominio.hashCode());
-		result = prime * result + ((vehiculo == null) ? 0 : vehiculo.hashCode());
 		return result;
 	}
 
@@ -77,11 +75,6 @@ public class RodadoModel {
 			if (other.dominio != null)
 				return false;
 		} else if (!dominio.equals(other.dominio))
-			return false;
-		if (vehiculo == null) {
-			if (other.vehiculo != null)
-				return false;
-		} else if (!vehiculo.equals(other.vehiculo))
 			return false;
 		return true;
 	}
