@@ -38,13 +38,12 @@ public class RodadoController {
 		RedirectView redirectView = new RedirectView("/");
 
 		RodadoModel rodadoExistente = rodadoService.traerDominio(rodadoModel.getDominio());
-		
-		if (bindingResult.hasErrors()||rodadoExistente!=null)
+	  if (rodadoModel.equals(rodadoExistente))
+		{
 			redirectView.setUrl("/rodado/new");
-			else {
+		} else{
 		    	rodadoService.insertOrUpdate(rodadoModel);
 		    }
-
 		return redirectView;
 	}
 

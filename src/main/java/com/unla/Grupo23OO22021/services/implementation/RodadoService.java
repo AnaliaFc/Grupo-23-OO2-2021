@@ -35,7 +35,14 @@ public class RodadoService implements IRodadoService {
 
 	@Override
 	public RodadoModel traerDominio(String dominio) {
-		return rodadoConverter.entityToModel(rodadoRepository.findByDominio(dominio));
+		
+		Rodado rodadoExistente=rodadoRepository.findByDominio(dominio);
+		RodadoModel model=null;
+		if(rodadoExistente!=null)
+		{
+			rodadoConverter.entityToModel(rodadoExistente);
+		}
+		return model;
 	}
 
 	@Override

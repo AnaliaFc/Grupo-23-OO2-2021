@@ -53,12 +53,12 @@ public class RodadoModel {
 		this.vehiculo = vehiculo;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dominio == null) ? 0 : dominio.hashCode());
-		result = prime * result + ((vehiculo == null) ? 0 : vehiculo.hashCode());
 		return result;
 	}
 
@@ -75,11 +75,6 @@ public class RodadoModel {
 			if (other.dominio != null)
 				return false;
 		} else if (!dominio.equals(other.dominio))
-			return false;
-		if (vehiculo == null) {
-			if (other.vehiculo != null)
-				return false;
-		} else if (!vehiculo.equals(other.vehiculo))
 			return false;
 		return true;
 	}
