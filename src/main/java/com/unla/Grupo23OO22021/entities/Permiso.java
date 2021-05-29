@@ -43,6 +43,7 @@ public class Permiso {
 	@Column(name = "fecha")
 	protected LocalDate fecha;
 	
+	//TODO: CAMBIAR A SET
 	@JoinTable(
 			name = "permisoxlugar",
 			joinColumns = @JoinColumn(name="FK_permiso", nullable = false),
