@@ -2,6 +2,7 @@ package com.unla.Grupo23OO22021.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,7 +49,7 @@ public class Permiso {
 			inverseJoinColumns = @JoinColumn(name="FK_lugar", nullable = false)
 	)
 	@ManyToMany(cascade = CascadeType.ALL)
-	protected Set<Lugar> desdeHasta;
+	protected List<Lugar> desdeHasta;
 	
 	@Column(name = "createat")
 	@CreationTimestamp
@@ -58,7 +59,7 @@ public class Permiso {
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
 	
-	public Permiso(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta) {
+	public Permiso(int idPermiso, Persona persona, LocalDate fecha, List<Lugar> desdeHasta) {
 		super();
 		this.idPermiso = idPermiso;
 		this.persona = persona;
@@ -90,11 +91,11 @@ public class Permiso {
 		this.fecha = fecha;
 	}
 
-	public Set<Lugar> getDesdeHasta() {
+	public List<Lugar> getDesdeHasta() {
 		return desdeHasta;
 	}
 
-	public void setDesdeHasta(Set<Lugar> desdeHasta) {
+	public void setDesdeHasta(List<Lugar> desdeHasta) {
 		this.desdeHasta = desdeHasta;
 	}
 

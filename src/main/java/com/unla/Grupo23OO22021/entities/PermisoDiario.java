@@ -1,6 +1,7 @@
 package com.unla.Grupo23OO22021.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 
@@ -22,7 +23,7 @@ public class PermisoDiario extends Permiso{
 	@Column(name = "motivo")
 	private String motivo;
 
-	public PermisoDiario(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, String motivo) {
+	public PermisoDiario(int idPermiso, Persona persona, LocalDate fecha, List<Lugar> desdeHasta, String motivo) {
 		super(idPermiso, persona, fecha, desdeHasta);
 		this.motivo = motivo;
 	}
