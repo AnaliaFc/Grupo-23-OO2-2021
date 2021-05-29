@@ -36,8 +36,9 @@ public class LugarService implements ILugarService {
 
 	@Override
 	public LugarModel findByLugarAndCodigoPostal(String lugar, String codigoPostal) {
-		// TODO Auto-generated method stub
-		return lugarConverter.entityToModel(lugarRepository.findByLugarAndCodigoPostal(lugar, codigoPostal));
+		
+		Lugar entity=lugarRepository.findByLugarAndCodigoPostal(lugar, codigoPostal);
+		return entity==null ? null : lugarConverter.entityToModel(entity);
 	}
 
 	@Override

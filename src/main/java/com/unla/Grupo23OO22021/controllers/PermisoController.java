@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.unla.Grupo23OO22021.models.LugarModel;
 import com.unla.Grupo23OO22021.models.PermisoDiarioModel;
 import com.unla.Grupo23OO22021.models.PermisoModel;
 import com.unla.Grupo23OO22021.models.PermisoPeriodoModel;
 import com.unla.Grupo23OO22021.models.PersonaModel;
 import com.unla.Grupo23OO22021.models.RodadoModel;
+import com.unla.Grupo23OO22021.services.implementation.LugarService;
 import com.unla.Grupo23OO22021.services.implementation.PermisoService;
 
 @Controller
@@ -31,6 +33,9 @@ public class PermisoController {
 	@Autowired
 	@Qualifier("permisoService")
 	private PermisoService permisoService;
+	
+	@Autowired
+	private LugarService lugarService;
 
 	@GetMapping("/periodo/new")
 	public ModelAndView formPeriodo() {
@@ -59,14 +64,37 @@ public class PermisoController {
 
 		// TODO: Traer a la persona correspondiente
 		// TODO: Traer al rodado correspondiente
-		// TODO: Fijarse que exista los lugares y en base a eso guardar o no
+		
+		revisarLugares(permisoModel);
 
 		System.out.println(permisoModel);
-
+		
+		//TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 
 		return redirectView;
+	}
+
+	private void revisarLugares (PermisoModel permisoModel) {
+		LugarModel desde = lugarService.findByLugarAndCodigoPostal(
+				permisoModel.getDesdeHasta().get(0).getLugar(), 
+				permisoModel.getDesdeHasta().get(0).getCodigoPostal());
+		
+		if(desde!=null) {
+			permisoModel.getDesdeHasta().remove(0);
+			permisoModel.getDesdeHasta().add(0, desde);
+		}
+			
+		
+		LugarModel hasta = lugarService.findByLugarAndCodigoPostal(
+				permisoModel.getDesdeHasta().get(1).getLugar(), 
+				permisoModel.getDesdeHasta().get(1).getCodigoPostal());
+		
+		if(hasta!=null) {
+			permisoModel.getDesdeHasta().remove(1);
+			permisoModel.getDesdeHasta().add(1, hasta);
+		}
 	}
 
 	@GetMapping("/dia/new")
@@ -90,10 +118,11 @@ public class PermisoController {
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 
 		// TODO: Traer a la persona correspondiente
-		// TODO: Fijarse que exista los lugares y en base a eso guardar o no
+		revisarLugares(permisoModel);
 
 		System.out.println(permisoModel);
-
+		
+		//TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 

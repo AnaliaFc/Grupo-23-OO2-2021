@@ -54,15 +54,29 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row mt-3">
+			<h4>Desde</h4>
 			<div class="form-group col">
-				<label class="form-label">Desde</label>
+				<label class="form-label">Lugar</label>
 				<input class="form-control" type="text" th:field="*{desdeHasta[0].lugar}">
 			</div>
 
 			<div class="form-group col">
-				<label class="form-label">Hasta</label>
+				<label class="form-label">Codigo Postal</label>
+				<input class="form-control" type="text" th:field="*{desdeHasta[0].codigoPostal}">
+			</div>
+		</div>
+		
+		<div class="row mt-3">
+			<h4>Hasta</h4>
+			<div class="form-group col">
+				<label class="form-label">Lugar</label>
 				<input class="form-control" type="text" th:field="*{desdeHasta[1].lugar}">
+			</div>
+
+			<div class="form-group col">
+				<label class="form-label">Codigo Postal</label>
+				<input class="form-control" type="text" th:field="*{desdeHasta[1].codigoPostal}">
 			</div>
 		</div>
 

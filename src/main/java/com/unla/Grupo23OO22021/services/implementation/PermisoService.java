@@ -46,13 +46,13 @@ public class PermisoService implements IPermisoService{
 
 	@Override
 	public PermisoModel findById(int id) {
-		// TODO Auto-generated method stub
+		
 		return permisoConverter.entityToModel(permisoRepository.findById(id));
 	}
 
 	@Override
 	public PermisoModel insertOrUpdate(PermisoModel permisoModel) {
-		// TODO Auto-generated method stub
+		
 		return permisoConverter.entityToModel(permisoRepository.save(permisoConverter.modelToEntity(permisoModel)));
 	}
 
