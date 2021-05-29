@@ -1,6 +1,7 @@
 package com.unla.Grupo23OO22021.controllers;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.LugarModel;
 import com.unla.Grupo23OO22021.models.PermisoDiarioModel;
 import com.unla.Grupo23OO22021.models.PermisoModel;
@@ -41,7 +43,7 @@ public class PermisoController {
 	public ModelAndView formPeriodo() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
-
+		//TODO: Cambiar esto por los servicios
 		List<PersonaModel> personas = new ArrayList<PersonaModel>();
 		personas.add(new PersonaModel(1, 3, "Pepe", "Jose"));
 		personas.add(new PersonaModel(2, 4, "Roberto", "Jose"));
@@ -101,7 +103,8 @@ public class PermisoController {
 	public ModelAndView formDia() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
 		modelAndView.addObject("permiso", new PermisoDiarioModel());
-
+		
+		//TODO: Cambiar esto por los servicios
 		List<PersonaModel> personas = new ArrayList<PersonaModel>();
 		personas.add(new PersonaModel(1, 3, "Pepe", "Jose"));
 		personas.add(new PersonaModel(2, 4, "Roberto", "Jose"));
@@ -127,6 +130,13 @@ public class PermisoController {
 			redirectView.setUrl("/permiso/periodo/new");
 
 		return redirectView;
+	}
+	
+	@GetMapping("/traer-entre-fechas")
+	public RedirectView traerEntreFechas() {
+		permisoService.findByFechaBetween(LocalDate.now(), LocalDate.now().plusDays(20));
+		permisoService.findByFecha(LocalDate.now(), LocalDate.now().plusDays(20));
+		return new RedirectView("/");
 	}
 
 }

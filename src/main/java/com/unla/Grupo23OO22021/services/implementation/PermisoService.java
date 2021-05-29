@@ -1,5 +1,7 @@
  package com.unla.Grupo23OO22021.services.implementation;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +85,22 @@ public class PermisoService implements IPermisoService{
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public List<PermisoDiarioModel> findByFechaBetween(LocalDate inicio, LocalDate fin) {
+		List<PermisoDiarioModel> permisos = new ArrayList<PermisoDiarioModel>();
+		for(PermisoDiario permisoDiario : permisoRepository.findByFechaBetween(inicio, fin))
+			permisos.add(permisoDiarioConverter.entityToModel(permisoDiario));
+		return permisos;
+	}
+
+	@Override
+	public List<PermisoPeriodoModel> findByFecha(LocalDate inicio, LocalDate fin) {
+		List<PermisoPeriodoModel> permisos = new ArrayList<PermisoPeriodoModel>();
+		for(PermisoPeriodo permisoPeriodo : permisoRepository.findByFecha(inicio, fin))
+			permisos.add(permisoPeriodoConverter.entityToModel(permisoPeriodo));
+		return permisos;
 	}
 	
 }
