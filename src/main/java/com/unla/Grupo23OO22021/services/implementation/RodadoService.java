@@ -40,7 +40,7 @@ public class RodadoService implements IRodadoService {
 		RodadoModel model=null;
 		if(rodadoExistente!=null)
 		{
-			rodadoConverter.entityToModel(rodadoExistente);
+			model=rodadoConverter.entityToModel(rodadoExistente);
 		}
 		return model;
 	}
