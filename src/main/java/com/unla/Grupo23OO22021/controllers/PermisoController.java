@@ -132,11 +132,24 @@ public class PermisoController {
 		return redirectView;
 	}
 	
-	@GetMapping("/traer-entre-fechas")
-	public RedirectView traerEntreFechas() {
-		permisoService.findByFechaBetween(LocalDate.now(), LocalDate.now().plusDays(20));
-		permisoService.findByFecha(LocalDate.now(), LocalDate.now().plusDays(20));
-		return new RedirectView("/");
+	@GetMapping("/listar")
+	public ModelAndView traerEntreFechas() {
+		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
+		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
+		
+		List<LugarModel> lugarModels = new ArrayList<LugarModel>();
+		lugarModels.add(new LugarModel(1, "San juan", "1820"));
+		lugarModels.add(new LugarModel(1, "Costa", "2020"));
+		
+		permisoPeriodoModels.add(new PermisoPeriodoModel(1, new PersonaModel(1, 43200625, "Pepe", "Luis"), Date.valueOf("2021-05-29"), lugarModels, 10, false, 
+				new RodadoModel(3, "Citroen", "AAA333")));
+		
+		permisoDiarioModels.add(new PermisoDiarioModel(1, new PersonaModel(1, 43200626, "Pepe", "Eduardo"), Date.valueOf("2021-05-29"), lugarModels, "Fiesta"));
+		
+		modelAndView.addObject("permisosDiario", permisoDiarioModels);
+		modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
+		return modelAndView;
 	}
 
 }
