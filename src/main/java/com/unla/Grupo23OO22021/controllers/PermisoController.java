@@ -60,6 +60,10 @@ public class PermisoController {
 		
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 		
+		//TODO: Traer a la persona correspondiente
+		//TODO: Traer al rodado correspondiente
+		//TODO: Fijarse que exista los lugares y en base a eso guardar o no
+		
 		System.out.println(permisoModel);
 		
 		
