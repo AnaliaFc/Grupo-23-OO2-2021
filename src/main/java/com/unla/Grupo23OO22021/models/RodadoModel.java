@@ -14,19 +14,17 @@ public class RodadoModel {
 	
 	public RodadoModel() {}
 	
-	
-	
 	public RodadoModel(long idRodado, @Size(min = 6, max = 10) String dominio,
 			@Size(min = 5, max = 50) String vehiculo) {
+		super();
 		this.idRodado = idRodado;
 		this.dominio = dominio;
 		this.vehiculo = vehiculo;
 	}
 
-
-
 	public RodadoModel(String dominio, String vehiculo)
 	{
+		super();
 		this.dominio=dominio;
 		this.vehiculo=vehiculo;
 	}
@@ -35,7 +33,7 @@ public class RodadoModel {
 		return idRodado;
 	}
 
-	protected void setIdRodado(long idRodado) {
+	public void setIdRodado(long idRodado) {
 		this.idRodado = idRodado;
 	}
 
