@@ -27,6 +27,7 @@ import com.unla.Grupo23OO22021.models.PersonaModel;
 import com.unla.Grupo23OO22021.models.RodadoModel;
 import com.unla.Grupo23OO22021.services.implementation.LugarService;
 import com.unla.Grupo23OO22021.services.implementation.PermisoService;
+import com.unla.Grupo23OO22021.services.implementation.PersonaService;
 import com.unla.Grupo23OO22021.services.implementation.RodadoService;
 
 @Controller
@@ -42,16 +43,16 @@ public class PermisoController {
 	
 	@Autowired
 	private LugarService lugarService;
+	
+	@Autowired
+	private PersonaService personaService;
 
 	@GetMapping("/periodo/new")
 	public ModelAndView formPeriodo() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
 		
-		//TODO: Cambiar esto por los servicios
-		List<PersonaModel> personas = new ArrayList<PersonaModel>();
-		personas.add(new PersonaModel(1, 3, "Pepe", "Jose"));
-		personas.add(new PersonaModel(2, 4, "Roberto", "Jose"));
+		List<PersonaModel> personas = personaService.traerPersonas();
 		modelAndView.addObject("personas", personas);
 
 		List<RodadoModel> rodados = rodadoService.traerRodados();
@@ -63,11 +64,12 @@ public class PermisoController {
 	@PostMapping("/periodo/save")
 	public RedirectView savePeriodo(@Valid @ModelAttribute("permiso") PermisoPeriodoModel permisoModel,
 			BindingResult bindingResult) {
-		RedirectView redirectView = new RedirectView("/");
+		RedirectView redirectView = new RedirectView("/permiso/listar");
 
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
-
-		// TODO: Traer a la persona correspondiente
+		
+		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
+		
 		permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
 		
 		revisarLugares(permisoModel);
@@ -77,6 +79,9 @@ public class PermisoController {
 		//TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
+		else {
+			permisoService.insertOrUpdate(permisoModel);
+		}
 
 		return redirectView;
 	}
@@ -107,10 +112,7 @@ public class PermisoController {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
 		modelAndView.addObject("permiso", new PermisoDiarioModel());
 		
-		//TODO: Cambiar esto por los servicios
-		List<PersonaModel> personas = new ArrayList<PersonaModel>();
-		personas.add(new PersonaModel(1, 3, "Pepe", "Jose"));
-		personas.add(new PersonaModel(2, 4, "Roberto", "Jose"));
+		List<PersonaModel> personas = personaService.traerPersonas();
 		modelAndView.addObject("personas", personas);
 
 		return modelAndView;
@@ -119,11 +121,11 @@ public class PermisoController {
 	@PostMapping("/dia/save")
 	public RedirectView saveDia(@Valid @ModelAttribute("permiso") PermisoDiarioModel permisoModel,
 			BindingResult bindingResult) {
-		RedirectView redirectView = new RedirectView("/");
+		RedirectView redirectView = new RedirectView("/permiso/listar");
 
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 
-		// TODO: Traer a la persona correspondiente
+		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
 		revisarLugares(permisoModel);
 
 		System.out.println(permisoModel);
@@ -131,6 +133,9 @@ public class PermisoController {
 		//TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
+		else {
+			permisoService.insertOrUpdate(permisoModel);
+		}
 
 		return redirectView;
 	}
@@ -141,14 +146,12 @@ public class PermisoController {
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		
-		List<LugarModel> lugarModels = new ArrayList<LugarModel>();
-		lugarModels.add(new LugarModel(1, "San juan", "1820"));
-		lugarModels.add(new LugarModel(1, "Costa", "2020"));
-		
-		permisoPeriodoModels.add(new PermisoPeriodoModel(1, new PersonaModel(1, 43200625, "Pepe", "Luis"), Date.valueOf("2021-05-29"), lugarModels, 10, false, 
-				new RodadoModel(3, "Citroen", "AAA333")));
-		
-		permisoDiarioModels.add(new PermisoDiarioModel(1, new PersonaModel(1, 43200626, "Pepe", "Eduardo"), Date.valueOf("2021-05-29"), lugarModels, "Fiesta"));
+		for(PermisoModel permisoModel : permisoService.findAll()) {
+			if(permisoModel instanceof PermisoPeriodoModel)
+				permisoPeriodoModels.add((PermisoPeriodoModel) permisoModel);
+			else if(permisoModel instanceof PermisoDiarioModel)
+				permisoDiarioModels.add((PermisoDiarioModel) permisoModel);
+		}
 		
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
 		modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);

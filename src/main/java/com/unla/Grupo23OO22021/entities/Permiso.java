@@ -59,6 +59,10 @@ public abstract class Permiso {
 	@UpdateTimestamp
 	private LocalDateTime updateAt;
 	
+	public Permiso() {
+		
+	}
+	
 	public Permiso(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta) {
 		super();
 		this.idPermiso = idPermiso;

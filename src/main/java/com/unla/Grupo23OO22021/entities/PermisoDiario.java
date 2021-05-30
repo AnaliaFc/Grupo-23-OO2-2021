@@ -23,7 +23,11 @@ public class PermisoDiario extends Permiso{
 	
 	@Column(name = "motivo")
 	private String motivo;
-
+	
+	public PermisoDiario() {
+		
+	}
+	
 	public PermisoDiario(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, String motivo) {
 		super(idPermiso, persona, fecha, desdeHasta);
 		this.motivo = motivo;

@@ -36,6 +36,10 @@ public class PermisoPeriodo extends Permiso {
 	@JoinColumn(name = "idRodado", nullable = false)
 	private Rodado rodado;
 	
+	public PermisoPeriodo() {
+		
+	}
+	
 	public PermisoPeriodo(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, int cantDias,
 			boolean vacaciones, Rodado rodado) {
 		super(idPermiso, persona, fecha, desdeHasta);
