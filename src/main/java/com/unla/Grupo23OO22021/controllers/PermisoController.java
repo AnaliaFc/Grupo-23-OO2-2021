@@ -108,8 +108,6 @@ public class PermisoController {
 		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
 
 		System.out.println(permisoModel);
-		
-		//TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
@@ -140,20 +138,66 @@ public class PermisoController {
 	}
 	
 	@PostMapping("/filtro")
-	public ModelAndView traerEntreFechas(@ModelAttribute("filtro") FilterModel filterModel) {
+	public ModelAndView traerEntreFechas(@Valid @ModelAttribute("filtro") FilterModel filterModel, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-		modelAndView.addObject("permisosDiario", 
-				permisoService.findByFechaBetween(
-						LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-						LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-						)
-				);
-//		modelAndView.addObject("permisoPeriodo",
-//				permisoService.findByFecha(
-//						LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-//						LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-//						)
-//				);
+		
+		if(bindingResult.hasErrors())
+			return traer();
+		
+		
+		
+		try {
+			if(!filterModel.getFechaInicio().isEmpty() && !filterModel.getFechaFin().isEmpty()) {
+				
+				if(!filterModel.getDesde().getLugar().isEmpty() && !filterModel.getDesde().getLugar().isEmpty()) {
+					
+					if(!filterModel.getHasta().getLugar().isEmpty() && !filterModel.getHasta().getLugar().isEmpty()) {
+						modelAndView.addObject("permisosDiario",
+								permisoService.findByFechaBetweenAndLugar(
+									LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+									LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+									,filterModel.getDesde(), 
+									filterModel.getHasta())
+								);
+						modelAndView.addObject("permisoPeriodo",
+								permisoService.findByFechaAndLugar(
+									LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+									LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+									,filterModel.getDesde(), 
+									filterModel.getHasta())
+								);
+					}
+				}else {
+					modelAndView.addObject("permisosDiario", 
+							permisoService.findByFechaBetween(
+									LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+									LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+									)
+							);
+					modelAndView.addObject("permisoPeriodo",
+							permisoService.findByFecha(
+									LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+									LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+									)
+							);
+				}
+				
+			}
+		} catch (Exception e) {
+			List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
+			List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
+			for(PermisoModel permisoModel : permisoService.findAll()) {
+				if(permisoModel instanceof PermisoPeriodoModel)
+					permisoPeriodoModels.add((PermisoPeriodoModel) permisoModel);
+				else if(permisoModel instanceof PermisoDiarioModel)
+					permisoDiarioModels.add((PermisoDiarioModel) permisoModel);
+			}
+			
+			modelAndView.addObject("permisosDiario", permisoDiarioModels);
+			modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
+		}
+		
+		
 		
 		
 		modelAndView.addObject("filtro", filterModel);

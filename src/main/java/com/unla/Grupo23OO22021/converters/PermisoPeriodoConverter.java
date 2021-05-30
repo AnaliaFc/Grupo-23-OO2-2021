@@ -3,6 +3,7 @@ package com.unla.Grupo23OO22021.converters;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class PermisoPeriodoConverter {
 	private RodadoConverter rodadoConverter;
 	
 	public PermisoPeriodo modelToEntity(PermisoPeriodoModel permisoModel) {
-		Set<Lugar> lugares=new HashSet<Lugar>();
+		Set<Lugar> lugares=new LinkedHashSet<Lugar>();
 		for(LugarModel lugarModel : permisoModel.getDesdeHasta()) {
 			lugares.add(lugarConverter.modelToEntity(lugarModel));
 		}
