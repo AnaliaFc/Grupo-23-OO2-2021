@@ -74,7 +74,6 @@ public class PermisoController {
 		
 		permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
 		
-		revisarLugares(permisoModel);
 
 		System.out.println(permisoModel);
 		
@@ -86,27 +85,6 @@ public class PermisoController {
 		}
 
 		return redirectView;
-	}
-
-	private void revisarLugares (PermisoModel permisoModel) {
-		LugarModel desde = lugarService.findByLugarAndCodigoPostal(
-				permisoModel.getDesdeHasta().get(0).getLugar(), 
-				permisoModel.getDesdeHasta().get(0).getCodigoPostal());
-		
-		if(desde!=null) {
-			permisoModel.getDesdeHasta().remove(0);
-			permisoModel.getDesdeHasta().add(0, desde);
-		}
-			
-		
-		LugarModel hasta = lugarService.findByLugarAndCodigoPostal(
-				permisoModel.getDesdeHasta().get(1).getLugar(), 
-				permisoModel.getDesdeHasta().get(1).getCodigoPostal());
-		
-		if(hasta!=null) {
-			permisoModel.getDesdeHasta().remove(1);
-			permisoModel.getDesdeHasta().add(1, hasta);
-		}
 	}
 
 	@GetMapping("/dia/new")
@@ -128,7 +106,6 @@ public class PermisoController {
 		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 
 		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
-		revisarLugares(permisoModel);
 
 		System.out.println(permisoModel);
 		
