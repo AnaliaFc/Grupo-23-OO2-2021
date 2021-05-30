@@ -73,20 +73,10 @@ public class LugarModel {
 		return result;
 	}
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LugarModel other = (LugarModel) obj;
-		if (idLugar != other.idLugar)
-			return false;
-		return true;
+	public boolean equals(LugarModel lugar) {
+		return codigoPostal.equalsIgnoreCase(lugar.codigoPostal) && this.lugar.equalsIgnoreCase(lugar.lugar);
 	}
+
 
 
 	@Override

@@ -1,6 +1,8 @@
 package com.unla.Grupo23OO22021.models;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import com.unla.Grupo23OO22021.entities.Persona;
@@ -10,10 +12,12 @@ public class PermisoDiarioModel extends PermisoModel {
 	
 	private String motivo;
 	
-	public PermisoDiarioModel() {}
-
-	public PermisoDiarioModel(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, String motivo) {
+	public PermisoDiarioModel() {
 		super();
+	}
+
+	public PermisoDiarioModel(int idPermiso, PersonaModel persona, Date fecha, List<LugarModel> desdeHasta, String motivo) {
+		super(idPermiso, persona, fecha, desdeHasta);
 		this.motivo = motivo;
 	}
 
@@ -27,7 +31,7 @@ public class PermisoDiarioModel extends PermisoModel {
 
 	@Override
 	public String toString() {
-		return "PermisoDiarioModel [motivo=" + motivo + "]";
+		return super.toString()+" -> PermisoDiarioModel [motivo=" + motivo + "]";
 	}
 	
 

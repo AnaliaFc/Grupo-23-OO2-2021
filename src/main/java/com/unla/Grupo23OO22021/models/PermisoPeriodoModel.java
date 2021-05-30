@@ -1,6 +1,9 @@
 package com.unla.Grupo23OO22021.models;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.unla.Grupo23OO22021.entities.Persona;
@@ -11,12 +14,14 @@ public class PermisoPeriodoModel extends PermisoModel{
 	
 	private int cantDias;
 	private boolean vacaciones;
-	private Rodado rodado;
+	private RodadoModel rodado;
 	
-	public PermisoPeriodoModel() {}
-	
-	public PermisoPeriodoModel(int idPermiso, Persona persona, LocalDate fecha, Set<Lugar> desdeHasta, int cantDias, boolean vacaciones, Rodado rodado) {
+	public PermisoPeriodoModel() {
 		super();
+	}
+	
+	public PermisoPeriodoModel(int idPermiso, PersonaModel persona, Date fecha, List<LugarModel> desdeHasta, int cantDias, boolean vacaciones, RodadoModel rodado) {
+		super(idPermiso, persona, fecha, desdeHasta);
 		this.cantDias = cantDias;
 		this.vacaciones = vacaciones;
 		this.rodado = rodado;
@@ -38,17 +43,17 @@ public class PermisoPeriodoModel extends PermisoModel{
 		this.vacaciones = vacaciones;
 	}
 
-	public Rodado getRodado() {
+	public RodadoModel getRodado() {
 		return rodado;
 	}
 
-	public void setRodado(Rodado rodado) {
+	public void setRodado(RodadoModel rodado) {
 		this.rodado = rodado;
 	}
 
 	@Override
 	public String toString() {
-		return "PermisoPeriodoModel [cantDias=" + cantDias + ", vacaciones=" + vacaciones + ", rodado=" + rodado + "]";
+		return super.toString() + " -> PermisoPeriodoModel [cantDias=" + cantDias + ", vacaciones=" + vacaciones + ", rodado=" + rodado + "]";
 	}
 
 }
