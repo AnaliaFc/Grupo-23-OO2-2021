@@ -2,6 +2,7 @@ package com.unla.Grupo23OO22021.controllers;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
+import com.unla.Grupo23OO22021.models.FilterModel;
 import com.unla.Grupo23OO22021.models.LugarModel;
 import com.unla.Grupo23OO22021.models.PermisoDiarioModel;
 import com.unla.Grupo23OO22021.models.PermisoModel;
@@ -141,10 +143,11 @@ public class PermisoController {
 	}
 	
 	@GetMapping("/listar")
-	public ModelAndView traerEntreFechas() {
+	public ModelAndView traer() {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
+		FilterModel filterModel = new FilterModel();
 		
 		for(PermisoModel permisoModel : permisoService.findAll()) {
 			if(permisoModel instanceof PermisoPeriodoModel)
@@ -155,6 +158,28 @@ public class PermisoController {
 		
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
 		modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
+		modelAndView.addObject("filtro", filterModel);
+		return modelAndView;
+	}
+	
+	@PostMapping("/filtro")
+	public ModelAndView traerEntreFechas(@ModelAttribute("filtro") FilterModel filterModel) {
+		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+		modelAndView.addObject("permisosDiario", 
+				permisoService.findByFechaBetween(
+						LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+						LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+						)
+				);
+//		modelAndView.addObject("permisoPeriodo",
+//				permisoService.findByFecha(
+//						LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+//						LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+//						)
+//				);
+		
+		
+		modelAndView.addObject("filtro", filterModel);
 		return modelAndView;
 	}
 

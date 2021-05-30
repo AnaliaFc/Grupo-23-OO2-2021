@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,6 +50,7 @@ public abstract class Permiso {
 			inverseJoinColumns = @JoinColumn(name="FK_lugar", nullable = false)
 	)
 	@ManyToMany(cascade = CascadeType.ALL)
+	@OrderBy("createAt")
 	protected Set<Lugar> desdeHasta;
 	
 	@Column(name = "createat")
