@@ -25,8 +25,8 @@ public class PersonaController {
 	private PersonaService service;
 	
 	@GetMapping("/")
-	public String index() {
-		return "/persona/new";
+	public RedirectView index() {
+		return new RedirectView("/persona/new");
 	}
 	
 	@GetMapping("/new")
@@ -37,12 +37,11 @@ public class PersonaController {
 	}
 	
 	@PostMapping("/save")
-	public RedirectView save(@Valid @ModelAttribute("rodado") PersonaModel personaModel, BindingResult bindingResult) {
+	public RedirectView save(@Valid @ModelAttribute("persona") PersonaModel personaModel, BindingResult bindingResult) {
 		RedirectView redirectView = new RedirectView("/");
-
 		PersonaModel aux = service.traerDni(personaModel.getDni());
 		if (personaModel.equals(aux) || bindingResult.hasErrors()) {
-			redirectView.setUrl("/rodado/new");
+			redirectView.setUrl("/persona/new");
 		} else {
 			service.insertOrUpdate(personaModel);
 		}

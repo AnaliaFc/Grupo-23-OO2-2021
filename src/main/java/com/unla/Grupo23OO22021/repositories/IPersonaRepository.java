@@ -12,7 +12,7 @@ public interface IPersonaRepository extends JpaRepository<Persona, Long>{
 		
 		public abstract Persona findById(long idPersona);
 		
-		@Query("SELECT r FROM Persona p WHERE p.dni = :dni")
+		@Query("SELECT p FROM Persona p WHERE p.dni = :dni")
 		public abstract Persona findByDni(@Param("dni") int dni);
 
 

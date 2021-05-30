@@ -24,7 +24,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Persona {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idPersona", unique = true, nullable = false)
+	//@Column(name = "idPersona", unique = true, nullable = false)
 	protected long idPersona;
 	
 	@Column(name = "nombre")

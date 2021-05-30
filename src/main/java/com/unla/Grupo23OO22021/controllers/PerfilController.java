@@ -53,7 +53,7 @@ public class PerfilController {
 	}
 	
 	@PostMapping("/save")
-	public RedirectView save(@Valid @ModelAttribute("perfil") PerfilModel perfilModel, Model model, BindingResult result) {
+	public RedirectView save(@Valid @ModelAttribute("perfil") PerfilModel perfilModel, BindingResult result) {
 
 		RedirectView redirect = new RedirectView("/perfil/listar");
 
@@ -66,7 +66,7 @@ public class PerfilController {
 	}
 	
 	@GetMapping("/eliminar/{idPerfil}")
-	public String delete(Model model, @PathVariable long idPerfil) {
+	public String delete(@PathVariable long idPerfil) {
 		service.remove(idPerfil);
 		return ViewRouteHelper.ROUTE_PERFILES;
 	}

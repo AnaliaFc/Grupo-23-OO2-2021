@@ -15,7 +15,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 
 @Entity
-@PrimaryKeyJoinColumn(name="idPermiso")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @Table(name = "permisodiario")
