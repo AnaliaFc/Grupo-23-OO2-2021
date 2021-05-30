@@ -9,7 +9,7 @@ values('2021-05-20', "ROLE_AUDITOR",'2021-05-20');
 -- persona
 
 insert into persona(apellido, createat, dni, nombre, updateat)
-values("de la Fuente", '2020-11-11', 43200624, "Ezequiel", '2020-11-11');
+values("de la Fuente", '2020-11-11', 43200626, "Ezequiel", '2020-11-11');
 
 insert into persona(apellido, createat, dni, nombre, updateat)
 values("de la Fuente", '2020-11-11', 43200625, "Pepe", '2020-11-11');
