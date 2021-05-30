@@ -2,6 +2,8 @@ package com.unla.Grupo23OO22021.models;
 
 import javax.validation.constraints.Size;
 
+import com.unla.Grupo23OO22021.entities.Lugar;
+
 public class LugarModel {
 
 	private long idLugar;
@@ -12,11 +14,8 @@ public class LugarModel {
 	@Size(min=4,max=5)
 	private String codigoPostal;
 	
-	
 	public LugarModel(){}
 
-
-	
 	
 	public LugarModel(long idLugar, @Size(min = 3, max = 20) String lugar,
 			@Size(min = 4, max = 5) String codigoPostal) {

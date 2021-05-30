@@ -77,6 +77,10 @@ public class Lugar {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+	
+	public boolean equals(Lugar lugar) {
+		return codigoPostal.equalsIgnoreCase(lugar.codigoPostal) && this.lugar.equalsIgnoreCase(lugar.lugar);
+	}
 
 
 }

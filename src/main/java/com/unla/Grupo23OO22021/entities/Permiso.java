@@ -2,6 +2,7 @@ package com.unla.Grupo23OO22021.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @DynamicUpdate(true)
 @Table(name = "permiso")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Permiso {
+public abstract class Permiso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,5 +114,5 @@ public class Permiso {
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}
-
+	
 }

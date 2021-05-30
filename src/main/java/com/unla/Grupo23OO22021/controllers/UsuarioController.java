@@ -56,7 +56,6 @@ public class UsuarioController {
 	public RedirectView crear(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result) {
 		
 		RedirectView redirect= new RedirectView(ViewRouteHelper.USUARIO_ROOT);
-		//TODO: Cambie esto
 		// String passEncriptado = usuarioModel.encriptarPassword(usuarioModel.getPassword());
 		usuarioModel.setPassword(encriptar.encode(usuarioModel.getPassword()));
 		
