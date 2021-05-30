@@ -123,6 +123,8 @@ public class PermisoController {
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		FilterModel filterModel = new FilterModel();
+		List<RodadoModel> listaRodados=rodadoService.traerRodados();
+		RodadoModel rodadoModel = new RodadoModel();
 		
 		for(PermisoModel permisoModel : permisoService.findAll()) {
 			if(permisoModel instanceof PermisoPeriodoModel)
@@ -134,6 +136,20 @@ public class PermisoController {
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
 		modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
 		modelAndView.addObject("filtro", filterModel);
+		modelAndView.addObject("listaRodados", listaRodados);//TRAER RODADOS POR PERMISO
+		modelAndView.addObject("rodado", rodadoModel);
+		return modelAndView;
+	}
+	
+	@PostMapping("/rodados")
+	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
+		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+			
+		modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
+		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
+		modelAndView.addObject("filtro", new FilterModel());
+		modelAndView.addObject("listaRodados", rodadoService.traerRodados());//TRAER RODADOS POR PERMISO
+		modelAndView.addObject("rodado", new RodadoModel());
 		return modelAndView;
 	}
 	
@@ -143,10 +159,7 @@ public class PermisoController {
 		
 		if(bindingResult.hasErrors())
 			return traer();
-		
-		
-		
-		try {
+				try {
 			if(!filterModel.getFechaInicio().isEmpty() && !filterModel.getFechaFin().isEmpty()) {
 				
 				if(!filterModel.getDesde().getLugar().isEmpty() && !filterModel.getDesde().getLugar().isEmpty()) {
@@ -196,9 +209,6 @@ public class PermisoController {
 			modelAndView.addObject("permisosDiario", permisoDiarioModels);
 			modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
 		}
-		
-		
-		
 		
 		modelAndView.addObject("filtro", filterModel);
 		return modelAndView;

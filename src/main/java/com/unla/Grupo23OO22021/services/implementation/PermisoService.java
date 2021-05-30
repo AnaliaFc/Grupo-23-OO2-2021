@@ -21,6 +21,7 @@ import com.unla.Grupo23OO22021.models.PermisoDiarioModel;
 import com.unla.Grupo23OO22021.models.PermisoModel;
 import com.unla.Grupo23OO22021.models.PermisoPeriodoModel;
 import com.unla.Grupo23OO22021.models.PersonaModel;
+import com.unla.Grupo23OO22021.models.RodadoModel;
 import com.unla.Grupo23OO22021.repositories.IPermisoRepository;
 import com.unla.Grupo23OO22021.services.IPermisoService;
 
@@ -132,5 +133,13 @@ public class PermisoService implements IPermisoService{
 		}
 		
 		return list;
+	}
+	
+	
+	public List<PermisoPeriodoModel> findByDominio(RodadoModel rodadoModel) {
+		List<PermisoPeriodoModel> permisos = new ArrayList<PermisoPeriodoModel>();
+		for(PermisoPeriodo permisoPeriodo : permisoRepository.findByDominio(rodadoModel.getDominio()))
+			permisos.add(permisoPeriodoConverter.entityToModel(permisoPeriodo));
+		return permisos;
 	}
 }
