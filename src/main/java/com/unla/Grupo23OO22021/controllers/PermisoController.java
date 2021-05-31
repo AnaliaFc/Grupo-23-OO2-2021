@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -161,9 +162,19 @@ public class PermisoController {
 		return modelAndView;
 	}
 	
+	@GetMapping("/remove-lugar/{index}")
+	public String removeLugar(@PathVariable int index, Model model) {
+		try {
+			lugarService.getLugares().remove(index);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "redirect:/permiso/dia/new";
+	}
+	
 	@Transactional
-	@PostMapping("/add-lugar")
-	public String addLugar(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+	@PostMapping("/add-lugar-d")
+	public String addLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		try {
 			lugarService.guardarLugar(lugarModel);
 		} catch (Exception e) {
@@ -174,14 +185,37 @@ public class PermisoController {
 	}
 	
 	@Transactional
-	@PostMapping("/search-lugar")
-	public ModelAndView searchLugar(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+	@PostMapping("/add-lugar-p")
+	public String addLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+		try {
+			lugarService.guardarLugar(lugarModel);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/permiso/periodo/new";
+	}
+	
+	@Transactional
+	@PostMapping("/search-lugar-d")
+	public ModelAndView searchLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		System.out.println(lugarModeEncontrado);
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}
 		return formDia();
+	}
+	
+	@Transactional
+	@PostMapping("/search-lugar-p")
+	public ModelAndView searchLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
+		System.out.println(lugarModeEncontrado);
+		if(lugarModeEncontrado!=null) {
+			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}
+		return formPeriodo();
 	}
 
 	@PostMapping("/rodados")

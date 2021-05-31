@@ -14,7 +14,7 @@
 	<div class="mb-5"></div>
 
 	
-	<form action="#" th:action="@{/permiso/add-lugar}" th:object="${lugar}" method="POST" style="width:70%"
+	<form action="#" th:action="@{/permiso/add-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Agregar Lugar</h5>
 		<input th:field="*{lugar}" type="text">
@@ -23,7 +23,7 @@
 	</form>
 
 	
-	<form action="#" th:action="@{/permiso/search-lugar}" th:object="${lugar}" method="POST" style="width:70%"
+	<form action="#" th:action="@{/permiso/search-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Buscar Lugar</h5>
 		<input th:field="*{lugar}" type="text">
