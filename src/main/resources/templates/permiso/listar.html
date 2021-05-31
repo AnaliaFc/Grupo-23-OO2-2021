@@ -71,9 +71,6 @@
 				data-bs-parent="#accordionExample">
 				<div class="accordion-body">
 				 <form action="#" th:action="@{/permiso/rodados}" th:object="${rodado}" method="POST" style="width: 50%;">
-					<!---<select th:field="*{idRodado}" class="form-select">
-					<option th:each="r : ${listaRodados}" th:value="${r.idRodado}" th:text="${r.dominio}"></option>
-					</select>-->
 					<div class="form-group col">
 				    <label class="form-label">Ingrese el Dominio a buscar</label>
 				    <input class="form-control" type="text" th:field="*{dominio}">
