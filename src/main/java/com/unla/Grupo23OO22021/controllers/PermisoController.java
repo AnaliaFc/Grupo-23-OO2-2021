@@ -222,7 +222,7 @@ public class PermisoController {
 	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
 	
-		rodadoModel=rodadoService.traerId(rodadoModel.getIdRodado());
+		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
 		modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());
