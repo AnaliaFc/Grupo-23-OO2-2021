@@ -13,7 +13,9 @@
 	<div th:replace="fragments/menu"></div>
 	<div class="mb-5"></div>
 
-
+	<div class="alert alert-warning" th:if="${error}">
+		<span th:text="${error}"></span>
+	</div>
 	<form action="#" th:action="@{/permiso/add-lugar-p}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Agregar Lugar</h5>

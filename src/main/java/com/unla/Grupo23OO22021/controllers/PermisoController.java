@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -56,7 +57,7 @@ public class PermisoController {
 
 	@Transactional
 	@GetMapping("/periodo/new")
-	public ModelAndView formPeriodo() {
+	public ModelAndView formPeriodo(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
 
@@ -68,6 +69,8 @@ public class PermisoController {
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
 		modelAndView.addObject("lugar", new LugarModel());
+		
+		modelAndView.addObject("error", error);
 
 		return modelAndView;
 	}
@@ -102,7 +105,7 @@ public class PermisoController {
 	
 	@Transactional
 	@GetMapping("/dia/new")
-	public ModelAndView formDia() {
+	public ModelAndView formDia(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
 		modelAndView.addObject("permiso", new PermisoDiarioModel());
 
@@ -111,6 +114,8 @@ public class PermisoController {
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
 		modelAndView.addObject("lugar", new LugarModel());
+		
+		modelAndView.addObject("error", error);
 
 		return modelAndView;
 	}
@@ -175,7 +180,11 @@ public class PermisoController {
 	@PostMapping("/add-lugar-d")
 	public String addLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		try {
-			lugarService.guardarLugar(lugarModel);
+			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
+				lugarService.guardarLugar(lugarModel);
+			}else {
+				return "redirect:/permiso/dia/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -187,7 +196,11 @@ public class PermisoController {
 	@PostMapping("/add-lugar-p")
 	public String addLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		try {
-			lugarService.guardarLugar(lugarModel);
+			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
+				lugarService.guardarLugar(lugarModel);
+			}else {
+				return "redirect:/permiso/periodo/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -203,7 +216,7 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}
-		return formDia();
+		return formDia(null);
 	}
 	
 	@Transactional
@@ -214,7 +227,7 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}
-		return formPeriodo();
+		return formPeriodo(null);
 	}
 
 	@PostMapping("/rodados")
