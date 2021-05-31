@@ -13,7 +13,7 @@
 
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
-
+    <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
 	<div class="title-container mt-5">
 		<h1 class="display-2">Sistema integrador</h1>
 		<h2 class="display-5 text-muted">(versión web con bases de datos)</h2>

@@ -85,7 +85,7 @@ public class RodadoModel {
 
 	@Override
 	public String toString() {
-		return "Informacion del rodado---> Dominio:" + dominio + "| Vehiculo=" + vehiculo + "\n";
+		return "Rodado con Dominio:" + dominio + "y tipo de Vehiculo:" + vehiculo;
 	}
 	
 	
