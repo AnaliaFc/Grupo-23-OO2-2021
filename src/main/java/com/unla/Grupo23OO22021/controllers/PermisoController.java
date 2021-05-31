@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.entities.Lugar;
@@ -148,7 +149,6 @@ public class PermisoController {
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		FilterModel filterModel = new FilterModel();
-		List<RodadoModel> listaRodados = rodadoService.traerRodados();
 		RodadoModel rodadoModel = new RodadoModel();
 
 		for (PermisoModel permisoModel : permisoService.findAll()) {
@@ -161,7 +161,6 @@ public class PermisoController {
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
 		modelAndView.addObject("permisosPeriodo", permisoPeriodoModels);
 		modelAndView.addObject("filtro", filterModel);
-		modelAndView.addObject("listaRodados", listaRodados);// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", rodadoModel);
 		return modelAndView;
 	}
@@ -220,13 +219,21 @@ public class PermisoController {
 
 	@PostMapping("/rodados")
 	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-	
-		rodadoModel=rodadoService.traerId(rodadoModel.getIdRodado());
-		modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
+		
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
+		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
+		
+		if(rodadoModel!=null)
+		{
+			List<PermisoPeriodoModel> listaPermisos = permisoService.findByDominio(rodadoModel);
+			modelAndView.addObject("permisosPeriodo", listaPermisos);
+								
+		}else {
+			modelAndView.addObject("permisosPeriodo", new ArrayList<PermisoPeriodoModel>());
+		}
+		
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());
-		modelAndView.addObject("listaRodados", rodadoService.traerRodados());// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", new RodadoModel());
 		return modelAndView;
 	}
