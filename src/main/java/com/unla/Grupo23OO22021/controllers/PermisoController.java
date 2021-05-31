@@ -300,4 +300,6 @@ public class PermisoController {
 		return modelAndView;
 	}
 
+	//TODO: Traer permiso por Persona
+	// @PreAuthorize("isAuthenticated() or hasRole('AUDITOR')")    
 }

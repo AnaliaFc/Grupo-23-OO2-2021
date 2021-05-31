@@ -46,6 +46,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.antMatchers("/perfil/save").hasRole("ADMIN")
 				.antMatchers("/perfil/eliminar/*").hasRole("ADMIN")
 				.antMatchers("/perfil/listar?format=pdf").hasRole("AUDITOR")
+				
+				.antMatchers("/permiso/rodados").hasRole("AUDITOR")
+				.antMatchers("/permiso/filtro").hasRole("AUDITOR")
 			.and()
 				.formLogin().loginPage("/login").loginProcessingUrl("/loginprocess")
 				.usernameParameter("username").passwordParameter("password")
