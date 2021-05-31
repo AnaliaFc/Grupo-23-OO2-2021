@@ -134,7 +134,7 @@ public class PermisoController {
 		}
 		
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
-		modelAndView.addObject("permisoPeriodo", permisoPeriodoModels);
+		modelAndView.addObject("permisosPeriodo", permisoPeriodoModels);
 		modelAndView.addObject("filtro", filterModel);
 		modelAndView.addObject("listaRodados", listaRodados);//TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", rodadoModel);
@@ -144,7 +144,8 @@ public class PermisoController {
 	@PostMapping("/rodados")
 	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-			
+		
+		rodadoModel=rodadoService.traerId(rodadoModel.getIdRodado());
 		modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());

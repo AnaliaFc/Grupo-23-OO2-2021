@@ -135,7 +135,6 @@ public class PermisoService implements IPermisoService{
 		return list;
 	}
 	
-	
 	public List<PermisoPeriodoModel> findByDominio(RodadoModel rodadoModel) {
 		List<PermisoPeriodoModel> permisos = new ArrayList<PermisoPeriodoModel>();
 		for(PermisoPeriodo permisoPeriodo : permisoRepository.findByDominio(rodadoModel.getDominio()))

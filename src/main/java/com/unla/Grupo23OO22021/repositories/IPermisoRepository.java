@@ -32,7 +32,10 @@ public interface IPermisoRepository extends JpaRepository<Permiso, Integer> {
 			+ "WHERE pd.fecha BETWEEN :inicio AND :fin")
 	public abstract List<PermisoDiario> findByFechaBetween(LocalDate inicio, LocalDate fin);
 	
-	@Query(value ="SELECT * FROM PermisoPeriodo pp INNER JOIN rodado r ON r.id_rodado=pp.id_rodado WHERE r.dominio=:dominio", nativeQuery = true)
+	@Query(value="SELECT * from Permiso p"
+			+" inner join PermisoPeriodo pp on p.id_permiso=pp.id_permiso"
+			+" inner join Rodado r ON r.id_rodado=pp.id_rodado "
+			+ "WHERE r.dominio=(:dominio)",nativeQuery=true)
 	public abstract List<PermisoPeriodo> findByDominio(@Param("dominio") String dominio);
 	
 	
