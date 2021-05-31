@@ -91,8 +91,11 @@ public class PermisoController {
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
 			permisoService.insertOrUpdate(permisoModel);
+			lugarService.clearLugares();
 		}
-
+		
+		
+		
 		return redirectView;
 	}
 	
@@ -131,9 +134,10 @@ public class PermisoController {
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
 			permisoService.insertOrUpdate(permisoModel);
+			lugarService.clearLugares();
 		}
 		
-		lugarService.clearLugares();
+		
 
 		return redirectView;
 	}
@@ -162,13 +166,9 @@ public class PermisoController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/remove-lugar/{index}")
-	public String removeLugar(@PathVariable int index, Model model) {
-		try {
-			lugarService.getLugares().remove(index);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+	@PostMapping("/clear-lugar")
+	public String clearLugar(Model model) {
+		lugarService.clearLugares();
 		return "redirect:/permiso/dia/new";
 	}
 	

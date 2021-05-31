@@ -17,21 +17,21 @@
 	<form action="#" th:action="@{/permiso/add-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Agregar Lugar</h5>
-		<input th:field="*{lugar}" type="text">
-		<input th:field="*{codigoPostal}" type="text">
-		<input th:field="*{lugar}" type="submit">
+		<input th:field="*{lugar}" type="text" placeholder="Nombre">
+		<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal">
+		<input th:field="*{lugar}" type="submit" class="btn btn-primary">
 	</form>
 
 	
 	<form action="#" th:action="@{/permiso/search-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Buscar Lugar</h5>
-		<input th:field="*{lugar}" type="text">
-		<input th:field="*{codigoPostal}" type="text">
-		<input th:field="*{lugar}" type="submit">
+		<input th:field="*{lugar}" type="text" placeholder="Nombre">
+		<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal">
+		<input th:field="*{lugar}" type="submit" class="btn btn-primary">
 	</form>
 	
-	<table class="table container" style="width:70%">
+	<table class="table container" style="width:70%" th:if="${lugares.size()>0}">
 		<thead>
 			<tr>
 				<th scope="col">Lugar</th>
@@ -39,12 +39,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="l : ${lugares}">
+			<tr th:each="l, iter : ${lugares}">
 				<td th:text="${l.lugar}"></td>
 				<td th:text="${l.codigoPostal}"></td>
 			</tr>
 		</tbody>
 	</table>
+	
+	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"
+		class="container mt-3" th:if="${lugares.size()>0}">
+		<input type="submit" value="Borrar lugares seleccionados" class="btn btn-primary">
+	</form>
 	
 	<form action="#" th:action="@{/permiso/dia/save}" th:object="${permiso}" method="POST" style="width:70%"
 		class="container">
