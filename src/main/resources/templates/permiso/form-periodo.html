@@ -14,6 +14,38 @@
 	<div class="mb-5"></div>
 
 
+	<form action="#" th:action="@{/permiso/add-lugar}" th:object="${lugar}" method="POST" style="width:70%"
+		class="container" th:if="${lugares.size()<2}">
+		<h5>Agregar Lugar</h5>
+		<input th:field="*{lugar}" type="text">
+		<input th:field="*{codigoPostal}" type="text">
+		<input th:field="*{lugar}" type="submit">
+	</form>
+
+
+	<form action="#" th:action="@{/permiso/search-lugar}" th:object="${lugar}" method="POST" style="width:70%"
+		class="container" th:if="${lugares.size()<2}">
+		<h5>Buscar Lugar</h5>
+		<input th:field="*{lugar}" type="text">
+		<input th:field="*{codigoPostal}" type="text">
+		<input th:field="*{lugar}" type="submit">
+	</form>
+
+	<table class="table container" style="width:70%">
+		<thead>
+			<tr>
+				<th scope="col">Lugar</th>
+				<th scope="col">Codigo Postal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l : ${lugares}">
+				<td th:text="${l.lugar}"></td>
+				<td th:text="${l.codigoPostal}"></td>
+			</tr>
+		</tbody>
+	</table>
+
 
 	<form action="#" th:action="@{/permiso/periodo/save}" th:object="${permiso}" method="POST" style="width:70%"
 		class="container">
@@ -25,7 +57,8 @@
 				<label class="form-label">Dni</label>
 				<select th:field="*{persona.idPersona}" class="form-select">
 					<option value=0></option>
-					<option th:each="p : ${personas}" th:value="${p.idPersona}" th:text="${p.nombre+' '+p.apellido+' '+p.dni}"></option>
+					<option th:each="p : ${personas}" th:value="${p.idPersona}"
+						th:text="${p.nombre+' '+p.apellido+' '+p.dni}"></option>
 				</select>
 			</div>
 
@@ -33,7 +66,8 @@
 				<label class="form-label">Rodado</label>
 				<select th:field="*{rodado.idRodado}" class="form-select">
 					<option value=0></option>
-					<option th:each="r : ${rodados}" th:value="${r.idRodado}" th:text="${r.vehiculo}+' con patente '+${r.dominio.toUpperCase()}">
+					<option th:each="r : ${rodados}" th:value="${r.idRodado}"
+						th:text="${r.vehiculo}+' con patente '+${r.dominio.toUpperCase()}">
 					</option>
 				</select>
 			</div>
@@ -53,33 +87,6 @@
 				<input class="form-control" type="number" th:field="*{cantDias}">
 			</div>
 		</div>
-
-		<div class="row mt-3">
-			<h4>Desde</h4>
-			<div class="form-group col">
-				<label class="form-label">Lugar</label>
-				<input class="form-control" type="text" th:field="*{desdeHasta[0].lugar}">
-			</div>
-
-			<div class="form-group col">
-				<label class="form-label">Codigo Postal</label>
-				<input class="form-control" type="text" th:field="*{desdeHasta[0].codigoPostal}">
-			</div>
-		</div>
-		
-		<div class="row mt-3">
-			<h4>Hasta</h4>
-			<div class="form-group col">
-				<label class="form-label">Lugar</label>
-				<input class="form-control" type="text" th:field="*{desdeHasta[1].lugar}">
-			</div>
-
-			<div class="form-group col">
-				<label class="form-label">Codigo Postal</label>
-				<input class="form-control" type="text" th:field="*{desdeHasta[1].codigoPostal}">
-			</div>
-		</div>
-
 
 		<div class="row">
 			<div class="form-group col">

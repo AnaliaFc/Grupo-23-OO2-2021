@@ -52,6 +52,7 @@ public class PermisoController {
 	@Autowired
 	private PersonaService personaService;
 
+	@Transactional
 	@GetMapping("/periodo/new")
 	public ModelAndView formPeriodo() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
@@ -62,6 +63,9 @@ public class PermisoController {
 
 		List<RodadoModel> rodados = rodadoService.traerRodados();
 		modelAndView.addObject("rodados", rodados);
+		
+		modelAndView.addObject("lugares", lugarService.getLugares());
+		modelAndView.addObject("lugar", new LugarModel());
 
 		return modelAndView;
 	}
@@ -78,6 +82,8 @@ public class PermisoController {
 		permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
 
 		System.out.println(permisoModel);
+		
+		permisoModel.setDesdeHasta(lugarService.getLugares());
 
 		// TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
@@ -207,7 +213,7 @@ public class PermisoController {
 							LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							filterModel.getLugar()));
-					modelAndView.addObject("permisoPeriodo", permisoService.findByFechaAndLugar(
+					modelAndView.addObject("permisosPeriodo", permisoService.findByFechaAndLugar(
 							LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							filterModel.getLugar()));
@@ -215,7 +221,7 @@ public class PermisoController {
 					modelAndView.addObject("permisosDiario", permisoService.findByFechaBetween(
 							LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
-					modelAndView.addObject("permisoPeriodo", permisoService.findByFecha(
+					modelAndView.addObject("permisosPeriodo", permisoService.findByFecha(
 							LocalDate.parse(filterModel.getFechaInicio(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
 							LocalDate.parse(filterModel.getFechaFin(), DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 				}
