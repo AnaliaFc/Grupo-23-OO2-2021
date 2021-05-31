@@ -218,22 +218,18 @@ public class PermisoController {
 	}
 
 	@PostMapping("/rodados")
-	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel, RedirectAttributes redirAttrs) {
+	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
 		
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-		String valorIngresado= rodadoModel.getDominio();
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
 		
 		if(rodadoModel!=null)
 		{
 			List<PermisoPeriodoModel> listaPermisos = permisoService.findByDominio(rodadoModel);
 			modelAndView.addObject("permisosPeriodo", listaPermisos);
-			if (listaPermisos.size()==0)
-				{redirAttrs.addFlashAttribute("error", "El dominio "+rodadoModel.getDominio()+" no tiene permisos asignados.");}
-				
+								
 		}else {
 			modelAndView.addObject("permisosPeriodo", new ArrayList<PermisoPeriodoModel>());
-			redirAttrs.addFlashAttribute("error", "El dominio "+valorIngresado+" no se encuentra registrado.");
 		}
 		
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
