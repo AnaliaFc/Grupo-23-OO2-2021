@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.entities.Lugar;
@@ -217,16 +218,22 @@ public class PermisoController {
 	}
 
 	@PostMapping("/rodados")
-	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
+	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel, RedirectAttributes redirAttrs) {
 		
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+		String valorIngresado= rodadoModel.getDominio();
 		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
 		
 		if(rodadoModel!=null)
 		{
-			modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
+			List<PermisoPeriodoModel> listaPermisos = permisoService.findByDominio(rodadoModel);
+			modelAndView.addObject("permisosPeriodo", listaPermisos);
+			if (listaPermisos.size()==0)
+				{redirAttrs.addFlashAttribute("error", "El dominio "+rodadoModel.getDominio()+" no tiene permisos asignados.");}
+				
 		}else {
 			modelAndView.addObject("permisosPeriodo", new ArrayList<PermisoPeriodoModel>());
+			redirAttrs.addFlashAttribute("error", "El dominio "+valorIngresado+" no se encuentra registrado.");
 		}
 		
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());

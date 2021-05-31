@@ -12,7 +12,7 @@
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
 	<div class="mb-5"></div>
-
+	<div th:if="${error != null}" th:text="${error}"class="alert alert-danger"></div>
 	<div class="accordion container" id="accordionExample" style="width:85%">
 		<div class="accordion-item">
 			<h2 class="accordion-header" id="headingOne">
