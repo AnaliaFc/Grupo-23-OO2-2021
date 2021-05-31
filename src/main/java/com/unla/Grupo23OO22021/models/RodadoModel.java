@@ -1,15 +1,19 @@
 package com.unla.Grupo23OO22021.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class RodadoModel {
 	
 	private long idRodado;
 	
-	@Size(min=6,max=10)
+	@NotNull(message="Campo dominio no puede ser vacio")
+	@Pattern(regexp = "^[A-Z]{3}[0-9]{3}|[A-Z]{2}[0-9]{3}[A-Z]{2}$", message ="Patente debe ser formato AAA999 o AA123AA")
 	private String dominio;
 	
-	@Size(min=5,max=50)
+	@NotNull(message="Campo vehiculo no puede ser vacio")
+	@Size(min=5,max=50, message="Longitud del vehiculo debe ser entre 5 y 50 caracteres")
 	private String vehiculo;
 	
 	public RodadoModel() {}

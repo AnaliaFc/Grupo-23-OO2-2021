@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,19 +34,24 @@ public class RodadoController {
 	}
 	
 	@PostMapping("/save")
-	public RedirectView save(@Valid @ModelAttribute("rodado") RodadoModel rodadoModel, BindingResult bindingResult)
+	public ModelAndView save(@Valid @ModelAttribute("rodado") RodadoModel rodadoModel, BindingResult bindingResult)
 	{
-		RedirectView redirectView = new RedirectView("/");
+		ModelAndView mAV;
 
 		RodadoModel rodadoExistente = rodadoService.traerDominio(rodadoModel.getDominio());
-	  if (rodadoModel.equals(rodadoExistente)||bindingResult.hasErrors())
+		if(rodadoModel.equals(rodadoExistente))
 		{
-			redirectView.setUrl("/rodado/new");
+			FieldError error = new FieldError("rodado", "dominio", "Ya existe un rodado con el dominio ingresado");
+			bindingResult.addError(error);
+			mAV = new ModelAndView("rodado/form");
+		}else if(bindingResult.hasErrors())
+		{
+			mAV = new ModelAndView("rodado/form");
 		} else{
 		    	rodadoService.insertOrUpdate(rodadoModel);
+		    	mAV = new ModelAndView("/");
 		    }
-		return redirectView;
+		return mAV;
 	}
-
-
+	
 }
