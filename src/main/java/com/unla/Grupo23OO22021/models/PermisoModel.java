@@ -11,15 +11,18 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.unla.Grupo23OO22021.entities.Persona;
+import com.sun.istack.NotNull;
 import com.unla.Grupo23OO22021.entities.Lugar;
 
 public class PermisoModel {
 	
 	protected int idPermiso;
 	
+	@NotNull
 	protected PersonaModel persona;	
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@NotNull
 	protected Date fecha;
 	
 	protected List<LugarModel> desdeHasta;

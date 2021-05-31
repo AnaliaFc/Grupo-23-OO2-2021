@@ -5,11 +5,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.unla.Grupo23OO22021.entities.Persona;
 import com.unla.Grupo23OO22021.entities.Lugar;
 
 public class PermisoDiarioModel extends PermisoModel {
 	
+	@NotEmpty
 	private String motivo;
 	
 	public PermisoDiarioModel() {

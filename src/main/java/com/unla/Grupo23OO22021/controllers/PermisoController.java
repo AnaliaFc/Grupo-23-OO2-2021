@@ -120,19 +120,19 @@ public class PermisoController {
 			BindingResult bindingResult) {
 		RedirectView redirectView = new RedirectView("/permiso/listar");
 
-		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
-
-		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
-
-		System.out.println(permisoModel);
-		
-		
-		
-		permisoModel.setDesdeHasta(lugarService.getLugares());
 		
 		if (bindingResult.hasErrors())
-			redirectView.setUrl("/permiso/periodo/new");
+			redirectView.setUrl("/permiso/dia/new");
 		else {
+			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
+
+			permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
+
+			System.out.println(permisoModel);
+			
+			
+			
+			permisoModel.setDesdeHasta(lugarService.getLugares());
 			permisoService.insertOrUpdate(permisoModel);
 			lugarService.clearLugares();
 		}
