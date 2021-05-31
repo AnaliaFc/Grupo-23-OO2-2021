@@ -111,27 +111,36 @@ public class PermisoService implements IPermisoService{
 	}
 	
 	
-	public List<PermisoPeriodoModel> findByFechaAndLugar(LocalDate inicio, LocalDate fin, LugarModel desde, LugarModel hasta){
+	public List<PermisoPeriodoModel> findByFechaAndLugar(LocalDate inicio, LocalDate fin, LugarModel lugar){
 		List<PermisoPeriodoModel> permisoPeriodoModels = findByFecha(inicio, fin);
 		List<PermisoPeriodoModel> list = new ArrayList<PermisoPeriodoModel>();
 		
 		for(PermisoPeriodoModel periodoModel : permisoPeriodoModels) {
-			if(periodoModel.getDesdeHasta().get(0).equals(desde) && periodoModel.getDesdeHasta().get(1).equals(hasta))
+			if(periodoModel.getDesdeHasta().get(0).equals(lugar) || periodoModel.getDesdeHasta().get(1).equals(lugar))
 				list.add(periodoModel);
 		}
 		
 		return list;
 	}
 	
-	public List<PermisoDiarioModel> findByFechaBetweenAndLugar(LocalDate inicio, LocalDate fin, LugarModel desde, LugarModel hasta){
+	public List<PermisoDiarioModel> findByFechaBetweenAndLugar(LocalDate inicio, LocalDate fin, LugarModel lugar){
 		List<PermisoDiarioModel> permisoDiarioModels = findByFechaBetween(inicio, fin);
 		List<PermisoDiarioModel> list = new ArrayList<PermisoDiarioModel>();
 		
 		for(PermisoDiarioModel permisoDiarioModel : permisoDiarioModels) {
-			if(permisoDiarioModel.getDesdeHasta().get(0).equals(desde) && permisoDiarioModel.getDesdeHasta().get(1).equals(hasta))
+			System.out.println(permisoDiarioModel.getDesdeHasta());
+			System.out.println(lugar);
+			
+			LugarModel desde = permisoDiarioModel.getDesdeHasta().get(0);
+			LugarModel hasta = permisoDiarioModel.getDesdeHasta().get(1);
+			
+			if(desde.equals(lugar))
 				list.add(permisoDiarioModel);
+			else if(hasta.equals(lugar))
+				list.add(permisoDiarioModel);
+			
 		}
-		
+		System.out.println(list);
 		return list;
 	}
 	

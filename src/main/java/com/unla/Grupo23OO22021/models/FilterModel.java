@@ -15,9 +15,7 @@ public class FilterModel {
 	private String fechaFin;
 	
 	
-	private LugarModel desde;
-	
-	private LugarModel hasta;
+	private LugarModel lugar;
 	
 	public FilterModel() {
 		
@@ -31,12 +29,11 @@ public class FilterModel {
 	
 	
 
-	public FilterModel(String fechaInicio, String fechaFin, LugarModel desde, LugarModel hasta) {
+	public FilterModel(String fechaInicio, String fechaFin, LugarModel lugar) {
 		super();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
-		this.desde = desde;
-		this.hasta = hasta;
+		this.lugar=lugar;
 	}
 
 	public String getFechaInicio() {
@@ -55,21 +52,15 @@ public class FilterModel {
 		this.fechaFin = fechaFin;
 	}
 
-	public LugarModel getDesde() {
-		return desde;
+	public LugarModel getLugar() {
+		return lugar;
 	}
 
-	public void setDesde(LugarModel desde) {
-		this.desde = desde;
+	public void setLugar(LugarModel lugar) {
+		this.lugar = lugar;
 	}
 
-	public LugarModel getHasta() {
-		return hasta;
-	}
-
-	public void setHasta(LugarModel hasta) {
-		this.hasta = hasta;
-	}
+	
 	
 	
 	
