@@ -49,7 +49,8 @@ public abstract class Permiso {
 			joinColumns = @JoinColumn(name="FK_permiso", nullable = false),
 			inverseJoinColumns = @JoinColumn(name="FK_lugar", nullable = false)
 	)
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
+	
 	@OrderBy("createAt")
 	protected Set<Lugar> desdeHasta;
 	

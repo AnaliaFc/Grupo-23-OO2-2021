@@ -18,7 +18,7 @@
 			<h2 class="accordion-header" id="headingOne">
 				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
 					aria-expanded="true" aria-controls="collapseOne">
-					Filtros
+					Filtros por fecha y lugar
 				</button>
 				<h2 class="accordion-header" id="headingTwo">
 				<button sec:authorize="hasRole('ROLE_AUDITOR')" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
@@ -137,7 +137,7 @@
 						<span th:text="${p.desdeHasta[0].lugar + ' CP: ' + p.desdeHasta[0].codigoPostal}"/> &harr;
 						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}"/>
 					</td>
-					<td th:text="${p.rodado.vehiculo + 'P: ' + p.rodado.dominio}"></td>
+					<td th:text="${p.rodado.vehiculo + ' P: ' + p.rodado.dominio}"></td>
 					<td th:text="${p.vacaciones ? 'Si':'No'}"></td>
 				</tr>
 			</tbody>

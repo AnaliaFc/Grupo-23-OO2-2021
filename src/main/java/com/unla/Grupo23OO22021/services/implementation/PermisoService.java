@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.unla.Grupo23OO22021.converters.LugarConverter;
 import com.unla.Grupo23OO22021.converters.PermisoDiarioConverter;
@@ -42,7 +43,7 @@ public class PermisoService implements IPermisoService{
 	@Autowired
 	@Qualifier("permisoRepository")
 	private IPermisoRepository permisoRepository;
-
+	
 	@Override
 	public List<PermisoModel> findAll() {
 		List<PermisoModel> permisos = new ArrayList<PermisoModel>();
@@ -67,6 +68,7 @@ public class PermisoService implements IPermisoService{
 		return null;
 	}
 
+	
 	@Override
 	public PermisoModel insertOrUpdate(PermisoModel permisoModel) {
 		if(permisoModel instanceof PermisoDiarioModel)

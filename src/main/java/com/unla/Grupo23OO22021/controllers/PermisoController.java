@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.unla.Grupo23OO22021.entities.Lugar;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.FilterModel;
 import com.unla.Grupo23OO22021.models.LugarModel;
@@ -85,7 +88,8 @@ public class PermisoController {
 
 		return redirectView;
 	}
-
+	
+	@Transactional
 	@GetMapping("/dia/new")
 	public ModelAndView formDia() {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
@@ -93,10 +97,14 @@ public class PermisoController {
 
 		List<PersonaModel> personas = personaService.traerPersonas();
 		modelAndView.addObject("personas", personas);
+		
+		modelAndView.addObject("lugares", lugarService.getLugares());
+		modelAndView.addObject("lugar", new LugarModel());
 
 		return modelAndView;
 	}
-
+	
+	@Transactional
 	@PostMapping("/dia/save")
 	public RedirectView saveDia(@Valid @ModelAttribute("permiso") PermisoDiarioModel permisoModel,
 			BindingResult bindingResult) {
@@ -107,11 +115,18 @@ public class PermisoController {
 		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
 
 		System.out.println(permisoModel);
+		
+		
+		
+		permisoModel.setDesdeHasta(lugarService.getLugares());
+		
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
 			permisoService.insertOrUpdate(permisoModel);
 		}
+		
+		lugarService.clearLugares();
 
 		return redirectView;
 	}
@@ -138,6 +153,29 @@ public class PermisoController {
 		modelAndView.addObject("listaRodados", listaRodados);// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", rodadoModel);
 		return modelAndView;
+	}
+	
+	@Transactional
+	@PostMapping("/add-lugar")
+	public String addLugar(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+		try {
+			lugarService.guardarLugar(lugarModel);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/permiso/dia/new";
+	}
+	
+	@Transactional
+	@PostMapping("/search-lugar")
+	public ModelAndView searchLugar(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
+		System.out.println(lugarModeEncontrado);
+		if(lugarModeEncontrado!=null) {
+			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}
+		return formDia();
 	}
 
 	@PostMapping("/rodados")

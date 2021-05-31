@@ -12,6 +12,7 @@ import com.unla.Grupo23OO22021.repositories.ILugarRepository;
 import com.unla.Grupo23OO22021.services.ILugarService;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("lugarService")
 public class LugarService implements ILugarService {
@@ -20,6 +21,8 @@ public class LugarService implements ILugarService {
 	
 	@Autowired
 	private ILugarRepository lugarRepository;
+
+	private List<Lugar> lugares = new ArrayList<Lugar>();
 	
 	@Override
 	public List<LugarModel> findAll() {
@@ -33,7 +36,8 @@ public class LugarService implements ILugarService {
 	public LugarModel findByIdLugar(long id) {
 		return lugarConverter.entityToModel(lugarRepository.findByIdLugar(id));
 	}
-
+	
+	
 	@Override
 	public LugarModel findByLugarAndCodigoPostal(String lugar, String codigoPostal) {
 		
@@ -44,6 +48,31 @@ public class LugarService implements ILugarService {
 	@Override
 	public LugarModel inserterOrUpdate(LugarModel lugarModel) {
 		return (LugarModel) lugarConverter.entityToModel(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+	}
+	
+	
+	public void guardarLugarEncontrado(LugarModel lugarModel) {
+		lugares.add(lugarConverter.modelToEntity(lugarModel));
+	}
+	
+	
+	public void guardarLugar(LugarModel lugarModel) {
+		lugares.add(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+	}
+	
+	
+	
+	public List<LugarModel> getLugares() {
+		List<LugarModel> list = new ArrayList<LugarModel>();
+		
+		for(Lugar lugar : lugares)
+			list.add(lugarConverter.entityToModel(lugar));
+		
+		return list;
+	}
+
+	public void clearLugares() {
+		this.lugares = new ArrayList<Lugar>();
 	}
 
 	@Override
