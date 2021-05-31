@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
@@ -33,9 +35,10 @@ public class PerfilController {
 	}
 	
 	@GetMapping("/listar")
-	public String listar(Model model) {
+	public String listar(Model model, @RequestParam(name = "error", required = false) String error) {
 		List<PerfilModel> perfiles = service.traerPerfiles();
 		model.addAttribute("perfiles",perfiles);
+		model.addAttribute("error", error);
 		return ViewRouteHelper.PERFILES;
 	}
 	
@@ -65,10 +68,15 @@ public class PerfilController {
 		return redirect;
 	}
 	
-	@GetMapping("/eliminar/{idPerfil}")
-	public String delete(@PathVariable long idPerfil) {
-		service.remove(idPerfil);
-		return ViewRouteHelper.ROUTE_PERFILES;
+	@PostMapping("/eliminar/{idPerfil}")
+	public String delete(@PathVariable long idPerfil, Model model) {
+		
+		if(!service.remove(idPerfil)) {
+			return ViewRouteHelper.ROUTE_PERFILES+"?error=Error al intertar borrar el perfil: "+service.traerId(idPerfil).getTipo()+""
+					+ ", ya que tiene usuarios asignados.";
+		}else {
+			return ViewRouteHelper.ROUTE_PERFILES;
+		}
 	}
 	
 }

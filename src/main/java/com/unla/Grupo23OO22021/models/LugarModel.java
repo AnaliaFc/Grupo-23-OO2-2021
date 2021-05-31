@@ -73,7 +73,7 @@ public class LugarModel {
 	}
 
 	public boolean equals(LugarModel lugar) {
-		return codigoPostal.equalsIgnoreCase(lugar.codigoPostal) && this.lugar.equalsIgnoreCase(lugar.lugar);
+		return codigoPostal.toLowerCase().trim().equalsIgnoreCase(lugar.codigoPostal.toLowerCase().trim()) && this.lugar.toLowerCase().trim().equalsIgnoreCase(lugar.lugar.toLowerCase().trim());
 	}
 
 
