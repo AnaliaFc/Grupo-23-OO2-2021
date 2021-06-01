@@ -15,89 +15,102 @@
 	<div class="accordion container" id="accordionExample" style="width:85%">
 		<div class="accordion-item">
 			<h2 class="accordion-header" id="headingOne">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-					aria-expanded="true" aria-controls="collapseOne" sec:authorize="hasRole('ROLE_AUDITOR')">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+					sec:authorize="hasRole('ROLE_AUDITOR')">
 					Filtros por fecha y lugar
 				</button>
-				<h2 class="accordion-header" id="headingTwo">
-				<button sec:authorize="hasRole('ROLE_AUDITOR')" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-					aria-expanded="true" aria-controls="collapseTwo">
+
+				<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+					data-bs-parent="#accordionExample" sec:authorize="hasRole('ROLE_AUDITOR')">
+					<div class="accordion-body">
+						<form action="#" th:action="@{/permiso/filtro}" th:object="${filtro}" method="POST"
+							style="width: 50%;" id="filtro-fecha">
+							<div class="row">
+								<div class="form-group col">
+									<label class="form-label form-label-sm">Fecha de inicio</label>
+									<input class="form-control form-control-sm" th:field="*{fechaInicio}" type="text"
+										placeholder="2021-05-30">
+								</div>
+								<div class="col-1"></div>
+								<div class="form-group col">
+									<label class="form-label form-label-sm">Fecha de fin</label>
+									<input class="form-control form-control-sm" th:field="*{fechaFin}" type="text"
+										placeholder="2021-05-30">
+								</div>
+							</div>
+
+							<div class="row mt-2">
+								<div class="form-group col">
+									<label class="form-label form-label-sm">Lugar</label>
+									<input class="form-control form-control-sm" th:field="*{lugar.lugar}" type="text"
+										placeholder="Adrogue">
+								</div>
+								<div class="form-group col">
+									<label class="form-label form-label-sm">Codigo Postal</label>
+									<input class="form-control form-control-sm" th:field="*{lugar.codigoPostal}"
+										type="text" placeholder="1846">
+								</div>
+								<div></div>
+							</div>
+
+							<div class="mt-3">
+								<input class="btn btn-primary" value="Filtrar" type="submit" form="filtro-fecha">
+								<a class="btn btn-secondary" th:href="@{/permiso/listar}">Limpiar filtro</a>
+							</div>
+
+						</form>
+					</div>
+				</div>
+
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingTwo">
+				<button sec:authorize="hasRole('ROLE_AUDITOR')" class="accordion-button collapsed" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true"
+					aria-controls="collapseTwo">
 					Filtros Por Rodado
 				</button>
-				<h2 class="accordion-header" id="headingThree">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-					aria-expanded="true" aria-controls="collapseThree">
+				<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+					data-bs-parent="#accordionExample" sec:authorize="hasRole('ROLE_AUDITOR')">
+					<div class="accordion-body">
+						<form action="#" th:action="@{/permiso/rodados}" th:object="${rodado}" method="POST"
+							style="width: 50%;">
+							<div class="form-group col">
+								<label class="form-label">Ingrese el Dominio a buscar</label>
+								<input class="form-control" type="text" th:field="*{dominio}">
+							</div>
+							<input class="btn btn-primary" value="Enviar" type="submit">
+							<a class="btn btn-secondary" th:href="@{/permiso/listar}">Limpiar filtro</a>
+						</form>
+					</div>
+				</div>
+		</div>
+
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingThree">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"
+					sec:authorize="hasRole('ROLE_AUDITOR') or !isAuthenticated()">
 					Filtros Por Persona
 				</button>
 			</h2>
-			<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-				data-bs-parent="#accordionExample" sec:authorize="hasRole('ROLE_AUDITOR')">
+			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+				data-bs-parent="#accordionExample" sec:authorize="hasRole('ROLE_AUDITOR') or !isAuthenticated()">
 				<div class="accordion-body">
-					<form action="#" th:action="@{/permiso/filtro}" th:object="${filtro}" method="POST"
-						style="width: 50%;" id="filtro-fecha">
-						<div class="row">
-							<div class="form-group col">
-								<label class="form-label form-label-sm">Fecha de inicio</label>
-								<input class="form-control form-control-sm" th:field="*{fechaInicio}" type="text"
-									placeholder="2021-05-30">
-							</div>
-							<div class="col-1"></div>
-							<div class="form-group col">
-								<label class="form-label form-label-sm">Fecha de fin</label>
-								<input class="form-control form-control-sm" th:field="*{fechaFin}" type="text"
-									placeholder="2021-05-30">
-							</div>
+					<form action="#" th:action="@{/permiso/personas}" th:object="${persona}" method="POST"
+						style="width: 50%;">
+						<div class="form-group col">
+							<label class="form-label">Ingrese el DNI a buscar</label>
+							<input class="form-control" type="text" th:field="*{dni}">
 						</div>
-						
-						<div class="row mt-2">
-							<div class="form-group col">
-								<label class="form-label form-label-sm">Lugar</label>
-								<input class="form-control form-control-sm" th:field="*{lugar.lugar}" type="text"
-									placeholder="Adrogue">
-							</div>
-							<div class="form-group col">
-								<label class="form-label form-label-sm">Codigo Postal</label>
-								<input class="form-control form-control-sm" th:field="*{lugar.codigoPostal}" type="text"
-									placeholder="1846">
-							</div>
-							<div></div>
-						</div>
-						
-						<div class="mt-3">
-							<input class="btn btn-primary" value="Filtrar" type="submit" form="filtro-fecha">
-							<a class="btn btn-secondary" th:href="@{/permiso/listar}" >Limpiar filtro</a>
-						</div>
-
+						<input class="btn btn-primary" value="Enviar" type="submit">
+						<a class="btn btn-secondary" th:href="@{/permiso/listar}">Limpiar filtro</a>
 					</form>
 				</div>
 			</div>
-			<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-				data-bs-parent="#accordionExample">
-				<div class="accordion-body">
-				 <form action="#" th:action="@{/permiso/rodados}" th:object="${rodado}" method="POST" style="width: 50%;">
-					<div class="form-group col">
-				    <label class="form-label">Ingrese el Dominio a buscar</label>
-				    <input class="form-control" type="text" th:field="*{dominio}">
-			        </div>
-					<input class="btn btn-primary" value="Enviar" type="submit">
-					<a class="btn btn-secondary" th:href="@{/permiso/listar}" >Limpiar filtro</a>
-				</form>
-				</div>
-			</div>
-			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-				data-bs-parent="#accordionExample">
-				<div class="accordion-body">
-				<form action="#" th:action="@{/permiso/personas}" th:object="${persona}" method="POST" style="width: 50%;">
-					<div class="form-group col">
-				    <label class="form-label">Ingrese el DNI a buscar</label>
-				    <input class="form-control" type="text" th:field="*{dni}">
-			        </div>
-					<input class="btn btn-primary" value="Enviar" type="submit">
-					<a class="btn btn-secondary" th:href="@{/permiso/listar}" >Limpiar filtro</a>
-				</form>
-				</div>
-			</div>
 		</div>
+
 	</div>
 
 	<form action="#" th:action="@{/permiso/dia/save}" th:object="${permiso}" method="POST" style="width:85%"
@@ -122,9 +135,9 @@
 					<td th:text="${p.persona.dni}"></td>
 					<td th:text="${p.fecha}"></td>
 					<td th:text="${p.fecha}"></td>
-					<td >
-						<span th:text="${p.desdeHasta[0].lugar + ' CP: ' + p.desdeHasta[0].codigoPostal}"/> &harr;
-						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}"/>
+					<td>
+						<span th:text="${p.desdeHasta[0].lugar + ' CP: ' + p.desdeHasta[0].codigoPostal}" /> &harr;
+						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}" />
 					</td>
 					<td class="col-3" th:text="${p.motivo}"></td>
 				</tr>
@@ -152,8 +165,8 @@
 					<td th:text="${p.fecha}"></td>
 					<td th:text="${p.fecha.toLocalDate().plusDays(p.cantDias)}"></td>
 					<td class="col-4">
-						<span th:text="${p.desdeHasta[0].lugar + ' CP: ' + p.desdeHasta[0].codigoPostal}"/> &harr;
-						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}"/>
+						<span th:text="${p.desdeHasta[0].lugar + ' CP: ' + p.desdeHasta[0].codigoPostal}" /> &harr;
+						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}" />
 					</td>
 					<td th:text="${p.rodado.vehiculo + ' P: ' + p.rodado.dominio}"></td>
 					<td th:text="${p.vacaciones ? 'Si':'No'}"></td>

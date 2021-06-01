@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -270,6 +271,7 @@ public class PermisoController {
 		return modelAndView;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_AUDITOR') or !isAuthenticated()")
 	@PostMapping("/personas")
 	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
