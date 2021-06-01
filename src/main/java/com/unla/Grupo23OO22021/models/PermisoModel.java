@@ -25,15 +25,12 @@ public class PermisoModel {
 	@NotNull
 	protected Date fecha;
 	
-	protected List<LugarModel> desdeHasta;
+	protected List<LugarModel> desdeHasta=new ArrayList<LugarModel>();
 	
 	private String fechaString;
 	
 	public PermisoModel() {
-		this.desdeHasta=new ArrayList<LugarModel>();
-		for(int i=0;i<2;i++) {
-			desdeHasta.add(new LugarModel());
-		}
+		
 	}
 	
 	public PermisoModel(int idPermiso, PersonaModel persona, Date fecha, List<LugarModel> desdeHasta) {

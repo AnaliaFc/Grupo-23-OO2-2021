@@ -188,7 +188,7 @@ public class PermisoController {
 			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
 				lugarService.guardarLugar(lugarModel);
 			}else {
-				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
 				return "redirect:/permiso/dia/new"+error;
 			}
 		} catch (Exception e) {
@@ -205,7 +205,7 @@ public class PermisoController {
 			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
 				lugarService.guardarLugar(lugarModel);
 			}else {
-				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
 				return "redirect:/permiso/periodo/new"+error;
 			}
 		} catch (Exception e) {
@@ -220,21 +220,26 @@ public class PermisoController {
 	public ModelAndView searchLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		System.out.println(lugarModeEncontrado);
+		String error = null;
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}else {
+			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 		}
-		return formDia(null);
+		return formDia(error);
 	}
 	
 	@Transactional
 	@PostMapping("/search-lugar-p")
 	public ModelAndView searchLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
-		System.out.println(lugarModeEncontrado);
+		String error = null;
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}else {
+			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 		}
-		return formPeriodo(null);
+		return formPeriodo(error);
 	}
 
 	@PostMapping("/rodados")

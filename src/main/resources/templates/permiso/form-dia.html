@@ -11,11 +11,16 @@
 
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
-	<div class="mb-5"></div>
-
 	<div class="alert alert-warning" th:if="${error}">
 		<span th:text="${error}"></span>
 	</div>
+	<div class="mb-5"></div>
+	
+	<div class="container" style="width: 70%;">
+		<h1>Formulario de Permiso por Dia</h1>
+	</div>
+
+	
 	<form action="#" th:action="@{/permiso/add-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Agregar Lugar</h5>
@@ -54,8 +59,8 @@
 	</form>
 	
 	<form action="#" th:action="@{/permiso/dia/save}" th:object="${permiso}" method="POST" style="width:70%"
-		class="container">
-		<h1>Formulario de Permiso por Dia</h1>
+		class="container mt-2" th:if="${lugares.size()==2}">
+		
 
 		<div class="row">
 
