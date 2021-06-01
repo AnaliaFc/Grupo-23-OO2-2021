@@ -15,17 +15,17 @@
 		<span th:text="${error}"></span>
 	</div>
 	<div class="mb-5"></div>
-	
+
 	<div class="container" style="width: 70%;">
-		<h1>Formulario de Permiso por Dia <span class="badge bg-secondary" th:text="${lugares.size()+1+'/3'}"/></h1>
+		<h1>Formulario de Permiso por Dia <span class="badge bg-secondary" th:text="${lugares.size()+1+'/3'}" /></h1>
 	</div>
-	
+
 	<table class="table container" style="width:70%" th:if="${lugares.size()>0}">
 		<thead>
 			<tr>
 				<th scope="col">Lugar</th>
 				<th scope="col">Codigo Postal</th>
-				
+
 			</tr>
 		</thead>
 		<tbody>
@@ -35,14 +35,21 @@
 			</tr>
 		</tbody>
 	</table>
-	
+
 	<form action="#" th:action="@{/permiso/search-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5 th:if="${lugares.size()==0}">Desde</h5>
 		<h5 th:if="${lugares.size()==1}">Hasta</h5>
-		<input th:field="*{lugar}" type="text" placeholder="Nombre" required>
-		<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal" required>
-		<input th:field="*{lugar}" type="submit" class="btn btn-primary">
+		<div class="mb-2">
+			<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
+		</div>
+		
+		<div class="mb-2">
+			<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal" class="form-control">
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
+		</div>
+		<input type="submit" class="btn btn-primary">
 	</form>
 	
 	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"

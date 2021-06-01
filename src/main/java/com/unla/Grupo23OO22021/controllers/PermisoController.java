@@ -191,17 +191,26 @@ public class PermisoController {
 	
 	@Transactional
 	@PostMapping("/search-lugar-d")
-	public ModelAndView searchLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+	public ModelAndView searchLugarD(@Valid @ModelAttribute("lugar") LugarModel lugarModel,BindingResult bindingResult) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
-		System.out.println(lugarModeEncontrado);
-		String error = null;
-		if(lugarModeEncontrado!=null) {
-			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
-		}else {
-//			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
-			lugarService.guardarLugar(lugarModel);
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_DIA);
+		System.out.println(bindingResult);
+		if(!bindingResult.hasErrors()) {
+			if(lugarModeEncontrado!=null) {
+				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+			}else {
+//				error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+				lugarService.guardarLugar(lugarModel);
+			}
+			modelAndView.addObject("lugar", new LugarModel());
 		}
-		return formDia(error);
+		
+		modelAndView.addObject("lugares", lugarService.getLugares());
+		modelAndView.addObject("permiso", new PermisoDiarioModel());
+		
+		List<PersonaModel> personas = personaService.traerPersonas();
+		modelAndView.addObject("personas", personas);
+		return modelAndView;
 	}
 	
 	@Transactional

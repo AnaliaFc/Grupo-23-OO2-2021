@@ -42,9 +42,21 @@
 		class="container" th:if="${lugares.size()<2}">
 		<h5 th:if="${lugares.size()==0}">Desde</h5>
 		<h5 th:if="${lugares.size()==1}">Hasta</h5>
-		<input th:field="*{lugar}" type="text" placeholder="Nombre">
-		<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal">
+		<div class="mb-2">
+			<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
+		</div>
+		
+		<div class="mb-2">
+			<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal" class="form-control">
+			<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
+		</div>
 		<input th:field="*{lugar}" type="submit" class="btn btn-primary">
+	</form>
+	
+	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"
+		class="container mt-3" th:if="${lugares.size()>0}">
+		<input type="submit" value="Borrar lugares seleccionados" class="btn btn-primary">
 	</form>
 
 	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"

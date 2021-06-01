@@ -8,10 +8,10 @@ public class LugarModel {
 
 	private long idLugar;
 	
-	@Size(min=3,max=20)
+	@Size(min=3,max=20, message = "Debe tener entre 3 y 20 caracteres")
 	private String lugar;
 	
-	@Size(min=4,max=5)
+	@Size(min=4,max=5, message = "Debe tener entre 4 y 5 caracteres")
 	private String codigoPostal;
 	
 	public LugarModel(){}
