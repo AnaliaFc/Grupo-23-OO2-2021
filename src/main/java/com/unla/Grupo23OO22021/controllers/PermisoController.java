@@ -84,30 +84,46 @@ public class PermisoController {
 	}
 
 	@PostMapping("/periodo/save")
-	public RedirectView savePeriodo(@Valid @ModelAttribute("permiso") PermisoPeriodoModel permisoModel,
+	public ModelAndView savePeriodo(@Valid @ModelAttribute("permiso") PermisoPeriodoModel permisoModel,
 			BindingResult bindingResult) {
-		RedirectView redirectView = new RedirectView("/permiso/listar");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 
-		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
-
-		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
-
-		permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
-
-		System.out.println(permisoModel);
 		
-		permisoModel.setDesdeHasta(lugarService.getLugares());
+		if (bindingResult.hasErrors()) {
+			modelAndView.addObject("personas", personaService.traerPersonas());
 
-		if (bindingResult.hasErrors())
-			redirectView.setUrl("/permiso/periodo/new");
+			List<RodadoModel> rodados = rodadoService.traerRodados();
+			modelAndView.addObject("rodados", rodados);
+			
+			modelAndView.addObject("lugares", lugarService.getLugares());
+			modelAndView.addObject("lugar", new LugarModel());
+			
+			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_PERIODO);
+			
+			return modelAndView;
+		}
+			
 		else {
+			
+			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
+
+			permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
+
+			permisoModel.setRodado(rodadoService.traerId(permisoModel.getRodado().getIdRodado()));
+
+			
+			permisoModel.setDesdeHasta(lugarService.getLugares());
+
+			
 			permisoService.insertOrUpdate(permisoModel);
 			lugarService.clearLugares();
+			
+			return traer();
 		}
 		
 		
 		
-		return redirectView;
+		
 	}
 	
 	@Transactional

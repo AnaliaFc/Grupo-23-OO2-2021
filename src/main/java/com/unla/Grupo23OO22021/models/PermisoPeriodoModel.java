@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.validation.constraints.Min;
 
 import com.unla.Grupo23OO22021.entities.Persona;
+import com.sun.istack.NotNull;
 import com.unla.Grupo23OO22021.entities.Lugar;
 import com.unla.Grupo23OO22021.entities.Rodado;
 
@@ -17,6 +18,7 @@ public class PermisoPeriodoModel extends PermisoModel{
 	@Min(1)
 	private int cantDias;
 	private boolean vacaciones;
+	@NotNull
 	private RodadoModel rodado;
 	
 	public PermisoPeriodoModel() {

@@ -93,7 +93,8 @@
 
 			<div class="form-group col">
 				<label class="form-label">Cantidad de dias</label>
-				<input class="form-control" type="number" th:field="*{cantDias}" min="1" value="1">
+				<input class="form-control" type="number" th:field="*{cantDias}">
+				<small class="form-text text-danger" th:if="${#fields.hasErrors('cantDias')}" th:errors="*{cantDias}"></small>
 			</div>
 		</div>
 
