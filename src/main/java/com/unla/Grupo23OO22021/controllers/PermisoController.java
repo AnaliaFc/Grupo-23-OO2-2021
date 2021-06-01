@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,11 +56,16 @@ public class PermisoController {
 
 	@Autowired
 	private PersonaService personaService;
+	
+	@GetMapping("")
+	public ModelAndView index() {
+		return traer();
+	}
 
 	@Transactional
 	@GetMapping("/periodo/new")
 	public ModelAndView formPeriodo(@RequestParam(name = "error", required = false) String error) {
-		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_PERIODO);
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
 
 		List<PersonaModel> personas = personaService.traerPersonas();
@@ -90,7 +97,6 @@ public class PermisoController {
 		
 		permisoModel.setDesdeHasta(lugarService.getLugares());
 
-		// TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
@@ -106,7 +112,7 @@ public class PermisoController {
 	@Transactional
 	@GetMapping("/dia/new")
 	public ModelAndView formDia(@RequestParam(name = "error", required = false) String error) {
-		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_DIA);
 		modelAndView.addObject("permiso", new PermisoDiarioModel());
 
 		List<PersonaModel> personas = personaService.traerPersonas();
@@ -127,8 +133,11 @@ public class PermisoController {
 		RedirectView redirectView = new RedirectView("/permiso/listar");
 
 		
-		if (bindingResult.hasErrors())
+		if (bindingResult.hasErrors()) {
 			redirectView.setUrl("/permiso/dia/new");
+			System.out.println(bindingResult);
+		}
+			
 		else {
 			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 
@@ -150,7 +159,7 @@ public class PermisoController {
 
 	@GetMapping("/listar")
 	public ModelAndView traer() {
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		FilterModel filterModel = new FilterModel();
@@ -185,7 +194,8 @@ public class PermisoController {
 			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
 				lugarService.guardarLugar(lugarModel);
 			}else {
-				return "redirect:/permiso/dia/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
+				return "redirect:/permiso/dia/new"+error;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -201,7 +211,8 @@ public class PermisoController {
 			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
 				lugarService.guardarLugar(lugarModel);
 			}else {
-				return "redirect:/permiso/periodo/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
+				return "redirect:/permiso/periodo/new"+error;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -215,21 +226,26 @@ public class PermisoController {
 	public ModelAndView searchLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		System.out.println(lugarModeEncontrado);
+		String error = null;
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}else {
+			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 		}
-		return formDia(null);
+		return formDia(error);
 	}
 	
 	@Transactional
 	@PostMapping("/search-lugar-p")
 	public ModelAndView searchLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
-		System.out.println(lugarModeEncontrado);
+		String error = null;
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+		}else {
+			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 		}
-		return formPeriodo(null);
+		return formPeriodo(error);
 	}
 
 	@PostMapping("/rodados")
@@ -273,7 +289,7 @@ public class PermisoController {
 	@PostMapping("/filtro")
 	public ModelAndView traerEntreFechas(@Valid @ModelAttribute("filtro") FilterModel filterModel,
 			BindingResult bindingResult) {
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 
 		if (bindingResult.hasErrors())
 			return traer();

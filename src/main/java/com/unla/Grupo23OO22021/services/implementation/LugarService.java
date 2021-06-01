@@ -52,12 +52,16 @@ public class LugarService implements ILugarService {
 	
 	
 	public void guardarLugarEncontrado(LugarModel lugarModel) {
-		lugares.add(lugarConverter.modelToEntity(lugarModel));
+		if(lugares.size()<2) {
+			lugares.add(lugarConverter.modelToEntity(lugarModel));
+		}
 	}
 	
 	
 	public void guardarLugar(LugarModel lugarModel) {
-		lugares.add(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+		if(lugares.size()<2) {
+			lugares.add(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+		}
 	}
 	
 	

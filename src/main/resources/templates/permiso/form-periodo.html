@@ -11,11 +11,17 @@
 
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
-	<div class="mb-5"></div>
-
 	<div class="alert alert-warning" th:if="${error}">
 		<span th:text="${error}"></span>
 	</div>
+	<div class="mb-5"></div>
+	
+	
+	<div class="container" style="width: 70%;">
+		<h1>Formulario de Permiso por Dia</h1>
+	</div>
+
+	
 	<form action="#" th:action="@{/permiso/add-lugar-p}" th:object="${lugar}" method="POST" style="width:70%"
 		class="container" th:if="${lugares.size()<2}">
 		<h5>Agregar Lugar</h5>
@@ -55,15 +61,13 @@
 	</form>
 
 	<form action="#" th:action="@{/permiso/periodo/save}" th:object="${permiso}" method="POST" style="width:70%"
-		class="container">
-		<h1>Formulario de Permiso por Periodo</h1>
+		class="container mt-2" th:if="${lugares.size()==2}">
 
 		<div class="row">
 
 			<div class="col form-group">
 				<label class="form-label">Dni</label>
 				<select th:field="*{persona.idPersona}" class="form-select">
-					<option value=0></option>
 					<option th:each="p : ${personas}" th:value="${p.idPersona}"
 						th:text="${p.nombre+' '+p.apellido+' '+p.dni}"></option>
 				</select>
@@ -72,7 +76,6 @@
 			<div class="col form-group">
 				<label class="form-label">Rodado</label>
 				<select th:field="*{rodado.idRodado}" class="form-select">
-					<option value=0></option>
 					<option th:each="r : ${rodados}" th:value="${r.idRodado}"
 						th:text="${r.vehiculo}+' con patente '+${r.dominio.toUpperCase()}">
 					</option>
@@ -91,7 +94,7 @@
 
 			<div class="form-group col">
 				<label class="form-label">Cantidad de dias</label>
-				<input class="form-control" type="number" th:field="*{cantDias}">
+				<input class="form-control" type="number" th:field="*{cantDias}" min="1" value="1">
 			</div>
 		</div>
 

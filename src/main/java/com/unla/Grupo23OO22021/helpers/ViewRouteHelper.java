@@ -19,6 +19,8 @@ public class ViewRouteHelper {
 
 	//PERMISOS
 	public final static String ROUTE_PERMISOS = "permiso/listar";
+	public final static String PERMISO_FORM_PERIODO = "permiso/form-periodo";
+	public final static String PERMISO_FORM_DIA="permiso/form-dia";
 	
 	// REDIRECT
 	public final static String ROUTE_PERFILES = "redirect:/perfil/listar";
@@ -28,8 +30,14 @@ public class ViewRouteHelper {
 	public final static String HOME_INDEX = "home/index";
 	public final static String HOME_LOGIN = "home/login";
 	public final static String HOME_LOGOUT = "home/logout";
+	public final static String HOME_ABOUT_US = "home/about-us";
+	public final static String HOME_USER = "home/user";
 	
 	// REDIRECT
 	public final static String HOME_ROUTE = "redirect:/";
+	
+	// ERROR
+	public final static String ERROR_403="error/403";
+	
 
 }

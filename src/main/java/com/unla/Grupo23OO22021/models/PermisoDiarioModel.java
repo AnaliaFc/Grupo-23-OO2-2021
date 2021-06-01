@@ -17,6 +17,7 @@ public class PermisoDiarioModel extends PermisoModel {
 	
 	public PermisoDiarioModel() {
 		super();
+		motivo=new String();
 	}
 
 	public PermisoDiarioModel(int idPermiso, PersonaModel persona, Date fecha, List<LugarModel> desdeHasta, String motivo) {
