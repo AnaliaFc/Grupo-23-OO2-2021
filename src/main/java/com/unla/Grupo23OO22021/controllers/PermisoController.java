@@ -188,39 +188,6 @@ public class PermisoController {
 		return "redirect:/permiso/dia/new";
 	}
 	
-	@Transactional
-	@PostMapping("/add-lugar-d")
-	public String addLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
-		try {
-			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
-				lugarService.guardarLugar(lugarModel);
-			}else {
-				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
-				return "redirect:/permiso/dia/new"+error;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		return "redirect:/permiso/dia/new";
-	}
-	
-	@Transactional
-	@PostMapping("/add-lugar-p")
-	public String addLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
-		try {
-			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
-				lugarService.guardarLugar(lugarModel);
-			}else {
-				String error = "?error=Se inteto crear un lugar que ya existe, intente usar buscar: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;;
-				return "redirect:/permiso/periodo/new"+error;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		return "redirect:/permiso/periodo/new";
-	}
 	
 	@Transactional
 	@PostMapping("/search-lugar-d")
@@ -231,7 +198,8 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}else {
-			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+//			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+			lugarService.guardarLugar(lugarModel);
 		}
 		return formDia(error);
 	}
@@ -244,7 +212,8 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}else {
-			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+//			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+			lugarService.guardarLugar(lugarModel);
 		}
 		return formPeriodo(error);
 	}
@@ -276,10 +245,14 @@ public class PermisoController {
 	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
 	
-		personaModel=personaService.traerDni(personaModel.getDni());
-		
-		modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
-		modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
+		try {
+			personaModel=personaService.traerDni(personaModel.getDni());
+			
+			modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
+			modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
+		} catch (Exception e) {
+			return traer();
+		}
 		modelAndView.addObject("filtro", new FilterModel());
 		modelAndView.addObject("listaPersonas", personaService.traerPersonas());
 		modelAndView.addObject("listaRodados", new ArrayList<RodadoModel>());
