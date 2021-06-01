@@ -258,7 +258,7 @@ public class PermisoController {
 	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
 		ModelAndView modelAndView = new ModelAndView("permiso/listar");
 	
-		personaModel=personaService.traerId(personaModel.getIdPersona());
+		personaModel=personaService.traerDni(personaModel.getDni());
 		
 		modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
 		modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
