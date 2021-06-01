@@ -215,16 +215,27 @@ public class PermisoController {
 	
 	@Transactional
 	@PostMapping("/search-lugar-p")
-	public ModelAndView searchLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
+	public ModelAndView searchLugarP(@Valid @ModelAttribute("lugar") LugarModel lugarModel,BindingResult bindingResult) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
-		String error = null;
-		if(lugarModeEncontrado!=null) {
-			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
-		}else {
-//			error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
-			lugarService.guardarLugar(lugarModel);
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_PERIODO);
+		System.out.println(bindingResult);
+		if(!bindingResult.hasErrors()) {
+			if(lugarModeEncontrado!=null) {
+				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+			}else {
+//				error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
+				lugarService.guardarLugar(lugarModel);
+			}
+			modelAndView.addObject("lugar", new LugarModel());
 		}
-		return formPeriodo(error);
+		
+		modelAndView.addObject("lugares", lugarService.getLugares());
+		modelAndView.addObject("permiso", new PermisoPeriodoModel());
+		
+		List<PersonaModel> personas = personaService.traerPersonas();
+		modelAndView.addObject("personas", personas);
+		modelAndView.addObject("rodados", rodadoService.traerRodados());
+		return modelAndView;
 	}
 
 	@PostMapping("/rodados")
