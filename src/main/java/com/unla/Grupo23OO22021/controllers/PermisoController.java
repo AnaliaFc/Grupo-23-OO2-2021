@@ -150,6 +150,7 @@ public class PermisoController {
 		FilterModel filterModel = new FilterModel();
 		List<RodadoModel> listaRodados = rodadoService.traerRodados();
 		RodadoModel rodadoModel = new RodadoModel();
+		PersonaModel personaModel = new PersonaModel();
 
 		for (PermisoModel permisoModel : permisoService.findAll()) {
 			if (permisoModel instanceof PermisoPeriodoModel)
@@ -163,6 +164,7 @@ public class PermisoController {
 		modelAndView.addObject("filtro", filterModel);
 		modelAndView.addObject("listaRodados", listaRodados);// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", rodadoModel);
+		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
 	}
 	
@@ -228,6 +230,23 @@ public class PermisoController {
 		modelAndView.addObject("filtro", new FilterModel());
 		modelAndView.addObject("listaRodados", rodadoService.traerRodados());// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", new PersonaModel());
+		return modelAndView;
+	}
+	
+	@PostMapping("/personas")
+	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
+		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+	
+		personaModel=personaService.traerId(personaModel.getIdPersona());
+		
+		modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
+		modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
+		modelAndView.addObject("filtro", new FilterModel());
+		modelAndView.addObject("listaPersonas", personaService.traerPersonas());
+		modelAndView.addObject("listaRodados", new ArrayList<RodadoModel>());
+		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
 	}
 
@@ -277,6 +296,7 @@ public class PermisoController {
 
 		modelAndView.addObject("filtro", filterModel);
 		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", new PersonaModel());
 		return modelAndView;
 	}
 

@@ -25,6 +25,11 @@
 					aria-expanded="true" aria-controls="collapseTwo">
 					Filtros Por Rodado
 				</button>
+				<h2 class="accordion-header" id="headingThree">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+					aria-expanded="true" aria-controls="collapseThree">
+					Filtros Por Persona
+				</button>
 			</h2>
 			<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
 				data-bs-parent="#accordionExample">
@@ -73,6 +78,18 @@
 				<form action="#" th:action="@{/permiso/rodados}" th:object="${rodado}" method="POST" style="width: 50%;">
 					<select th:field="*{idRodado}" class="form-select">
 					<option th:each="r : ${listaRodados}" th:value="${r.idRodado}" th:text="${r.dominio}"></option>
+					</select>
+					<input class="btn btn-primary" value="Enviar" type="submit">
+					<a class="btn btn-secondary" th:href="@{/permiso/listar}" >Limpiar filtro</a>
+				</form>
+				</div>
+			</div>
+			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+				data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+				<form action="#" th:action="@{/permiso/personas}" th:object="${persona}" method="POST" style="width: 50%;">
+					<select th:field="*{idPersona}" class="form-select">
+					<option th:each="p : ${listaPersonas}" th:value="${p.idPersona}" th:text="${p.dni}"></option>
 					</select>
 					<input class="btn btn-primary" value="Enviar" type="submit">
 					<a class="btn btn-secondary" th:href="@{/permiso/listar}" >Limpiar filtro</a>
