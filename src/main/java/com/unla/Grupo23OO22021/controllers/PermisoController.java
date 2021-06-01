@@ -118,7 +118,7 @@ public class PermisoController {
 			permisoService.insertOrUpdate(permisoModel);
 			lugarService.clearLugares();
 			
-			return traer();
+			return traer(); 
 		}
 		
 		
@@ -277,21 +277,24 @@ public class PermisoController {
 	@PreAuthorize("hasRole('ROLE_AUDITOR') or !isAuthenticated()")
 	@PostMapping("/personas")
 	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-	
-		try {
-			personaModel=personaService.traerDni(personaModel.getDni());
-			
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
+		personaModel=personaService.traerDni(personaModel.getDni());
+		
+		if(personaModel!=null)
+		{
 			modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
 			modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
-		} catch (Exception e) {
-			return traer();
+			modelAndView.addObject("persona", personaModel);
+								
+		}else {
+			modelAndView.addObject("permisosPeriodo", new ArrayList<PermisoPeriodoModel>());
+			modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
+			modelAndView.addObject("persona", new PersonaModel());
 		}
 		modelAndView.addObject("filtro", new FilterModel());
 		modelAndView.addObject("listaPersonas", personaService.traerPersonas());
 		modelAndView.addObject("listaRodados", new ArrayList<RodadoModel>());
 		modelAndView.addObject("rodado", new RodadoModel());
-		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
 	}
 
