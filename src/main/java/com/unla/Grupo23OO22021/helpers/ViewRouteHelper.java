@@ -13,9 +13,16 @@ public class ViewRouteHelper {
 	// PERFIL
 	public final static String FORM = "viewsPerfil/form";
 	public final static String PERFILES = "viewsPerfil/listaPerfiles";
+	
+	//RODADO
+	public final static String RODADO_FORM = "rodado/form";
 
+	//PERMISOS
+	public final static String ROUTE_PERMISOS = "permiso/listar";
+	
 	// REDIRECT
 	public final static String ROUTE_PERFILES = "redirect:/perfil/listar";
+
 	
 	// HOME
 	public final static String HOME_INDEX = "home/index";

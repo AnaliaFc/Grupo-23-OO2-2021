@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.entities.Lugar;
@@ -55,7 +57,7 @@ public class PermisoController {
 
 	@Transactional
 	@GetMapping("/periodo/new")
-	public ModelAndView formPeriodo() {
+	public ModelAndView formPeriodo(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-periodo");
 		modelAndView.addObject("permiso", new PermisoPeriodoModel());
 
@@ -67,6 +69,8 @@ public class PermisoController {
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
 		modelAndView.addObject("lugar", new LugarModel());
+		
+		modelAndView.addObject("error", error);
 
 		return modelAndView;
 	}
@@ -101,7 +105,7 @@ public class PermisoController {
 	
 	@Transactional
 	@GetMapping("/dia/new")
-	public ModelAndView formDia() {
+	public ModelAndView formDia(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView modelAndView = new ModelAndView("permiso/form-dia");
 		modelAndView.addObject("permiso", new PermisoDiarioModel());
 
@@ -110,6 +114,8 @@ public class PermisoController {
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
 		modelAndView.addObject("lugar", new LugarModel());
+		
+		modelAndView.addObject("error", error);
 
 		return modelAndView;
 	}
@@ -120,19 +126,19 @@ public class PermisoController {
 			BindingResult bindingResult) {
 		RedirectView redirectView = new RedirectView("/permiso/listar");
 
-		permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
-
-		permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
-
-		System.out.println(permisoModel);
-		
-		
-		
-		permisoModel.setDesdeHasta(lugarService.getLugares());
 		
 		if (bindingResult.hasErrors())
-			redirectView.setUrl("/permiso/periodo/new");
+			redirectView.setUrl("/permiso/dia/new");
 		else {
+			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
+
+			permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
+
+			System.out.println(permisoModel);
+			
+			
+			
+			permisoModel.setDesdeHasta(lugarService.getLugares());
 			permisoService.insertOrUpdate(permisoModel);
 			lugarService.clearLugares();
 		}
@@ -148,7 +154,6 @@ public class PermisoController {
 		List<PermisoDiarioModel> permisoDiarioModels = new ArrayList<PermisoDiarioModel>();
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		FilterModel filterModel = new FilterModel();
-		List<RodadoModel> listaRodados = rodadoService.traerRodados();
 		RodadoModel rodadoModel = new RodadoModel();
 		PersonaModel personaModel = new PersonaModel();
 
@@ -162,7 +167,6 @@ public class PermisoController {
 		modelAndView.addObject("permisosDiario", permisoDiarioModels);
 		modelAndView.addObject("permisosPeriodo", permisoPeriodoModels);
 		modelAndView.addObject("filtro", filterModel);
-		modelAndView.addObject("listaRodados", listaRodados);// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", rodadoModel);
 		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
@@ -178,7 +182,11 @@ public class PermisoController {
 	@PostMapping("/add-lugar-d")
 	public String addLugarD(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		try {
-			lugarService.guardarLugar(lugarModel);
+			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
+				lugarService.guardarLugar(lugarModel);
+			}else {
+				return "redirect:/permiso/dia/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -190,7 +198,11 @@ public class PermisoController {
 	@PostMapping("/add-lugar-p")
 	public String addLugarP(@ModelAttribute("lugar") LugarModel lugarModel, Model model) {
 		try {
-			lugarService.guardarLugar(lugarModel);
+			if(lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal())==null) {
+				lugarService.guardarLugar(lugarModel);
+			}else {
+				return "redirect:/permiso/periodo/new?error=Se inteto crear un lugar que ya existe, intente usar buscar";
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -206,7 +218,7 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}
-		return formDia();
+		return formDia(null);
 	}
 	
 	@Transactional
@@ -217,18 +229,26 @@ public class PermisoController {
 		if(lugarModeEncontrado!=null) {
 			lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 		}
-		return formPeriodo();
+		return formPeriodo(null);
 	}
 
 	@PostMapping("/rodados")
 	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel) {
-		ModelAndView modelAndView = new ModelAndView("permiso/listar");
-	
-		rodadoModel=rodadoService.traerId(rodadoModel.getIdRodado());
-		modelAndView.addObject("permisosPeriodo", permisoService.findByDominio(rodadoModel));
+		
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
+		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
+		
+		if(rodadoModel!=null)
+		{
+			List<PermisoPeriodoModel> listaPermisos = permisoService.findByDominio(rodadoModel);
+			modelAndView.addObject("permisosPeriodo", listaPermisos);
+								
+		}else {
+			modelAndView.addObject("permisosPeriodo", new ArrayList<PermisoPeriodoModel>());
+		}
+		
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());
-		modelAndView.addObject("listaRodados", rodadoService.traerRodados());// TRAER RODADOS POR PERMISO
 		modelAndView.addObject("rodado", new RodadoModel());
 		modelAndView.addObject("persona", new PersonaModel());
 		return modelAndView;
@@ -299,5 +319,4 @@ public class PermisoController {
 		modelAndView.addObject("persona", new PersonaModel());
 		return modelAndView;
 	}
-
 }
