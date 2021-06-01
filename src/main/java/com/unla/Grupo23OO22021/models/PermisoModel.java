@@ -27,6 +27,7 @@ public class PermisoModel {
 	
 	protected List<LugarModel> desdeHasta=new ArrayList<LugarModel>();
 	
+	@NotEmpty
 	private String fechaString;
 	
 	public PermisoModel() {

@@ -129,33 +129,31 @@ public class PermisoController {
 	
 	@Transactional
 	@PostMapping("/dia/save")
-	public RedirectView saveDia(@Valid @ModelAttribute("permiso") PermisoDiarioModel permisoModel,
+	public ModelAndView saveDia(@Valid @ModelAttribute("permiso") PermisoDiarioModel permisoModel,
 			BindingResult bindingResult) {
-		RedirectView redirectView = new RedirectView("/permiso/listar");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 
 		
 		if (bindingResult.hasErrors()) {
-			redirectView.setUrl("/permiso/dia/new");
-			System.out.println(bindingResult);
-		}
+			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_DIA);
+			modelAndView.addObject("personas", personaService.traerPersonas());
 			
+			modelAndView.addObject("lugares", lugarService.getLugares());
+			modelAndView.addObject("lugar", new LugarModel());
+			return modelAndView;
+		}
 		else {
 			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
-
 			permisoModel.setPersona(personaService.traerId(permisoModel.getPersona().getIdPersona()));
-
-			System.out.println(permisoModel);
-			
-			
-			
 			permisoModel.setDesdeHasta(lugarService.getLugares());
 			permisoService.insertOrUpdate(permisoModel);
 			lugarService.clearLugares();
+			return traer();
 		}
 		
 		
 
-		return redirectView;
+		
 	}
 
 	@GetMapping("/listar")

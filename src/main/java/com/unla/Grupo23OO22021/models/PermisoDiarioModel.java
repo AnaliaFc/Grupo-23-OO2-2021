@@ -12,7 +12,7 @@ import com.unla.Grupo23OO22021.entities.Lugar;
 
 public class PermisoDiarioModel extends PermisoModel {
 	
-	@NotEmpty
+	@NotEmpty(message = "No debe estar vacio")
 	private String motivo;
 	
 	public PermisoDiarioModel() {
