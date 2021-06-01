@@ -1,18 +1,22 @@
 package com.unla.Grupo23OO22021.models;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class PersonaModel {
 	protected long idPersona;
 	
-	@Min(6)
+	@NotNull(message="EL DNI NO PUEDE ESTAR VACIO")
+	@Min(value=8,message="EL DNI ES INCORRECTO")
 	protected int dni;
 	
-	@Size(min=3,max=20)
+	@NotNull(message="EL NOMBRE NO PUEDE ESTAR VACIO")
+	@Size(min=3,max=20, message="EL NOMBRE DEBE TENER ENTRE 3 Y 20 CARACTERES")
 	protected String nombre;
 	
-	@Size(min=3,max=20)
+	@NotNull(message="EL APELLIDO NO PUEDE ESTAR VACIO")
+	@Size(min=3,max=20, message="EL APELLIDO DEBE TENER ENTRE 3 Y 20 CARACTERES")
 	protected String apellido;
 	
 	public PersonaModel() {}

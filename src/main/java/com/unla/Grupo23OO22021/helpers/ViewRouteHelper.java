@@ -16,6 +16,9 @@ public class ViewRouteHelper {
 	
 	//RODADO
 	public final static String RODADO_FORM = "rodado/form";
+	
+	//PERSONA
+	public final static String PERSONA_FORM = "persona/form";
 
 	//PERMISOS
 	public final static String ROUTE_PERMISOS = "permiso/listar";
