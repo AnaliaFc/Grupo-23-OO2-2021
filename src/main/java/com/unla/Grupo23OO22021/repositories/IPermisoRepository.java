@@ -40,8 +40,8 @@ public interface IPermisoRepository extends JpaRepository<Permiso, Integer> {
 	
 	@Query(value="SELECT * FROM Permiso p"
 	        +" INNER JOIN Persona pe ON pe.id_persona=p.id_persona"
-			+" WHERE pe.id_persona=(:idPersona)",nativeQuery=true)
-	public abstract List<Permiso> findByPersona(long idPersona);
+			+" WHERE pe.dni=(:dni)",nativeQuery=true)
+	public abstract List<Permiso> findByPersona(int dni);
 	
 	
 }
