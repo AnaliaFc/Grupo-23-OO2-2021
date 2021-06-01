@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,7 +97,6 @@ public class PermisoController {
 		
 		permisoModel.setDesdeHasta(lugarService.getLugares());
 
-		// TODO: Guardarlo cuando se tengan disponible los servicios
 		if (bindingResult.hasErrors())
 			redirectView.setUrl("/permiso/periodo/new");
 		else {
@@ -132,8 +133,11 @@ public class PermisoController {
 		RedirectView redirectView = new RedirectView("/permiso/listar");
 
 		
-		if (bindingResult.hasErrors())
+		if (bindingResult.hasErrors()) {
 			redirectView.setUrl("/permiso/dia/new");
+			System.out.println(bindingResult);
+		}
+			
 		else {
 			permisoModel.setFecha(Date.valueOf(permisoModel.getFechaString()));
 

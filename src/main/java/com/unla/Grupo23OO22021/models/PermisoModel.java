@@ -30,7 +30,7 @@ public class PermisoModel {
 	private String fechaString;
 	
 	public PermisoModel() {
-		
+		fechaString = Date.valueOf(LocalDate.now()).toString();
 	}
 	
 	public PermisoModel(int idPermiso, PersonaModel persona, Date fecha, List<LugarModel> desdeHasta) {
