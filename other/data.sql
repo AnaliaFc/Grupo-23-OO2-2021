@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `grupo-23-bdd-oo2-2021`;
-USE `grupo-23-bdd-oo2-2021`;
+USE `oo2`;
 insert into perfil(createat, tipo, updateat)
 values('2021-05-20', "ROLE_ADMIN",'2021-05-20');
 

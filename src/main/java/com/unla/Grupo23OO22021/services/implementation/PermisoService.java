@@ -152,4 +152,27 @@ public class PermisoService implements IPermisoService{
 			permisos.add(permisoPeriodoConverter.entityToModel(permisoPeriodo));
 		return permisos;
 	}
+	
+	@Override
+	public List<PermisoPeriodoModel> findByPersonaPeriodo(PersonaModel persona){
+		List<PermisoPeriodoModel> aux = new ArrayList<PermisoPeriodoModel>();
+		for(Permiso permiso : permisoRepository.findByPersona(persona.getIdPersona())) {
+			if(permiso instanceof PermisoPeriodo) {
+				aux.add(permisoPeriodoConverter.entityToModel((PermisoPeriodo)permiso));
+			}
+		}
+		return aux;
+	}
+	
+	@Override
+	public List<PermisoDiarioModel> findByPersonaDiario(PersonaModel persona){
+		List<PermisoDiarioModel> aux = new ArrayList<PermisoDiarioModel>();
+		for(Permiso permiso : permisoRepository.findByPersona(persona.getIdPersona())) {
+			if(permiso instanceof PermisoDiario) {
+				aux.add(permisoDiarioConverter.entityToModel((PermisoDiario)permiso));
+			}
+		}
+		return aux;
+	}
+	
 }

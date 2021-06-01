@@ -164,6 +164,7 @@ public class PermisoController {
 		List<PermisoPeriodoModel> permisoPeriodoModels = new ArrayList<PermisoPeriodoModel>();
 		FilterModel filterModel = new FilterModel();
 		RodadoModel rodadoModel = new RodadoModel();
+		PersonaModel personaModel = new PersonaModel();
 
 		for (PermisoModel permisoModel : permisoService.findAll()) {
 			if (permisoModel instanceof PermisoPeriodoModel)
@@ -176,6 +177,7 @@ public class PermisoController {
 		modelAndView.addObject("permisosPeriodo", permisoPeriodoModels);
 		modelAndView.addObject("filtro", filterModel);
 		modelAndView.addObject("rodado", rodadoModel);
+		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
 	}
 	
@@ -264,6 +266,23 @@ public class PermisoController {
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());
 		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", new PersonaModel());
+		return modelAndView;
+	}
+	
+	@PostMapping("/personas")
+	public ModelAndView traerPorPersonas(@ModelAttribute("persona") PersonaModel personaModel) {
+		ModelAndView modelAndView = new ModelAndView("permiso/listar");
+	
+		personaModel=personaService.traerId(personaModel.getIdPersona());
+		
+		modelAndView.addObject("permisosPeriodo", permisoService.findByPersonaPeriodo(personaModel));
+		modelAndView.addObject("permisosDiario", permisoService.findByPersonaDiario(personaModel));
+		modelAndView.addObject("filtro", new FilterModel());
+		modelAndView.addObject("listaPersonas", personaService.traerPersonas());
+		modelAndView.addObject("listaRodados", new ArrayList<RodadoModel>());
+		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", personaModel);
 		return modelAndView;
 	}
 
@@ -313,9 +332,7 @@ public class PermisoController {
 
 		modelAndView.addObject("filtro", filterModel);
 		modelAndView.addObject("rodado", new RodadoModel());
+		modelAndView.addObject("persona", new PersonaModel());
 		return modelAndView;
 	}
-
-	//TODO: Traer permiso por Persona
-	// @PreAuthorize("isAuthenticated() or hasRole('AUDITOR')")    
 }
