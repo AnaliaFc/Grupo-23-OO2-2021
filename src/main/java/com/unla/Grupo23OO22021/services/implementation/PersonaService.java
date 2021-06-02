@@ -41,7 +41,13 @@ public class PersonaService implements IPersonaService  {
 
 	@Override
 	public PersonaModel traerId(long id) {
-		return personaConverter.entityToModel(personaRepository.findById(id));
+		Persona personaExistente = personaRepository.findById(id);
+		PersonaModel model = null;
+		if(personaExistente!=null)
+		{
+			model=personaConverter.entityToModel(personaExistente);
+		}
+		return model;
 	}
 
 	@Override

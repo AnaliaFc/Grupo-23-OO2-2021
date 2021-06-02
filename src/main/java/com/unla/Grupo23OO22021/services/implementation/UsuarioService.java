@@ -16,10 +16,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.unla.Grupo23OO22021.converters.PerfilConverter;
 import com.unla.Grupo23OO22021.converters.UsuarioConverter;
 import com.unla.Grupo23OO22021.entities.Perfil;
 import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
+import com.unla.Grupo23OO22021.repositories.IPersonaRepository;
 import com.unla.Grupo23OO22021.repositories.IUsuarioRepository;
 
 
@@ -35,6 +37,14 @@ public class UsuarioService implements UserDetailsService {
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
 	
+	@Autowired
+	@Qualifier("perfilConverter")
+	private PerfilConverter perfilConverter;
+	
+	@Autowired
+	@Qualifier("personaRepository")
+	private IPersonaRepository personaRepository;
+	
 	public List<UsuarioModel> traerUsuarios() {
 		List<UsuarioModel> models = new ArrayList<UsuarioModel>();
 		for (Usuario user : usuarioRepository.findAll()) {
@@ -45,11 +55,16 @@ public class UsuarioService implements UserDetailsService {
 
 	
 	public UsuarioModel traerId(long id) {
-		return usuarioConverter.entityToModel(usuarioRepository.findById(id));
+		Usuario usuario = usuarioRepository.findById(id);
+		UsuarioModel model=null;
+		if (usuario!=null)
+		{
+			model=usuarioConverter.entityToModel(usuario);
+		}
+		return model; 
 	}
 
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
-	
 		Usuario existente = usuarioRepository.findById(userModel.getIdPersona());
 		if(existente!=null)
 		{
@@ -59,7 +74,7 @@ public class UsuarioService implements UserDetailsService {
 			existente.setEmail(userModel.getEmail());
 			usuarioRepository.save(existente);
 		}else {
-		     existente = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));}
+		  existente = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));}
 		return usuarioConverter.entityToModel(existente);
 	}
 
@@ -75,7 +90,24 @@ public class UsuarioService implements UserDetailsService {
 
 	
 	public UsuarioModel traerDocumento(int dni) {
-		return usuarioConverter.entityToModel(usuarioRepository.findByDocumento(dni));
+		Usuario usuario = usuarioRepository.findByDocumento(dni);
+		UsuarioModel model=null;
+		if (usuario!=null)
+		{
+			model=usuarioConverter.entityToModel(usuario);
+		}
+		return model; 
+	}
+	
+	public UsuarioModel traerUsername(String username)
+	{
+		Usuario usuario = usuarioRepository.findByUsernameWithPerfil(username);
+		UsuarioModel model=null;
+		if (usuario!=null)
+		{
+			model=usuarioConverter.entityToModel(usuario);
+		}
+		return model;
 	}
 
 	@Override

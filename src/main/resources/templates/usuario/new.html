@@ -17,18 +17,16 @@
 	<div class="row m-5">
 		<div class="col-md-8 mx-auto">
 			<h2>Registro de nuevo Usuario</h2>
-			<form action="#" th:action="@{/usuario/crear}" th:object="${usuario}" method="post" class="row g-3">
-
-
+			<form action="#" th:action="@{/usuario/crear}"th:object="${usuario}" method="post" class="row g-3">
 				<div class="col-md-6 form-group">
 					<label class="form-label">Nombre</label>
 					<input type="text" class="form-control" th:field="*{nombre}" />
-					<p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Longitud de Nombre incorrecta </p>
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
                     </div>
                     <div class="col-md-6 form-group">
                        <label class="form-label">Apellido</label>
 						<input type="text" class="form-control" th:field="*{apellido}"/>
-						<p th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Longitud de Apellido incorrecta </p>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
                     </div>
                     <div class="col-md-6 form-group">
                        <label class="form-label">Tipo de Documento</label>
@@ -39,7 +37,7 @@
                     <div class="col-md-6 form-group">
                         <label class="form-label"> N° Documento </label>
 						<input type="text" class="form-control" th:field="*{dni}" />
-						<p th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Longitud incorrecta </p>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
                     </div>
                    
                     <div class="col-md-6 form-group">
@@ -50,7 +48,7 @@
                      <div class="col-md-6 form-group">
                        <label class="form-label">Nombre de Usuario</label>
 						<input type="text" class="form-control" th:field="*{username}"/>
-						<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Longitud usuario incorrecta </p>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
                     </div>
 					
 					<div class="col-md-6 form-group">
@@ -63,9 +61,9 @@
 					<div class="col-md-6 form-group">
 						<label class="form-label">Contraseña</label>
 						<input type="password" class="form-control" pattern=".{6,}" th:field="*{password}"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
 					</div>
-					
-                     
+				               
                 
 				<input type="submit" class="btn btn-primary" value="Crear"/>
             </form>
