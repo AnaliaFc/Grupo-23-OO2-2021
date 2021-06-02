@@ -17,5 +17,5 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 	public abstract Usuario findByDocumento(@Param("dni")int dni);
 	
 	@Query("SELECT u FROM Usuario u inner join fetch u.perfil where username = (:username)")
-	public abstract Usuario findByUsernameWithPerfil(String username);
+	public abstract Usuario findByUsernameWithPerfil(@Param("username")String username);
 }

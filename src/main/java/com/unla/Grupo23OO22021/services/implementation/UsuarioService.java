@@ -37,14 +37,7 @@ public class UsuarioService implements UserDetailsService {
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
 	
-	@Autowired
-	@Qualifier("perfilConverter")
-	private PerfilConverter perfilConverter;
-	
-	@Autowired
-	@Qualifier("personaRepository")
-	private IPersonaRepository personaRepository;
-	
+
 	public List<UsuarioModel> traerUsuarios() {
 		List<UsuarioModel> models = new ArrayList<UsuarioModel>();
 		for (Usuario user : usuarioRepository.findAll()) {
