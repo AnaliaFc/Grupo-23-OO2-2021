@@ -13,6 +13,8 @@ public UsuarioModel traerDocumento(int dni);
 
 public UsuarioModel traerId(long id);
 
+public UsuarioModel traerUsername(String username);
+
 public UsuarioModel insertOrUpdate(UsuarioModel userModel);
 	
 public boolean remove(long id);
