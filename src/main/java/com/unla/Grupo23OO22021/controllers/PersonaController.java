@@ -17,7 +17,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.PersonaModel;
-import com.unla.Grupo23OO22021.models.RodadoModel;
 import com.unla.Grupo23OO22021.services.implementation.PersonaService;
 
 @Controller
@@ -35,7 +34,7 @@ public class PersonaController {
 	
 	@GetMapping("/new")
 	public ModelAndView newPersona() {
-		ModelAndView modelAndView = new ModelAndView("persona/form");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERSONA_FORM);
 		modelAndView.addObject("persona", new PersonaModel());
 		return modelAndView;
 	}
@@ -44,13 +43,13 @@ public class PersonaController {
 	public ModelAndView savePersona(@Valid @ModelAttribute("persona") PersonaModel personaModel, BindingResult bindingResult, RedirectAttributes redirAttrs)
 	{
 		ModelAndView mAV;
-
 		PersonaModel personaExistente = service.traerDni(personaModel.getDni());
 		if(personaModel.equals(personaExistente))
 		{
 			FieldError error = new FieldError("persona", "dni", "Ya existe una persona con el dni ingresado");
 			bindingResult.addError(error);
 			mAV = new ModelAndView(ViewRouteHelper.PERSONA_FORM);
+			
 		}else if(bindingResult.hasErrors())
 		{
 			mAV = new ModelAndView(ViewRouteHelper.PERSONA_FORM);

@@ -69,11 +69,34 @@ public class PersonaModel {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + dni;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonaModel other = (PersonaModel) obj;
+		if (dni != other.dni)
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {
-		return "PersonaModel [idPersona=" + idPersona + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido
-				+ "]";
+		return "Persona con Documento:" + dni + ", Nombre: " + nombre + " Y Apellido: " + apellido;
 	}
 	
 	
