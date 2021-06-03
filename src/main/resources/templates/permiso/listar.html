@@ -127,7 +127,6 @@
 					<th scope="col">Fin</th>
 					<th scope="col">Trayecto</th>
 					<th scope="col">Motivo</th>
-					<th scope= "col">Acciones</th>
 
 				</tr>
 			</thead>
@@ -142,9 +141,6 @@
 						<span th:text="${p.desdeHasta[1].lugar + ' CP: ' + p.desdeHasta[1].codigoPostal}" />
 					</td>
 					<td class="col-3" th:text="${p.motivo}"></td>
-					<td>
-						<a th:href="@{/generarydescargarQR/}+${p.idPermiso}"class="btn btn-danger">QRusuario</a>
-					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -160,7 +156,6 @@
 					<th scope="col" class="col-2">Trayecto</th>
 					<th scope="col" class="col-2">Vehiculo</th>
 					<th scope="col" style="width: 40px;">Vacaciones</th>
-					<th scope="col">Acciones</th>
 
 				</tr>
 			</thead>
@@ -176,8 +171,6 @@
 					</td>
 					<td th:text="${p.rodado.vehiculo + ' P: ' + p.rodado.dominio}"></td>
 					<td th:text="${p.vacaciones ? 'Si':'No'}"></td>
-					<td><a th:href="@{/generarydescargarQR/}+${p.idPermiso}"class="btn btn-danger">QRusuario</a>
-					</td>
 				</tr>
 			</tbody>
 		</table>
