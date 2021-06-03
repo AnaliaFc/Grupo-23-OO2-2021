@@ -1,6 +1,8 @@
 package com.unla.Grupo23OO22021.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
+import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 
 @Controller
@@ -50,6 +53,12 @@ public class HomeController {
 	@GetMapping("/user")
 	public ModelAndView user() {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.HOME_USER);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		UsuarioModel usuarioModel = usuarioService.traerUsername(user.getUsername());
+		
+		modelAndView.addObject("user", usuarioModel);
+		
 		return modelAndView;
 	}
 }
