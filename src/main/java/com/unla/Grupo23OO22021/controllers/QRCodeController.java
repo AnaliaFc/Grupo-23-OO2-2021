@@ -32,7 +32,7 @@ public class QRCodeController {
     @GetMapping("/generarydescargarQR/{idPermiso}")
 		public ModelAndView generarYver(@PathVariable int idPermiso, RedirectAttributes redirAttrs)throws Exception {
 			        
-    				String codeText = "https://ezequiel-de-la-fuente.github.io/visualizador-de-permisos/?";
+    				String codeText = ViewRouteHelper.QR_WEBVIEW;
     				
     				PermisoModel permiso= permisoService.findById(idPermiso); 
     	    	
