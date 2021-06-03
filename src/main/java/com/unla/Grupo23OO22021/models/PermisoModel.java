@@ -89,7 +89,16 @@ public class PermisoModel {
 		this.fechaString = fechaString;
 	}
 
-	
+
+	public String generarUrl()
+	{
+		LocalDate inicio=fecha.toLocalDate();
+		String fechaInicio=inicio.getDayOfMonth()+"-"+inicio.getMonthValue()+"-"+inicio.getYear();
+		return "nombre="+persona.getNombre()+"&apellido="+persona.getApellido()+"&dni="+persona.getDni()+
+				"&desde="+desdeHasta.get(0).getLugar()+"&desdeCP="+desdeHasta.get(0).getCodigoPostal()+
+				"&hasta="+desdeHasta.get(1).getLugar()+"&hastaCP="+desdeHasta.get(1).getCodigoPostal()
+				+"&inicio="+fechaInicio;
+	}
 	
 	
 }

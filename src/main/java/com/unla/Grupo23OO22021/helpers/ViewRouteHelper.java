@@ -42,5 +42,8 @@ public class ViewRouteHelper {
 	// ERROR
 	public final static String ERROR_403="error/403";
 	
+	//QR
+	public static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/qr/QRCode.png";
+	
 
 }

@@ -143,8 +143,8 @@
 					</td>
 					<td class="col-3" th:text="${p.motivo}"></td>
 					<td>
-						<a th:href="@{/generarydescargarQR/}+${p.persona.nombre}+' '+${p.motivo}" 	
-						class="btn btn-danger">QRusuario</a></td>
+						<a th:href="@{/generarydescargarQR/}+${p.idPermiso}"class="btn btn-danger">QRusuario</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -176,8 +176,8 @@
 					</td>
 					<td th:text="${p.rodado.vehiculo + ' P: ' + p.rodado.dominio}"></td>
 					<td th:text="${p.vacaciones ? 'Si':'No'}"></td>
-					<td><a th:href="@{/generarydescargarQR/}+${p.persona.nombre}+ 'viaja en' +${p.rodado.dominio}+ 'el dia' +${p.fecha}" 
-						class="btn btn-danger">QRusuario</a></td>
+					<td><a th:href="@{/generarydescargarQR/}+${p.idPermiso}"class="btn btn-danger">QRusuario</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

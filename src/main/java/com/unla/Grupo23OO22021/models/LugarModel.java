@@ -80,7 +80,7 @@ public class LugarModel {
 
 	@Override
 	public String toString() {
-		return "Nombre: " + lugar + "| Codigo Postal: " + codigoPostal + "]";
+		return "&lugar="+lugar+"&codigoPostal="+codigoPostal;
 	}
 	
 	
