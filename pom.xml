@@ -78,8 +78,18 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
-
-
+		
+		<dependency>
+    		<groupId>com.google.zxing</groupId>
+    		<artifactId>core</artifactId>
+    		<version>3.2.0</version>
+		</dependency>
+		
+		<dependency>
+    	   	<groupId>com.google.zxing</groupId>
+   			<artifactId>javase</artifactId>
+    		<version>3.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -87,10 +97,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration> <addResources>true</addResources></configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.springframework</groupId>

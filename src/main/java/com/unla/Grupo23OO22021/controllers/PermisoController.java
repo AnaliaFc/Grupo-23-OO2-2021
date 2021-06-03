@@ -254,9 +254,9 @@ public class PermisoController {
 
 	@PostMapping("/rodados")
 	public ModelAndView traerPorRodado(@ModelAttribute("rodado") RodadoModel rodadoModel,RedirectAttributes rA) {
-		//A mejorar los tres retornos!!!
+		
 		ModelAndView modelAndView= new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
-		ModelAndView redireccion = new ModelAndView("redirect:/"+ViewRouteHelper.ROUTE_PERMISOS);//Caso que no haya permisos
+		boolean hayQueRedireccionar=false;
 		
 		String dominioInput=rodadoModel.getDominio();
 		rodadoModel=rodadoService.traerDominio(rodadoModel.getDominio());
@@ -268,18 +268,22 @@ public class PermisoController {
 			if(listaPermisos.size()==0)
 			{
 				rA.addFlashAttribute("error", "El dominio "+dominioInput+" no tiene permisos asociados");
-				return redireccion;
+				hayQueRedireccionar=true;
 			}
 		}
 		else{
 			rA.addFlashAttribute("error", "El dominio "+dominioInput+" no esta en la Base de datos");
-			return redireccion;
+			hayQueRedireccionar=true;
 		}
 		
 		modelAndView.addObject("permisosDiario", new ArrayList<PermisoDiarioModel>());
 		modelAndView.addObject("filtro", new FilterModel());
 		modelAndView.addObject("rodado", new RodadoModel());
 		modelAndView.addObject("persona", new PersonaModel());
+		if(hayQueRedireccionar)
+		{
+			modelAndView =new ModelAndView("redirect:/"+ViewRouteHelper.ROUTE_PERMISOS);
+		}
 		return modelAndView;
 	}
 	
