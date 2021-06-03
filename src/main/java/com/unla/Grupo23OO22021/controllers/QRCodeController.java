@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.util.QRCodeGenerator;
 
@@ -19,7 +20,7 @@ public class QRCodeController {
 		public ModelAndView generarYver(@PathVariable("codeText") String codeText)throws Exception {
 			        
     	 	    	QRCodeGenerator.generateQRCodeImage(codeText,400, 400, QR_CODE_IMAGE_PATH);
-		return new ModelAndView("/QRv/qrgenerado");
+		return new ModelAndView("QRv/qrgenerado");
     }
 
     
