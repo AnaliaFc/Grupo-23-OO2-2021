@@ -24,7 +24,7 @@ public class QRCodeController {
 	
 	@GetMapping("/verqr")
 	public ModelAndView mostrarQR() {
-		ModelAndView modelAndView = new ModelAndView("QRv/qrgenerado");
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.QR_GENERADO);
 		return modelAndView;
 	}
 
