@@ -22,12 +22,11 @@ public class PermisoModel {
 	protected PersonaModel persona;	
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@NotNull
 	protected Date fecha;
 	
 	protected List<LugarModel> desdeHasta=new ArrayList<LugarModel>();
 	
-	@NotEmpty
+	@NotEmpty(message = "Debe selecionar una fecha de inicio valida.")
 	private String fechaString;
 	
 	public PermisoModel() {

@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.unla.Grupo23OO22021.entities.Persona;
 import com.unla.Grupo23OO22021.entities.Lugar;
 
 public class PermisoDiarioModel extends PermisoModel {
 	
-	@NotEmpty(message = "No debe estar vacio")
+	@Size(min = 5, max = 100, message = "Debe tener un motivo entre 5 y 100 caracteres")
 	private String motivo;
 	
 	public PermisoDiarioModel() {

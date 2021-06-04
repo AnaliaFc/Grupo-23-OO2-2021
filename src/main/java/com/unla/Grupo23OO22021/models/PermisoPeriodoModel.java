@@ -18,6 +18,7 @@ public class PermisoPeriodoModel extends PermisoModel{
 	@Min(1)
 	private int cantDias;
 	private boolean vacaciones;
+	
 	@NotNull
 	private RodadoModel rodado;
 	
