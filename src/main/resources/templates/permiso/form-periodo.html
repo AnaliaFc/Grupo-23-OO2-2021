@@ -15,36 +15,37 @@
 		<span th:text="${error}"></span>
 	</div>
 	<div class="mb-5"></div>
-	
-	
-	<div class="container" style="width: 70%;">
-		<h1>Formulario de Permiso por Periodo <span class="badge bg-secondary" th:text="${lugares.size()+1+'/3'}"/></h1>
-	</div>
-	
 
-	<table class="table container" style="width:70%" th:if="${lugares.size()>0}">
-		<thead>
-			<tr>
-				<th scope="col">Lugar</th>
-				<th scope="col">Codigo Postal</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="l : ${lugares}">
-				<td th:text="${l.lugar}"></td>
-				<td th:text="${l.codigoPostal}"></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	
-	<form action="#" th:action="@{/permiso/search-lugar-p}" th:object="${lugar}" method="POST" style="width:70%"
-		class="container" th:if="${lugares.size()<2}">
-		<h5 th:if="${lugares.size()==0}">Desde</h5>
-		<h5 th:if="${lugares.size()==1}">Hasta</h5>
-		<div class="mb-2">
-			<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
-			<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
+	<div class="main">
+		<div class="container" style="width: 70%;">
+			<h1>Formulario de Permiso por Periodo <span class="badge bg-secondary" th:text="${lugares.size()+1+'/3'}" />
+			</h1>
+		</div>
+
+
+		<table class="table container" style="width:70%" th:if="${lugares.size()>0}">
+			<thead>
+				<tr>
+					<th scope="col">Lugar</th>
+					<th scope="col">Codigo Postal</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="l : ${lugares}">
+					<td th:text="${l.lugar}"></td>
+					<td th:text="${l.codigoPostal}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<form action="#" th:action="@{/permiso/search-lugar-p}" th:object="${lugar}" method="POST" style="width:70%"
+			class="container" th:if="${lugares.size()<2}">
+			<h5 th:if="${lugares.size()==0}">Desde</h5>
+			<h5 th:if="${lugares.size()==1}">Hasta</h5>
+			<div class="mb-2">
+				<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
+				<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
 		</div>
 		
 		<div class="mb-2">
@@ -112,7 +113,9 @@
 		</div>
 
 	</form>
-
+	</div>
+	
+	<div th:replace="fragments/footer"></div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
 		crossorigin="anonymous"></script>
