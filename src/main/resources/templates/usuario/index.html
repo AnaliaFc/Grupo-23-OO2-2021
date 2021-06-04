@@ -41,7 +41,7 @@
 		</table>
 		<div class="mb-2"></div>
 		<div class="col-md-12 text-center">
-			<a href="/usuario/new" class="btn btn-primary" style="text-align: right;"
+			<a th:ref="@{/usuario/form}" class="btn btn-primary" style="text-align: right;"
 				sec:authorize="hasRole('ROLE_ADMIN')">Agregar nuevo usuario</a>
 			<a href="/usuario?format=pdf" class="btn btn-primary" style="text-align: center;" target="_BLANK"
 				sec:authorize="hasRole('ROLE_AUDITOR')">Generar pdf</a>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -52,15 +53,19 @@ public class UsuarioController {
 		return mAV;
 	}
 	
-	@GetMapping("/new")
-	public ModelAndView crear() {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_NEW);
+	@GetMapping("/form")
+	public ModelAndView crearOeditar(@RequestParam(value= "idPersona",required=false) UsuarioModel usuarioModel) {
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
+		if(usuarioModel==null)
+		{
+			usuarioModel= new UsuarioModel();
+		}
 		mAV.addObject("perfiles", perfilService.traerPerfiles());
-		mAV.addObject("usuario", new UsuarioModel());
+		mAV.addObject("usuario", usuarioModel);
 		return mAV;
 	}
 	
-	@PostMapping("/crear")
+	@PostMapping("/save")
 	public ModelAndView saveUsuario(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result,RedirectAttributes redirAttrs) {
 		
 		ModelAndView mAV=null;
@@ -73,16 +78,16 @@ public class UsuarioController {
 		{
 			FieldError error = new FieldError("usuario", "dni", "Ya existe un usuario con el dni ingresado");
 			result.addError(error);
-			mAV = new ModelAndView(ViewRouteHelper.USUARIO_NEW);
+			mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 			 mAV.addObject("perfiles", perfilService.traerPerfiles());
 			}else if (result.hasErrors()) {			
-			 mAV = new ModelAndView(ViewRouteHelper.USUARIO_NEW);
+			 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 			 mAV.addObject("perfiles", perfilService.traerPerfiles());
 		    }else if(userNameRepetido!=null){
 		    	 
 		    	FieldError error = new FieldError("usuario", "username", "Ya existe un usuario con el username ingresado");
 				 result.addError(error);
-		    	 mAV = new ModelAndView(ViewRouteHelper.USUARIO_NEW);
+		    	 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 				 mAV.addObject("perfiles", perfilService.traerPerfiles());
 		    
 		    }
@@ -96,7 +101,7 @@ public class UsuarioController {
 	
 	@GetMapping("/{idUsuario}")
 	public ModelAndView get(@PathVariable("idUsuario") long idUsuario) {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_UPDATE);
+		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 		mAV.addObject("usuario", usuarioService.traerId(idUsuario));
 		return mAV;
 	}

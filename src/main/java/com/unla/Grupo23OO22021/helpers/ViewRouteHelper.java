@@ -41,7 +41,7 @@ public class ViewRouteHelper {
 	
 	// USUARIO
 	public final static String USUARIO_INDEX = "usuario/index";
-	public final static String USUARIO_NEW = "usuario/new";
+	public final static String USUARIO_FORM = "usuario/form";
 	public final static String USUARIO_UPDATE = "usuario/update";
 	
 }
