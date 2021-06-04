@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.unla.Grupo23OO22021.models.PersonaModel;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
-import com.unla.Grupo23OO22021.services.IUsuarioService;
 import com.unla.Grupo23OO22021.services.IPerfilService;
 import com.unla.Grupo23OO22021.services.implementation.PersonaService;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
@@ -27,6 +24,9 @@ import com.unla.Grupo23OO22021.util.Encriptar;
 import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 @RequestMapping("/usuario")
@@ -166,7 +166,16 @@ public class UsuarioController {
 	@PostMapping("/delete/{id}")
 	public ModelAndView delete(@PathVariable("id") long id,RedirectAttributes redirAttrs) {
 		String userName = usuarioService.traerId(id).getUsername();
-		if(!usuarioService.remove(id)) {
+		
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		    UsuarioModel usuarioLog = usuarioService.traerUsername(userDetail.getUsername());
+		
+		 if(usuarioLog.equals(usuarioService.traerId(id))) 
+			 {
+			 redirAttrs.addFlashAttribute("error", "Usted no puede borrar su propia cuenta");
+			 }
+		 else if(!usuarioService.remove(id)) {
 			redirAttrs.addFlashAttribute("error", "El usuario "+userName+" no ha podido ser dado de baja debido a registros activos");
 		}else
 		{
