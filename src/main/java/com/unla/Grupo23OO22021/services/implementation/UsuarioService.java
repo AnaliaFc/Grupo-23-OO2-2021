@@ -93,6 +93,17 @@ public class UsuarioService implements UserDetailsService {
 		}
 		return model;
 	}
+	
+	public UsuarioModel traerEmail(String email)
+	{
+		Usuario usuario = usuarioRepository.findByEmail(email);
+		UsuarioModel model=null;
+		if (usuario!=null)
+		{
+			model=usuarioConverter.entityToModel(usuario);
+		}
+		return model;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

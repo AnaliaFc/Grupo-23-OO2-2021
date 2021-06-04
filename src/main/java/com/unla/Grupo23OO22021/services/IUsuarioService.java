@@ -15,6 +15,8 @@ public UsuarioModel traerId(long id);
 
 public UsuarioModel traerUsername(String username);
 
+public UsuarioModel traerEmail(String email);
+
 public UsuarioModel insertOrUpdate(UsuarioModel userModel);
 	
 public boolean remove(long id);

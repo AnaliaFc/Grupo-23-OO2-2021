@@ -32,7 +32,7 @@ public class ViewRouteHelper {
 	public static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/qr/QRCode.png";
 
 	// REDIRECT
-	public final static String USUARIO_ROOT = "/usuario";
+	public final static String USUARIO_ROOT = "redirect:/usuario";
 	public final static String ROUTE_PERFILES = "redirect:/perfil/listar";
 	public final static String HOME_ROUTE = "redirect:/";
 		
@@ -42,6 +42,5 @@ public class ViewRouteHelper {
 	// USUARIO
 	public final static String USUARIO_INDEX = "usuario/index";
 	public final static String USUARIO_FORM = "usuario/form";
-	public final static String USUARIO_UPDATE = "usuario/update";
 	
 }

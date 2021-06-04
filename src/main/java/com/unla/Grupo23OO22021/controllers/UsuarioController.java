@@ -24,6 +24,7 @@ import com.unla.Grupo23OO22021.services.IPerfilService;
 import com.unla.Grupo23OO22021.services.implementation.PersonaService;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 import com.unla.Grupo23OO22021.util.Encriptar;
+import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 
 
@@ -53,19 +54,25 @@ public class UsuarioController {
 		return mAV;
 	}
 	
-	@GetMapping("/form")
-	public ModelAndView crearOeditar(@RequestParam(value= "idPersona",required=false) UsuarioModel usuarioModel) {
+	@GetMapping("/neworupdate")
+	public ModelAndView getById(@RequestParam(value= "idPersona", required=false)Usuario usuario) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
-		if(usuarioModel==null)
+		UsuarioModel usuarioModel= null;
+		if(usuario ==null)
 		{
 			usuarioModel= new UsuarioModel();
+			 mAV.addObject("add", true);
+		}else 
+		{
+			usuarioModel= usuarioService.traerId(usuario.getIdPersona());	
+			 mAV.addObject("add", false);
 		}
 		mAV.addObject("perfiles", perfilService.traerPerfiles());
 		mAV.addObject("usuario", usuarioModel);
 		return mAV;
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/newUser")
 	public ModelAndView saveUsuario(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result,RedirectAttributes redirAttrs) {
 		
 		ModelAndView mAV=null;
@@ -73,48 +80,99 @@ public class UsuarioController {
 		
 		UsuarioModel existente = usuarioService.traerDocumento(usuarioModel.getDni());
 		UsuarioModel userNameRepetido = usuarioService.traerUsername(usuarioModel.getUsername());
+		UsuarioModel emailRepetido=usuarioService.traerEmail(usuarioModel.getEmail());
+		boolean addIncorrecto=false;
 				
 		if(existente!=null)
 		{
 			FieldError error = new FieldError("usuario", "dni", "Ya existe un usuario con el dni ingresado");
 			result.addError(error);
-			mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
-			 mAV.addObject("perfiles", perfilService.traerPerfiles());
-			}else if (result.hasErrors()) {			
-			 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
-			 mAV.addObject("perfiles", perfilService.traerPerfiles());
-		    }else if(userNameRepetido!=null){
-		    	 
-		    	FieldError error = new FieldError("usuario", "username", "Ya existe un usuario con el username ingresado");
+			addIncorrecto=true;
+		}
+		if (result.hasErrors())	
+				addIncorrecto=true;
+		if(userNameRepetido!=null){
+			 
+		    	 FieldError error = new FieldError("usuario", "username", "Ya existe un usuario con el username ingresado");
 				 result.addError(error);
-		    	 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
-				 mAV.addObject("perfiles", perfilService.traerPerfiles());
-		    
+				 addIncorrecto=true;
 		    }
-		    else {
+		if(emailRepetido!=null)
+		    {FieldError otroError = new FieldError("usuario", "email", "El email ya tiene una cuenta asociada");
+			 result.addError(otroError);
+			 addIncorrecto=true;
+		    }
+		if(!addIncorrecto){
 		    	usuarioService.insertOrUpdate(usuarioModel);
 		    	redirAttrs.addFlashAttribute("success", usuarioModel.toString()+" agregado exitosamente.");
-		       	mAV = new ModelAndView(ViewRouteHelper.HOME_ROUTE);
-		    }
+		       	mAV = new ModelAndView(ViewRouteHelper.USUARIO_ROOT);
+		    }else {
+		    		mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
+		    		mAV.addObject("add", true);
+		    		mAV.addObject("perfiles", perfilService.traerPerfiles());}
 		 return mAV;
 	}
 	
-	@GetMapping("/{idUsuario}")
-	public ModelAndView get(@PathVariable("idUsuario") long idUsuario) {
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
-		mAV.addObject("usuario", usuarioService.traerId(idUsuario));
+	@PostMapping("/editUser")
+	public  ModelAndView update(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result,RedirectAttributes redirAttrs) {
+		
+		boolean editIncorrecto=false;
+		
+		ModelAndView mAV=null;
+		
+		String usernameActual=usuarioService.traerId(usuarioModel.getIdPersona()).getUsername();
+		String emailActual=usuarioService.traerId(usuarioModel.getIdPersona()).getEmail();
+		UsuarioModel otroUsuario;
+		if (result.hasErrors())			
+			editIncorrecto=true;
+		
+		if (!usernameActual.equals(usuarioModel.getUsername()))//si quiere cambiar el nombre
+		{
+			otroUsuario=usuarioService.traerUsername(usuarioModel.getUsername());
+			if(otroUsuario!=null)
+			{if(otroUsuario.getIdPersona()!=usuarioModel.getIdPersona())
+			{
+				 FieldError error = new FieldError("usuario", "username", "Ya existe un usuario con el username ingresado");
+				 result.addError(error);
+				 editIncorrecto=true;
+			}}
+		}
+		if(!emailActual.equals(usuarioModel.getEmail()))//si quiere cambiar el email
+		{
+			otroUsuario=usuarioService.traerEmail(usuarioModel.getEmail());
+			if(otroUsuario!=null)
+			{if(otroUsuario.getIdPersona()!=usuarioModel.getIdPersona())
+			{
+				 FieldError otroError = new FieldError("usuario", "email", "El email ya tiene una cuenta asociada");
+				 result.addError(otroError);
+				 editIncorrecto=true;
+			}}
+		}
+		if(editIncorrecto)
+		{
+			 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
+			 mAV.addObject("add", false);
+			 mAV.addObject("perfiles", perfilService.traerPerfiles());
+			
+		}else {
+			usuarioService.insertOrUpdate(usuarioModel);
+			redirAttrs.addFlashAttribute("success", usuarioModel.toString()+" editado exitosamente.");
+			mAV =new ModelAndView(ViewRouteHelper.USUARIO_ROOT);
+		}
 		return mAV;
 	}
-	@PostMapping("/update")
-	public RedirectView update(@ModelAttribute("usuario") UsuarioModel usuarioModel) {
-		usuarioService.insertOrUpdate(usuarioModel);
-		return new RedirectView(ViewRouteHelper.USUARIO_ROOT);
-	}
 	
+
 	@PostMapping("/delete/{id}")
-	public RedirectView delete(@PathVariable("id") long id) {
-		usuarioService.remove(id);
-		return new RedirectView(ViewRouteHelper.USUARIO_ROOT);
+	public ModelAndView delete(@PathVariable("id") long id,RedirectAttributes redirAttrs) {
+		String userName = usuarioService.traerId(id).getUsername();
+		if(!usuarioService.remove(id)) {
+			redirAttrs.addFlashAttribute("error", "El usuario "+userName+" no ha podido ser dado de baja debido a registros activos");
+		}else
+		{
+			redirAttrs.addFlashAttribute("success","El usuario "+userName+ " fue dado de baja exitosamente.");
+		}
+		return new ModelAndView(ViewRouteHelper.USUARIO_ROOT);
 	}
 
 }

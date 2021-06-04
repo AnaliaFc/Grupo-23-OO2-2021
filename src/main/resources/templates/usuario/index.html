@@ -11,10 +11,11 @@
 
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
+	<div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+	<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 	<div class="mb-5"></div>
-
 	<div class="main">
-		<table class="table table-bordered table-dark table-striped table-sm" style="width: 800px; margin: 0 auto;">
+		<table class="table table-bordered table-dark table-striped table-sm" style="width: 1000px; margin: 0 auto;">
 			<thead>
 				<tr>
 					<th>Usuario</th>
@@ -34,14 +35,19 @@
 					<td> <span th:text="${usuario.email}"> </td>
 					<td> <span th:text="${usuario.perfil.tipo}"> </td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')">
-						<a th:href="@{usuario/}+${usuario.idPersona}" class="btn btn-danger">Editar</a>
+					  
+						<div class="d-flex"><a th:href="@{usuario/neworupdate(idPersona=${usuario.idPersona})}" class="btn btn-danger">Editar</a>
+						<form th:action="@{/usuario/delete/{id}(id=${usuario.idPersona})}" method="post">
+						<input type="submit" class="btn btn-danger" value="Borrar" onclick="return confirm('¿Estas seguro de eliminar este usuario?')"/>
+						</form></div>
+				
 					</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="mb-2"></div>
 		<div class="col-md-12 text-center">
-			<a th:ref="@{/usuario/form}" class="btn btn-primary" style="text-align: right;"
+			<a th:href="@{/usuario/neworupdate}" class="btn btn-primary" style="text-align: right;"
 				sec:authorize="hasRole('ROLE_ADMIN')">Agregar nuevo usuario</a>
 			<a href="/usuario?format=pdf" class="btn btn-primary" style="text-align: center;" target="_BLANK"
 				sec:authorize="hasRole('ROLE_AUDITOR')">Generar pdf</a>

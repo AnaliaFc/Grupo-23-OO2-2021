@@ -18,4 +18,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	@Query("SELECT u FROM Usuario u inner join fetch u.perfil where username = (:username)")
 	public abstract Usuario findByUsernameWithPerfil(@Param("username")String username);
+
+	@Query("SELECT u FROM Usuario u inner join fetch u.perfil where email = (:email)")
+	public abstract Usuario findByEmail(@Param("email")String email);
 }
