@@ -58,17 +58,8 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
-		Usuario existente = usuarioRepository.findById(userModel.getIdPersona());
-		if(existente!=null)
-		{
-			existente.setApellido(userModel.getApellido());
-			existente.setNombre(userModel.getNombre());
-			existente.setUsername(userModel.getUsername());
-			existente.setEmail(userModel.getEmail());
-			usuarioRepository.save(existente);
-		}else {
-		  existente = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));}
-		return usuarioConverter.entityToModel(existente);
+		Usuario user = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));
+		return usuarioConverter.entityToModel(user);
 	}
 
 	

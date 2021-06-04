@@ -15,22 +15,43 @@
 	<div th:replace="fragments/menu"></div>
 
 	<div class="main">
-		<form action="#" th:action="@{/usuario/update}" th:object="${usuario}" method="post">
+		<form th:action="@{/usuario/update}" th:object="${usuario}" method="POST" class="row g-3">
 			<input type="hidden" th:field="*{idPersona}" />
 			<input type="hidden" th:field="*{perfil.idPerfil}" />
 			<input type="hidden" th:field="*{password}" />
-			<p>
-				Nombre <input type="text" th:field="*{nombre}" />
-			</p>
-			<p>
-				Apellido: <input type="text" th:field="*{apellido}" />
-			</p>
-			<p>
-				Nombre Usuario: <input type="text" th:field="*{username}" />
-			</p>
-			<p>
-				Email: <input type="text" th:field="*{email}" />
-			</p>
+					<div class="col-md-6 form-group">
+					<label class="form-label">Nombre</label>
+					<input type="text" class="form-control" th:field="*{nombre}" />
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+                    </div>
+                    <div class="col-md-6 form-group">
+                       <label class="form-label">Apellido</label>
+						<input type="text" class="form-control" th:field="*{apellido}"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
+                    </div>
+                    <div class="col-md-6 form-group">
+                       <label class="form-label">Tipo de Documento</label>
+						<select th:field="*{tipoDocumento}" class="form-select">
+							<option th:each="tipoDocumento : ${T(com.unla.Grupo23OO22021.enums.TipoDocumento).values()}" th:value="${tipoDocumento}" th:text="${tipoDocumento}"></option>
+						</select>
+					</div>
+                    <div class="col-md-6 form-group">
+                        <label class="form-label"> N° Documento </label>
+						<input type="text" class="form-control" th:field="*{dni}" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+                    </div>
+                   
+                    <div class="col-md-6 form-group">
+                        <label class="form-label"> Email </label>
+						<input type="text" class="form-control" th:field="*{email}" /></p>
+                    </div>
+                   
+                     <div class="col-md-6 form-group">
+                       <label class="form-label">Nombre de Usuario</label>
+						<input type="text" class="form-control" th:field="*{username}"/>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                    </div>
+					           
 			<input type="submit" class="btn btn-primary" value="Editar" />
 		</form>
 		<form action="#" th:action="@{/usuario/delete/{id}(id=${usuario.idPersona})}" method="post">
