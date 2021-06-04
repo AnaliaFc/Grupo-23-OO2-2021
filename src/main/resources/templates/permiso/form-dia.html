@@ -18,10 +18,10 @@
 
 	<div class="main">
 		<div class="container" style="width: 70%;">
-			<h1>Formulario de Permiso por Dia <span class="badge bg-secondary" th:text="${lugares.size()+1+'/3'}" />
+			<h1>Formulario de Permiso por un unico dia <span class="badge bg-secondary"
+					th:text="${lugares.size()+1+'/3'}" />
 			</h1>
 		</div>
-
 		<table class="table container" style="width:70%" th:if="${lugares.size()>0}">
 			<thead>
 				<tr>
@@ -40,19 +40,23 @@
 
 		<form action="#" th:action="@{/permiso/search-lugar-d}" th:object="${lugar}" method="POST" style="width:70%"
 			class="container" th:if="${lugares.size()<2}">
-			<h5 th:if="${lugares.size()==0}">Desde</h5>
-			<h5 th:if="${lugares.size()==1}">Hasta</h5>
-			<div class="mb-2">
-				<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
-				<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
-		</div>
-		
-		<div class="mb-2">
-			<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal" class="form-control">
-			<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
-		</div>
-		<input type="submit" class="btn btn-primary">
-	</form>
+			<div class="row">
+				<h5 th:if="${lugares.size()==0}">Lugar de partida</h5>
+				<h5 th:if="${lugares.size()==1}">Lugar de llegada</h5>
+				<div class="mb-2 form-group col">
+					<label class="form-label">Nombre</label>
+					<input th:field="*{lugar}" type="text" placeholder="Adrogue" class="form-control">
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
+				</div>
+			
+				<div class="mb-2 col">
+					<label class="form-label">Codigo Postal</label>
+					<input th:field="*{codigoPostal}" type="text" placeholder="1846" class="form-control">
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
+				</div>
+				</div>
+			<input type="submit" class="btn btn-primary">
+		</form>
 	
 	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"
 		class="container mt-3" th:if="${lugares.size()>0}">
@@ -66,7 +70,7 @@
 		<div class="row">
 
 			<div class="col form-group">
-				<label class="form-label">Dni</label>
+				<label class="form-label">Solicitante</label>
 				<select th:field="*{persona.idPersona}" class="form-select">
 					<option th:each="p : ${personas}" th:value="${p.idPersona}"
 						th:text="${p.nombre+' '+p.apellido+' '+p.dni}"></option>

@@ -41,20 +41,24 @@
 
 		<form action="#" th:action="@{/permiso/search-lugar-p}" th:object="${lugar}" method="POST" style="width:70%"
 			class="container" th:if="${lugares.size()<2}">
-			<h5 th:if="${lugares.size()==0}">Desde</h5>
-			<h5 th:if="${lugares.size()==1}">Hasta</h5>
-			<div class="mb-2">
-				<input th:field="*{lugar}" type="text" placeholder="Nombre" class="form-control">
-				<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
-		</div>
-		
-		<div class="mb-2">
-			<input th:field="*{codigoPostal}" type="text" placeholder="Codigo Postal" class="form-control">
-			<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
-		</div>
-		<input th:field="*{lugar}" type="submit" class="btn btn-primary">
-	</form>
-
+			<div class="row">
+				<h5 th:if="${lugares.size()==0}">Lugar de partida</h5>
+				<h5 th:if="${lugares.size()==1}">Lugar de llegada</h5>
+				<div class="mb-2 form-group col">
+					<label class="form-label">Nombre</label>
+					<input th:field="*{lugar}" type="text" placeholder="Adrogue" class="form-control">
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('lugar')}" th:errors="*{lugar}"></small>
+				</div>
+			
+				<div class="mb-2 col">
+					<label class="form-label">Codigo Postal</label>
+					<input th:field="*{codigoPostal}" type="text" placeholder="1846" class="form-control">
+					<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"></small>
+				</div>
+				</div>
+			<input type="submit" class="btn btn-primary">
+		</form>
+	
 	<form action="#" th:action="@{/permiso/clear-lugar}" method="POST" style="width:70%"
 		class="container mt-3" th:if="${lugares.size()>0}">
 		<input type="submit" value="Borrar lugares seleccionados" class="btn btn-primary">
@@ -66,7 +70,7 @@
 		<div class="row">
 
 			<div class="col form-group">
-				<label class="form-label">Dni</label>
+				<label class="form-label">Solicitante</label>
 				<select th:field="*{persona.idPersona}" class="form-select">
 					<option th:each="p : ${personas}" th:value="${p.idPersona}"
 						th:text="${p.nombre+' '+p.apellido+' '+p.dni}"></option>
@@ -90,6 +94,7 @@
 			<div class="form-group col">
 				<label class="form-label">Fecha de Inicio</label>
 				<input class="form-control" type="date" th:field="*{fechaString}">
+				<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaString')}" th:errors="*{fechaString}"></small>
 			</div>
 
 			<div class="form-group col">

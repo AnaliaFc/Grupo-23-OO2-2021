@@ -10,14 +10,14 @@
 				<li class="nav-item" sec:authorize="isAuthenticated()">
 					<a class="nav-link" th:href="@{/perfil/}">Perfiles</a>
 				</li>
-			   <div class="dropdown nav-item">
+				<div class="dropdown nav-item">
 					<a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
 						aria-expanded="false">
 						Permiso
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" th:href="@{/permiso/dia/new}">Alta Diario</a></li>
-						<li><a class="dropdown-item" th:href="@{/permiso/periodo/new}">Alta Periodo</a></li>
+						<li><a class="dropdown-item" th:href="@{/permiso/dia/new}">Por Dia Unico</a></li>
+						<li><a class="dropdown-item" th:href="@{/permiso/periodo/new}">Por Periodo</a></li>
 						<li><a class="dropdown-item" th:href="@{/permiso/listar}">Listar</a></li>
 					</ul>
 				</div>
@@ -27,21 +27,25 @@
 				<li class="nav-item">
 					<a class="nav-link" th:href="@{/persona/new}">AltaPersona</a>
 				</li>
-				
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/about-us}">Nosotros</a>
-				</li>		
-				<li class="nav-item" sec:authorize="isAuthenticated()">
-				<a class="nav-link" th:href="@{/user}" sec:authentication="name"></a>
-				</li>	
-				
+
 			</ul>
-			<div class="d-flex">
+			<div class="d-flex" style="width: 150px;">
 				<div sec:authorize="isAuthenticated()">
 					<form th:action="@{/logout}" method="post" id="form-logout">
 					</form>
-					<input class="btn btn-dark" style="cursor: pointer" type="submit" value="Logout"
-						form="form-logout" />
+					<div class="dropdown nav-item">
+						<a class="nav-link dropdown-toggle text-lighter" type="button" id="dropdownMenuButton1"
+							data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"
+							sec:authentication="name">
+
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li><a class="dropdown-item" th:href="@{/user}">Ver mi perfil</a></li>
+							<li><input class="dropdown-item" style="cursor: pointer" type="submit" value="Logout"
+									form="form-logout" /></li>
+
+						</ul>
+					</div>
 				</div>
 				<div sec:authorize="!isAuthenticated()">
 					<a class="btn btn-dark" th:href="@{/login}">Login</a>
