@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.unla.Grupo23OO22021.converters.PersonaConverter;
 import com.unla.Grupo23OO22021.entities.Persona;
+import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.models.PersonaModel;
+import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.repositories.IPersonaRepository;
 import com.unla.Grupo23OO22021.services.IPersonaService;
 
@@ -32,6 +34,18 @@ public class PersonaService implements IPersonaService  {
 		}
 		return aux;
 	}
+	
+	@Override
+	public List<PersonaModel> traerPersonasSinUsuario() {
+		List<PersonaModel> list = new ArrayList<PersonaModel>();;
+		for (Persona persona : personaRepository.findAll()) {
+			if(!(persona instanceof Usuario))
+				list.add(personaConverter.entityToModel(persona));
+		}
+		return list;
+	}
+	
+	
 
 	@Override
 	public PersonaModel insertOrUpdate(PersonaModel persona) {

@@ -50,7 +50,7 @@ public class QRCodeController {
     	
     	 	    	QRCodeGenerator.generateQRCodeImage(codeText,400, 400, ViewRouteHelper.QR_CODE_IMAGE_PATH);
     	 	    	try {
-    	 	    	    Thread.sleep(5 * 1000);//Para darle tiempo a la imagen a que refresque
+    	 	    	    Thread.sleep(4 * 1000);//Para darle tiempo a la imagen a que refresque
     	 	    	} catch (InterruptedException ie) {
     	 	    	    Thread.currentThread().interrupt();
     	 	    	}

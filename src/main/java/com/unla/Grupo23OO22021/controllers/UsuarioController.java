@@ -58,15 +58,16 @@ public class UsuarioController {
 	public ModelAndView getById(@RequestParam(value= "idPersona", required=false)Usuario usuario) {
 		ModelAndView mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 		UsuarioModel usuarioModel= null;
-		if(usuario ==null)
+		
+		if(usuario==null)
 		{
 			usuarioModel= new UsuarioModel();
 			 mAV.addObject("add", true);
-		}else 
-		{
+		} if(usuario!=null){
 			usuarioModel= usuarioService.traerId(usuario.getIdPersona());	
 			 mAV.addObject("add", false);
 		}
+		
 		mAV.addObject("perfiles", perfilService.traerPerfiles());
 		mAV.addObject("usuario", usuarioModel);
 		return mAV;
@@ -114,20 +115,21 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/editUser")
-	public  ModelAndView update(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result,RedirectAttributes redirAttrs) {
-		
+	public  ModelAndView update(@Valid @ModelAttribute("usuario") UsuarioModel usuarioModel, BindingResult result,RedirectAttributes redirAttrs)
+	{
 		boolean editIncorrecto=false;
 		
 		ModelAndView mAV=null;
 		
-		String usernameActual=usuarioService.traerId(usuarioModel.getIdPersona()).getUsername();
-		String emailActual=usuarioService.traerId(usuarioModel.getIdPersona()).getEmail();
-		UsuarioModel otroUsuario;
 		if (result.hasErrors())			
 			editIncorrecto=true;
 		
-		if (!usernameActual.equals(usuarioModel.getUsername()))//si quiere cambiar el nombre
-		{
+		 String usernameActual=usuarioService.traerId(usuarioModel.getIdPersona()).getUsername();
+		 String emailActual=usuarioService.traerId(usuarioModel.getIdPersona()).getEmail();
+		 UsuarioModel otroUsuario;
+		
+		 if (!usernameActual.equals(usuarioModel.getUsername()))//si quiere cambiar el nombre
+		 {
 			otroUsuario=usuarioService.traerUsername(usuarioModel.getUsername());
 			if(otroUsuario!=null)
 			{if(otroUsuario.getIdPersona()!=usuarioModel.getIdPersona())
@@ -136,24 +138,25 @@ public class UsuarioController {
 				 result.addError(error);
 				 editIncorrecto=true;
 			}}
-		}
-		if(!emailActual.equals(usuarioModel.getEmail()))//si quiere cambiar el email
-		{
+		 } 
+		 
+		 if(!emailActual.equals(usuarioModel.getEmail()))//si quiere cambiar el email
+		 { 
 			otroUsuario=usuarioService.traerEmail(usuarioModel.getEmail());
 			if(otroUsuario!=null)
 			{if(otroUsuario.getIdPersona()!=usuarioModel.getIdPersona())
 			{
-				 FieldError otroError = new FieldError("usuario", "email", "El email ya tiene una cuenta asociada");
-				 result.addError(otroError);
+				 FieldError error = new FieldError("usuario", "email", "El email ya tiene una cuenta asociada");
+				 result.addError(error);
 				 editIncorrecto=true;
 			}}
-		}
+		 }
+		
 		if(editIncorrecto)
 		{
 			 mAV = new ModelAndView(ViewRouteHelper.USUARIO_FORM);
 			 mAV.addObject("add", false);
 			 mAV.addObject("perfiles", perfilService.traerPerfiles());
-			
 		}else {
 			usuarioService.insertOrUpdate(usuarioModel);
 			redirAttrs.addFlashAttribute("success", usuarioModel.toString()+" editado exitosamente.");

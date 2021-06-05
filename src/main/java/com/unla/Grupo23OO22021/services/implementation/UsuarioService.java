@@ -16,12 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.unla.Grupo23OO22021.converters.PerfilConverter;
 import com.unla.Grupo23OO22021.converters.UsuarioConverter;
 import com.unla.Grupo23OO22021.entities.Perfil;
 import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
-import com.unla.Grupo23OO22021.repositories.IPersonaRepository;
 import com.unla.Grupo23OO22021.repositories.IUsuarioRepository;
 
 
@@ -37,7 +35,7 @@ public class UsuarioService implements UserDetailsService {
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
 	
-
+	
 	public List<UsuarioModel> traerUsuarios() {
 		List<UsuarioModel> models = new ArrayList<UsuarioModel>();
 		for (Usuario user : usuarioRepository.findAll()) {
@@ -56,7 +54,6 @@ public class UsuarioService implements UserDetailsService {
 		}
 		return model; 
 	}
-
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
 		Usuario user = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));
 		return usuarioConverter.entityToModel(user);

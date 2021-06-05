@@ -14,6 +14,7 @@ public class ViewRouteHelper {
 	public final static String HOME_LOGOUT = "home/logout";
 	public final static String HOME_ABOUT_US = "home/about-us";
 	public final static String HOME_USER = "home/user";
+	public final static String PERSONAS_Y_RODADO_LIST = "home/listpersonasYrodados";
 		
 	// PERFIL
 	public final static String FORM = "viewsPerfil/form";
@@ -27,6 +28,7 @@ public class ViewRouteHelper {
 	//PERSONA
 	public final static String PERSONA_FORM = "persona/form";
 	
+		
 	//QR
 	public static final String QR_GENERADO = "QRv/qrgenerado";
 	public static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/qr/QRCode.png";

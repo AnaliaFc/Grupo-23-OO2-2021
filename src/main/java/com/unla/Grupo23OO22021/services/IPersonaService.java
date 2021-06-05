@@ -7,6 +7,7 @@ import com.unla.Grupo23OO22021.models.PersonaModel;
 public interface IPersonaService {
 	
 	public List<PersonaModel> traerPersonas();
+	public List<PersonaModel> traerPersonasSinUsuario();
 	public PersonaModel insertOrUpdate(PersonaModel persona);
 	public PersonaModel traerId(long id);
 	public PersonaModel traerDni(int dni);

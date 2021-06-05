@@ -20,11 +20,11 @@
 			<form th:action="${add} ? @{/usuario/newUser} : @{/usuario/editUser}" th:object="${usuario}" method="POST" class="row g-3">
 				
 				<div th:unless="${add}">
-				<input type="hidden" th:field="*{idPersona}" />
-			    <input type="hidden" th:field="*{perfil.idPerfil}"/>
-			    <input type="hidden" th:field="*{tipoDocumento}"/>
-			    <input type="hidden" th:field="*{dni}"/>
-			    <input type="hidden" th:field="*{password}"/>
+					<input type="hidden" th:field="*{idPersona}" />
+			    	<input type="hidden" th:field="*{dni}"/>
+			    	<input type="hidden" th:field="*{perfil.idPerfil}"/>
+			    	<input type="hidden" th:field="*{password}"/>
+			    	<input type="hidden" th:field="*{tipoDocumento}"/>
 			    </div>
 				
 				<div class="col-md-6 form-group">

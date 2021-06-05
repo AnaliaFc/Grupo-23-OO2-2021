@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
 import com.unla.Grupo23OO22021.models.UsuarioModel;
+import com.unla.Grupo23OO22021.services.implementation.PersonaService;
+import com.unla.Grupo23OO22021.services.implementation.RodadoService;
 import com.unla.Grupo23OO22021.services.implementation.UsuarioService;
 
 @Controller
@@ -20,6 +22,10 @@ public class HomeController {
 	
 	@Autowired
 	UsuarioService usuarioService;
+	@Autowired
+	PersonaService personaService;
+	@Autowired
+	RodadoService rodadoService;
 	
 	@GetMapping("")
 	public ModelAndView index() {
@@ -61,4 +67,13 @@ public class HomeController {
 		
 		return modelAndView;
 	}
+	
+	@GetMapping("/listarPersonasyRodados")
+	public ModelAndView listadoPersonasYRodados() {
+		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERSONAS_Y_RODADO_LIST);
+		modelAndView.addObject("personas", personaService.traerPersonasSinUsuario());
+		modelAndView.addObject("rodados", rodadoService.traerRodados());
+		return modelAndView;
+	}
+	
 }

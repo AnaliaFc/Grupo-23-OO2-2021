@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<link th:href="@{../../css/style.css}" rel="stylesheet">
+	<title>Listado de personas y rodados registrados</title>
+</head>
+
+<body class="masthead">
+	<div th:replace="fragments/menu"></div>
+	<div class="mb-5"></div>
+	<div class="main">
+		<table class="table table-bordered table-dark table-striped table-sm" style="width: 800px; margin: 0 auto;">
+		<h2 th:text="Personas" style='text-align:center'></h2>
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>DNI</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="persona : ${personas}">
+					<td> <span th:text="${persona.nombre}"> </td>
+					<td> <span th:text="${persona.apellido}"> </td>
+					<td> <span th:text="${persona.dni}"> </td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="table table-bordered table-dark table-striped table-sm" style="width: 500px; margin: 0 auto;">
+			<h2 th:text="Rodados" style='text-align:center'></h2>
+			<thead>
+				<tr>
+					<th>Dominio</th>
+					<th>Vehiculo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="r : ${rodados}">
+					<td> <span th:text="${r.dominio}"> </td>
+					<td> <span th:text="${r.vehiculo}"> </td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:replace="fragments/footer"></div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
