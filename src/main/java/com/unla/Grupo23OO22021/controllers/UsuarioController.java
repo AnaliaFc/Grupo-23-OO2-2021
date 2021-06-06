@@ -122,7 +122,7 @@ public class UsuarioController {
 		ModelAndView mAV=null;
 		
 		if (result.hasErrors())			
-			editIncorrecto=true;
+			{editIncorrecto=true;}
 		
 		 String usernameActual=usuarioService.traerId(usuarioModel.getIdPersona()).getUsername();
 		 String emailActual=usuarioService.traerId(usuarioModel.getIdPersona()).getEmail();

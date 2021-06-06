@@ -54,6 +54,7 @@ public class UsuarioService implements UserDetailsService {
 		}
 		return model; 
 	}
+	
 	public UsuarioModel insertOrUpdate(UsuarioModel userModel) {
 		Usuario user = usuarioRepository.save(usuarioConverter.modelToEntity(userModel));
 		return usuarioConverter.entityToModel(user);
