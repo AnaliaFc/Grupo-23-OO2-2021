@@ -32,28 +32,15 @@ public class QRCodeController {
     @GetMapping("/generarydescargarQR/{idPermiso}")
 		public ModelAndView generarYver(@PathVariable int idPermiso, RedirectAttributes redirAttrs)throws Exception {
 			        
-    				String codeText = ViewRouteHelper.QR_WEBVIEW;
+    				String url = (ViewRouteHelper.QR_WEBVIEW+permisoService.generarUrlQR(idPermiso)).replaceAll("\\s+","%20"); 
     				
-    				PermisoModel permiso= permisoService.findById(idPermiso); 
-    	    	
-    				if(permiso instanceof PermisoPeriodoModel)
-    	 	    	{
-    					PermisoPeriodoModel pp = (PermisoPeriodoModel) permiso;
-    	 	    		codeText = codeText+pp.generarUrl();
-    	 	    	}
-    				if(permiso instanceof PermisoDiarioModel)
-    	 	    	{
-    					PermisoDiarioModel pd = (PermisoDiarioModel) permiso;
-    	 	    		codeText = codeText+pd.generarUrl();
-    	 	    	}
-    				codeText=codeText.replaceAll("\\s+","%20");
-    	
-    	 	    	QRCodeGenerator.generateQRCodeImage(codeText,400, 400, ViewRouteHelper.QR_CODE_IMAGE_PATH);
+    			   	QRCodeGenerator.generateQRCodeImage(url,400, 400, ViewRouteHelper.QR_CODE_IMAGE_PATH);
     	 	    	try {
-    	 	    	    Thread.sleep(4 * 1000);//Para darle tiempo a la imagen a que refresque
+    	 	    	    Thread.sleep(4 * 1000);//Le da tiempo a la imagen para que actualice
     	 	    	} catch (InterruptedException ie) {
     	 	    	    Thread.currentThread().interrupt();
     	 	    	}
+    	 	    	
     	 	    	redirAttrs.addFlashAttribute("qr", "qr");
     		        return new ModelAndView("redirect:/"+ViewRouteHelper.ROUTE_PERMISOS);
     }
