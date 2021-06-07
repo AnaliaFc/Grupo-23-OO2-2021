@@ -172,11 +172,11 @@ public class PermisoService implements IPermisoService{
 	}
 	
 	@Override
-	public String generarUrlQR(int id)
+	public String generarUrlQR(int idPermiso)
 	{
 		String url="";
 		
-		PermisoModel permiso= findById(id); 
+		PermisoModel permiso= findById(idPermiso); 
     	
 		if(permiso instanceof PermisoPeriodoModel)
 	    	{

@@ -1,5 +1,4 @@
 package com.unla.Grupo23OO22021.util;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -22,15 +21,4 @@ public class QRCodeGenerator {
 	       
 	    }
 		
-		
-		public static byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
-		    QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		    BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-		    
-		    ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-		    MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-		    byte[] pngData = pngOutputStream.toByteArray(); 
-		    return pngData;
-		}
-
 }
