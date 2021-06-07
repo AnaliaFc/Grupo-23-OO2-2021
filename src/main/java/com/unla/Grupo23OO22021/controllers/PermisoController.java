@@ -79,17 +79,21 @@ public class PermisoController {
 		modelAndView.addObject("lugar", new LugarModel());
 		
 		modelAndView.addObject("error", error);
+		
+		modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 
 		return modelAndView;
 	}
 
 	@PostMapping("/periodo/save")
 	public ModelAndView savePeriodo(@Valid @ModelAttribute("permiso") PermisoPeriodoModel permisoModel,
-			BindingResult bindingResult) {
+			BindingResult bindingResult){
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
-
 		
-		if (bindingResult.hasErrors()) {
+		LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
+		boolean errorFecha=false;
+		errorFecha=fechaAux.isBefore(LocalDate.now());
+		if (bindingResult.hasErrors() || errorFecha) {
 			modelAndView.addObject("personas", personaService.traerPersonas());
 
 			List<RodadoModel> rodados = rodadoService.traerRodados();
@@ -99,7 +103,7 @@ public class PermisoController {
 			modelAndView.addObject("lugar", new LugarModel());
 			
 			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_PERIODO);
-			
+			modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 			return modelAndView;
 		}
 			
@@ -139,6 +143,7 @@ public class PermisoController {
 		modelAndView.addObject("lugar", new LugarModel());
 		
 		modelAndView.addObject("error", error);
+		modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 
 		return modelAndView;
 	}
@@ -148,14 +153,17 @@ public class PermisoController {
 	public ModelAndView saveDia(@Valid @ModelAttribute("permiso") PermisoDiarioModel permisoModel,
 			BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
-
 		
-		if (bindingResult.hasErrors()) {
+		LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
+		boolean errorFecha=false;
+		errorFecha=fechaAux.isBefore(LocalDate.now());
+		if (bindingResult.hasErrors() || errorFecha) {
 			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_DIA);
 			modelAndView.addObject("personas", personaService.traerPersonas());
 			
 			modelAndView.addObject("lugares", lugarService.getLugares());
 			modelAndView.addObject("lugar", new LugarModel());
+			modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 			return modelAndView;
 		}
 		else {
@@ -208,12 +216,10 @@ public class PermisoController {
 	public ModelAndView searchLugarD(@Valid @ModelAttribute("lugar") LugarModel lugarModel,BindingResult bindingResult) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_DIA);
-		System.out.println(bindingResult);
 		if(!bindingResult.hasErrors()) {
 			if(lugarModeEncontrado!=null) {
 				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 			}else {
-//				error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 				lugarService.guardarLugar(lugarModel);
 			}
 			modelAndView.addObject("lugar", new LugarModel());
@@ -224,6 +230,7 @@ public class PermisoController {
 		
 		List<PersonaModel> personas = personaService.traerPersonas();
 		modelAndView.addObject("personas", personas);
+		modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 		return modelAndView;
 	}
 	
@@ -232,12 +239,10 @@ public class PermisoController {
 	public ModelAndView searchLugarP(@Valid @ModelAttribute("lugar") LugarModel lugarModel,BindingResult bindingResult) {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_PERIODO);
-		System.out.println(bindingResult);
 		if(!bindingResult.hasErrors()) {
 			if(lugarModeEncontrado!=null) {
 				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 			}else {
-//				error="El lugar que buscaste no existe, intente agregarlo: "+lugarModel.getLugar() + " CP: "+lugarModel.getCodigoPostal() ;
 				lugarService.guardarLugar(lugarModel);
 			}
 			modelAndView.addObject("lugar", new LugarModel());
@@ -249,6 +254,7 @@ public class PermisoController {
 		List<PersonaModel> personas = personaService.traerPersonas();
 		modelAndView.addObject("personas", personas);
 		modelAndView.addObject("rodados", rodadoService.traerRodados());
+		modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 		return modelAndView;
 	}
 
