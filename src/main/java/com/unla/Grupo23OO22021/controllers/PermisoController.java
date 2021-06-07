@@ -90,9 +90,15 @@ public class PermisoController {
 			BindingResult bindingResult){
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 		
-		LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
 		boolean errorFecha=false;
-		errorFecha=fechaAux.isBefore(LocalDate.now());
+		
+		try {
+			LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
+			errorFecha=fechaAux.isBefore(LocalDate.now());		
+		} catch (Exception e) {
+			errorFecha=false;
+		}
+		
 		if (bindingResult.hasErrors() || errorFecha) {
 			modelAndView.addObject("personas", personaService.traerPersonas());
 
@@ -104,6 +110,11 @@ public class PermisoController {
 			
 			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_PERIODO);
 			modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+			
+			if(errorFecha) {
+				bindingResult.addError(new FieldError("permiso", "fechaString", "La fecha elegida es erronea"));
+			}
+			
 			return modelAndView;
 		}
 			
@@ -154,9 +165,13 @@ public class PermisoController {
 			BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.ROUTE_PERMISOS);
 		
-		LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
 		boolean errorFecha=false;
-		errorFecha=fechaAux.isBefore(LocalDate.now());
+		try {
+			LocalDate fechaAux = LocalDate.parse(permisoModel.getFechaString());
+			errorFecha=fechaAux.isBefore(LocalDate.now());
+		} catch (Exception e) {
+			errorFecha=false;
+		}
 		if (bindingResult.hasErrors() || errorFecha) {
 			modelAndView.setViewName(ViewRouteHelper.PERMISO_FORM_DIA);
 			modelAndView.addObject("personas", personaService.traerPersonas());
@@ -164,6 +179,9 @@ public class PermisoController {
 			modelAndView.addObject("lugares", lugarService.getLugares());
 			modelAndView.addObject("lugar", new LugarModel());
 			modelAndView.addObject("hoy", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+			
+			
+			
 			return modelAndView;
 		}
 		else {
