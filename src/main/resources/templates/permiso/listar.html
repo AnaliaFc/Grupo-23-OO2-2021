@@ -12,8 +12,10 @@
 <body class="masthead">
 	<div th:replace="fragments/menu"></div>
 	<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+	<div class="alert alert-primary" role="alert" th:if="${qr}">
+     Se ha generado exitosamente su Código QR <a th:href="@{/verqr}" class="alert-link">Quiero verlo</a>
+	</div>
 	<div class="mb-5"></div>
-
 	<div class="main">
 		<div class="accordion container" id="accordionExample" style="width:85%">
 			<div class="accordion-item">

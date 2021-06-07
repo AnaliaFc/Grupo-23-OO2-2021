@@ -55,7 +55,7 @@ public class QRCodeController {
     	 	    	    Thread.currentThread().interrupt();
     	 	    	}
     	 	    	redirAttrs.addFlashAttribute("qr", "qr");
-    		        return new ModelAndView(ViewRouteHelper.HOME_ROUTE);
+    		        return new ModelAndView("redirect:/"+ViewRouteHelper.ROUTE_PERMISOS);
     }
 
     
