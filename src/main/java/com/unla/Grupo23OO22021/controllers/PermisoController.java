@@ -235,12 +235,16 @@ public class PermisoController {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_DIA);
 		if(!bindingResult.hasErrors()) {
+			boolean existeEnLaLista=false;
 			if(lugarModeEncontrado!=null) {
-				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+				existeEnLaLista=lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 			}else {
-				lugarService.guardarLugar(lugarModel);
+				existeEnLaLista=lugarService.guardarLugar(lugarModel);
 			}
 			modelAndView.addObject("lugar", new LugarModel());
+			if(existeEnLaLista) {
+				modelAndView.addObject("error", "¡Cuidado! Se intento agregar el mismo lugar");
+			}
 		}
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
@@ -258,12 +262,17 @@ public class PermisoController {
 		LugarModel lugarModeEncontrado = lugarService.findByLugarAndCodigoPostal(lugarModel.getLugar(), lugarModel.getCodigoPostal());
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERMISO_FORM_PERIODO);
 		if(!bindingResult.hasErrors()) {
+			boolean existeEnLaLista=false;
 			if(lugarModeEncontrado!=null) {
-				lugarService.guardarLugarEncontrado(lugarModeEncontrado);
+				existeEnLaLista=lugarService.guardarLugarEncontrado(lugarModeEncontrado);
 			}else {
-				lugarService.guardarLugar(lugarModel);
+				existeEnLaLista=lugarService.guardarLugar(lugarModel);
 			}
 			modelAndView.addObject("lugar", new LugarModel());
+			
+			if(existeEnLaLista) {
+				modelAndView.addObject("error", "¡Cuidado! Se intento agregar el mismo lugar");
+			}
 		}
 		
 		modelAndView.addObject("lugares", lugarService.getLugares());
