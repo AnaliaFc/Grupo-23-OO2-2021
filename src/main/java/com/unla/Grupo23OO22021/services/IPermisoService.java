@@ -20,6 +20,8 @@ public interface IPermisoService {
 	public List<PermisoPeriodoModel> findByPersonaPeriodo(PersonaModel persona);
 	public List<PermisoDiarioModel> findByPersonaDiario(PersonaModel persona);
 	
+	public String generarUrlQR(int id);
+	
 	public PermisoModel insertOrUpdate(PermisoModel permisoModel);
 	public boolean remove(int id);
 	

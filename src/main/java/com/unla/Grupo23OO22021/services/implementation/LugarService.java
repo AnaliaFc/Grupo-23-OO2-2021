@@ -51,17 +51,37 @@ public class LugarService implements ILugarService {
 	}
 	
 	
-	public void guardarLugarEncontrado(LugarModel lugarModel) {
+	public boolean guardarLugarEncontrado(LugarModel lugarModel) {
+		boolean existeEnLaLista=false;
 		if(lugares.size()<2) {
-			lugares.add(lugarConverter.modelToEntity(lugarModel));
+			for(Lugar lugar : lugares) {
+				if(lugar.equals(lugarConverter.modelToEntity(lugarModel))) {
+					existeEnLaLista=true;
+					break;
+				}
+			}
+			if(!existeEnLaLista) {
+				lugares.add(lugarConverter.modelToEntity(lugarModel));
+			}
 		}
+		return existeEnLaLista;
 	}
 	
 	
-	public void guardarLugar(LugarModel lugarModel) {
+	public boolean guardarLugar(LugarModel lugarModel) {
+		boolean existeEnLaLista=false;
 		if(lugares.size()<2) {
-			lugares.add(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+			for(Lugar lugar : lugares) {
+				if(lugar.equals(lugarConverter.modelToEntity(lugarModel))) {
+					existeEnLaLista=true;
+					break;
+				}
+			}
+			if(!existeEnLaLista) {
+				lugares.add(lugarRepository.save(lugarConverter.modelToEntity(lugarModel)));
+			}
 		}
+		return existeEnLaLista;
 	}
 	
 	

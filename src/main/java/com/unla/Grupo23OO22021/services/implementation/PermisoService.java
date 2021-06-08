@@ -171,4 +171,23 @@ public class PermisoService implements IPermisoService{
 		return aux;
 	}
 	
+	@Override
+	public String generarUrlQR(int idPermiso)
+	{
+		String url="";
+		
+		PermisoModel permiso= findById(idPermiso); 
+    	
+		if(permiso instanceof PermisoPeriodoModel)
+	    	{
+				PermisoPeriodoModel pp = (PermisoPeriodoModel) permiso;
+	    		url = pp.generarUrl();
+	    	}else if(permiso instanceof PermisoDiarioModel)
+	    	{
+	    		PermisoDiarioModel pd = (PermisoDiarioModel) permiso;
+	    		url = pd.generarUrl();
+	    	}
+		return url;
+	}
+	
 }
