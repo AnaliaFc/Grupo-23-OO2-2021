@@ -44,7 +44,7 @@ background: linear-gradient(217deg, rgba(33,37,41,1) 22%, rgba(41,43,46,1) 50%, 
     				<div></div>
     				<i class="fas fa-user user-icon"></i>
 					<h3 class="mt-3 text-light" sec:authentication="name"></h3>
-					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{usuario/}+${user.idPersona}" class="btn btn-primary mt-3">Editar</a>
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{usuario/neworupdate?idPersona=}+${user.idPersona}" class="btn btn-primary mt-3">Editar</a>
 				</div>
 				<div class="col-8 p-5">
 					<h3 class="mt-2">Information</h3>

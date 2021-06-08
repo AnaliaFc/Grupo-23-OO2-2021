@@ -32,11 +32,6 @@ public class PersonaController {
 	@Qualifier("personaService")
 	private PersonaService personaService;
 	
-	@GetMapping("/")
-	public RedirectView index() {
-		return new RedirectView("/persona/new");
-	}
-	
 	@GetMapping("/new")
 	public ModelAndView newPersona() {
 		ModelAndView modelAndView = new ModelAndView(ViewRouteHelper.PERSONA_FORM);

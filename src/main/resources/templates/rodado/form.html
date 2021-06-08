@@ -19,12 +19,12 @@
 		<div class="row">
 			<div class="form-group col">
 				<label class="form-label">Dominio</label>
-				<input class="form-control" type="text" th:field="*{dominio}">
+				<input class="form-control" placeholder="AAA999" type="text" th:field="*{dominio}">
 				<small class="form-text text-danger" th:if="${#fields.hasErrors('dominio')}" th:errors="*{dominio}"></small>
 			</div>
 			<div class="form-group col">
 				<label class="form-label">Vehiculo</label>
-				<input class="form-control" type="text" th:field="*{vehiculo}">
+				<input class="form-control" placeholder="Volkswagen Gol" type="text" th:field="*{vehiculo}">
 				<small class="form-text text-danger" th:if="${#fields.hasErrors('vehiculo')}" th:errors="*{vehiculo}"></small>
 			</div>
 
