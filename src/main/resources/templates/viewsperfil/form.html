@@ -17,14 +17,13 @@
 			<form th:action="@{/perfil/save}" th:object=${perfil} method="POST">
 				<div class="card">
 					<div class="card-header">
-						<h3>Modulo Perfil</h3>
+						<h3>Nuevo Perfil</h3>
 					</div>
 					<div class="card-body">
-						<input th:field="*{idPerfil}" type="hidden" class="form-control" />
 						<div class="cold-md-4">
 							<label class="col-md-3">TIPO</label>
-							<input th:field="*{tipo}" type="text" class="form-control col-md-8" />
-							<p th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" >EL TIPO NO PUEDE ESTAR VACIO</p>
+							<input th:field="*{tipo}" type="text" class="form-control" />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" ></small>
 						</div>
 					</div>
 					<div class="card-footer">

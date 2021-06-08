@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.unla.Grupo23OO22021.converters.PerfilConverter;
 import com.unla.Grupo23OO22021.entities.Perfil;
+import com.unla.Grupo23OO22021.entities.Usuario;
 import com.unla.Grupo23OO22021.models.PerfilModel;
+import com.unla.Grupo23OO22021.models.UsuarioModel;
 import com.unla.Grupo23OO22021.repositories.IPerfilRepository;
 import com.unla.Grupo23OO22021.services.IPerfilService;
 
@@ -35,7 +37,24 @@ public class PerfilService implements IPerfilService{
 		
 		@Override
 		public PerfilModel traerId(long id) {
-			return perfilConverter.entityToModel(perfilRepository.findById(id));
+			Perfil perfil = perfilRepository.findById(id);
+			PerfilModel model=null;
+			if (perfil!=null)
+			{
+				model=perfilConverter.entityToModel(perfil);
+			}
+			return model; 
+		}
+		
+		@Override
+		public PerfilModel traerTipo(String tipo) {
+			Perfil perfil = perfilRepository.findByTipo(tipo);
+			PerfilModel model=null;
+			if (perfil!=null)
+			{
+				model=perfilConverter.entityToModel(perfil);
+			}
+			return model; 
 		}
 
 		@Override

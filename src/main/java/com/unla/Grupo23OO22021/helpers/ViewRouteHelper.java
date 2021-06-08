@@ -17,7 +17,7 @@ public class ViewRouteHelper {
 	public final static String PERSONAS_Y_RODADO_LIST = "home/listpersonasYrodados";
 		
 	// PERFIL
-	public final static String FORM = "viewsPerfil/form";
+	public final static String PERFIL_FORM = "viewsPerfil/form";
 	public final static String PERFILES = "viewsPerfil/listaPerfiles";
 	
 	//PERMISOS

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.unla.Grupo23OO22021.helpers.ViewRouteHelper;
@@ -46,26 +48,33 @@ public class PerfilController {
 	public String editar(@PathVariable long idPerfil,Model model) {
 		PerfilModel perfil = service.traerId(idPerfil);
 		model.addAttribute("perfil", perfil);
-		return ViewRouteHelper.FORM;
+		return ViewRouteHelper.PERFIL_FORM;
 	}
 	
 	@GetMapping("/new")
 	public String agregar(Model model) {
 		model.addAttribute("perfil", new PerfilModel());
-		return ViewRouteHelper.FORM;
+		return ViewRouteHelper.PERFIL_FORM;
 	}
 	
 	@PostMapping("/save")
-	public RedirectView save(@Valid @ModelAttribute("perfil") PerfilModel perfilModel, BindingResult result) {
+	public ModelAndView save(@Valid @ModelAttribute("perfil") PerfilModel perfilModel, BindingResult result, RedirectAttributes redirAttrs) {
 
-		RedirectView redirect = new RedirectView("/perfil/listar");
-
-		if (result.hasErrors()) {
-			redirect = new RedirectView(ViewRouteHelper.FORM);
+		ModelAndView mAV;
+		PerfilModel exis = service.traerTipo(perfilModel.getTipo());
+		
+		if(exis!=null) {
+			FieldError error = new FieldError("persona", "dni", "Ya existe una persona con el dni ingresado");
+			result.addError(error);
+			mAV = new ModelAndView(ViewRouteHelper.PERFIL_FORM);
+		} else if (result.hasErrors()) {
+			mAV = new ModelAndView(ViewRouteHelper.PERFIL_FORM);
 		} else {
 			service.insertOrUpdate(perfilModel);
+			redirAttrs.addFlashAttribute("success", perfilModel.toString()+" agregado exitosamente.");
+	       	mAV = new ModelAndView(ViewRouteHelper.HOME_ROUTE);
 		}
-		return redirect;
+		return mAV;
 	}
 	
 	@PostMapping("/eliminar/{idPerfil}")

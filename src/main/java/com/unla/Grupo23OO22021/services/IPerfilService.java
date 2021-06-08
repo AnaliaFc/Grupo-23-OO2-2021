@@ -13,4 +13,6 @@ public interface IPerfilService {
 		
 	public boolean remove(long id);
 
+	PerfilModel traerTipo(String tipo);
+
 }

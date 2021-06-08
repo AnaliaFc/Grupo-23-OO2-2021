@@ -11,7 +11,7 @@ public interface IPerfilRepository extends JpaRepository<Perfil, Long> {
 
     public abstract Perfil findById(long id);
 	
-	@Query("SELECT u FROM Usuario u WHERE dni = (:dni)")
-	public abstract Perfil findByDocumento(int dni);
+	@Query("SELECT p FROM Perfil p WHERE tipo = (:tipo)")
+	public abstract Perfil findByTipo(String tipo);
 
 }
