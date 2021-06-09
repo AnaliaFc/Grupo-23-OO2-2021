@@ -39,10 +39,5 @@ public class PermisoDiarioModel extends PermisoModel {
 		return super.toString()+" -> PermisoDiarioModel [motivo=" + motivo + "]";
 	}
 	
-	@Override
-	public String generarUrl()
-	{
-		return super.generarUrl()+"&motivo="+motivo;
-	}
-	
+
 }
