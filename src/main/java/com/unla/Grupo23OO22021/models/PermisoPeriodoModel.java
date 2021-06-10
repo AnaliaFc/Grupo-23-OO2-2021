@@ -61,5 +61,16 @@ public class PermisoPeriodoModel extends PermisoModel{
 	public String toString() {
 		return super.toString() + " -> PermisoPeriodoModel [cantDias=" + cantDias + ", vacaciones=" + vacaciones + ", rodado=" + rodado + "]";
 	}
+	
+	@Override
+	public String generarUrl()
+	{
+		LocalDate fin=fecha.toLocalDate();
+		fin=fin.plusDays(cantDias);
+		String fechaFin=fin.getDayOfMonth()+"-"+fin.getMonthValue()+"-"+fin.getYear();
+		return super.generarUrl()+"&fin="+fechaFin
+		+"&vehiculo="+rodado.getVehiculo()+"&dominio="+rodado.getDominio()+"&vacaciones="+vacaciones;
+	}
+	
 
 }

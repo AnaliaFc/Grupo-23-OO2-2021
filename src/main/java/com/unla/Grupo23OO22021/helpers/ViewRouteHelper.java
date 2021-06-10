@@ -1,33 +1,12 @@
 package com.unla.Grupo23OO22021.helpers;
 
 public class ViewRouteHelper {
-
-	// PERSON
-	public final static String USUARIO_INDEX = "usuario/index";
-	public final static String USUARIO_NEW = "usuario/new";
-	public final static String USUARIO_UPDATE = "usuario/update";
-
-	// REDIRECT
-	public final static String USUARIO_ROOT = "/usuario";
-
-	// PERFIL
-	public final static String FORM = "viewsPerfil/form";
-	public final static String PERFILES = "viewsPerfil/listaPerfiles";
 	
-	//RODADO
-	public final static String RODADO_FORM = "rodado/form";
+	// ERROR
+	public final static String ERROR_403="error/403";
 	
-	//PERSONA
-	public final static String PERSONA_FORM = "persona/form";
-
-	//PERMISOS
-	public final static String ROUTE_PERMISOS = "permiso/listar";
-	public final static String PERMISO_FORM_PERIODO = "permiso/form-periodo";
-	public final static String PERMISO_FORM_DIA="permiso/form-dia";
-	
-	// REDIRECT
-	public final static String ROUTE_PERFILES = "redirect:/perfil/listar";
-
+	//GIT VISUALIZADOR
+	public static final String QR_WEBVIEW = "https://ezequiel-de-la-fuente.github.io/visualizador-de-permisos/?";
 	
 	// HOME
 	public final static String HOME_INDEX = "home/index";
@@ -35,12 +14,35 @@ public class ViewRouteHelper {
 	public final static String HOME_LOGOUT = "home/logout";
 	public final static String HOME_ABOUT_US = "home/about-us";
 	public final static String HOME_USER = "home/user";
+	public final static String PERSONAS_Y_RODADO_LIST = "home/listpersonasYrodados";
+		
+	// PERFIL
+	public final static String PERFIL_FORM = "viewsPerfil/form";
+	public final static String PERFILES = "viewsPerfil/listaPerfiles";
 	
-	// REDIRECT
-	public final static String HOME_ROUTE = "redirect:/";
+	//PERMISOS
+	public final static String ROUTE_PERMISOS = "permiso/listar";
+	public final static String PERMISO_FORM_PERIODO = "permiso/form-periodo";
+	public final static String PERMISO_FORM_DIA="permiso/form-dia";
 	
-	// ERROR
-	public final static String ERROR_403="error/403";
+	//PERSONA
+	public final static String PERSONA_FORM = "persona/form";
 	
+		
+	//QR
+	public static final String QR_GENERADO = "QRv/qrgenerado";
+	public static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/qr/QRCode.png";
 
+	// REDIRECT
+	public final static String USUARIO_ROOT = "redirect:/usuario";
+	public final static String ROUTE_PERFILES = "redirect:/perfil/listar";
+	public final static String HOME_ROUTE = "redirect:/";
+		
+	//RODADO
+	public final static String RODADO_FORM = "rodado/form";
+	
+	// USUARIO
+	public final static String USUARIO_INDEX = "usuario/index";
+	public final static String USUARIO_FORM = "usuario/form";
+	
 }
